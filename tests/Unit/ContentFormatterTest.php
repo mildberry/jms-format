@@ -3,6 +3,7 @@
 namespace Mildberry\Library\ContentFormatter\Test\Unit;
 
 use Mildberry\Library\ContentFormatter\ContentFormatter;
+use Mildberry\Library\ContentFormatter\Exception\WrongFormatNameException;
 use PHPUnit_Framework_TestCase;
 
 /**
@@ -10,9 +11,34 @@ use PHPUnit_Framework_TestCase;
  */
 class ContentFormatterTest extends PHPUnit_Framework_TestCase
 {
-    public function testConstruct()
+    public function testSuccessConstruct()
     {
-        $contentFormatter = new ContentFormatter();
+        $contentFormatter = $this->createContentFormatter();
         $this->assertTrue(($contentFormatter instanceof ContentFormatter));
+    }
+
+    public function testFailedConvertFromHtmlToJson()
+    {
+        $contentFormatter = $this->createContentFormatter();
+        try {
+            $contentFormatter->convert('wrongFormat1', 'wrongFormat2', '<html></html>');
+            $this->assertTrue(false);
+        } catch (WrongFormatNameException $e) {
+            $this->assertTrue(true);
+        }
+    }
+
+    public function testSuccessConvertFromHtmlToJson()
+    {
+        $contentFormatter = $this->createContentFormatter();
+        $this->assertEquals('', $contentFormatter->convert('html', 'json', '<html></html>'));
+    }
+
+    /**
+     * @return ContentFormatter
+     */
+    private function createContentFormatter()
+    {
+        return new ContentFormatter();
     }
 }
