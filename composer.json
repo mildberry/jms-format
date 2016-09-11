@@ -1,0 +1,33 @@
+{
+    "name": "mildberry/php-content-formatter",
+    "description": "Library for format html text to json and vice versa",
+    "keywords": [ "php", "html", "xml", "json"],
+    "homepage": "https://github.com/mildberry/php-content-formatter",
+    "license": "MIT",
+    "type": "library",
+    "require": {
+        "php": ">=5.3"
+    },
+    "require-dev": {
+        "phpunit/phpunit": "^4.7"
+    },
+    "autoload": {
+        "psr-4": {
+            "Mildberry\\Library\\ContentFormatter\\": "src/"
+        }
+    },
+    "autoload-dev": {
+        "psr-4": { "Mildberry\\Library\\ContentFormatter\\Tests\\": "tests/" }
+    },
+    "extra": {
+        "branch-alias": {
+            "dev-master": "0.1.x-dev"
+        }
+    },
+    "authors": [
+        {
+            "name": "Egor Zyuskin",
+            "email": "e.zyuskin@mildberry.com"
+        }
+    ]
+}
