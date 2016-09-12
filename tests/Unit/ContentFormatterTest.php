@@ -4,6 +4,11 @@ namespace Mildberry\Library\ContentFormatter\Test\Unit;
 
 use Mildberry\Library\ContentFormatter\ContentFormatter;
 use Mildberry\Library\ContentFormatter\Exception\WrongFormatNameException;
+use Mildberry\Library\ContentFormatter\Item\BodyItem;
+use Mildberry\Library\ContentFormatter\Item\HeadLineItem;
+use Mildberry\Library\ContentFormatter\Item\ImageItem;
+use Mildberry\Library\ContentFormatter\Item\ParagraphItem;
+use Mildberry\Library\ContentFormatter\Item\TextItem;
 use PHPUnit_Framework_TestCase;
 
 /**
