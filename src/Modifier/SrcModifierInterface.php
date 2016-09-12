@@ -5,10 +5,10 @@ namespace Mildberry\Library\ContentFormatter\Modifier;
 /**
  * @author Egor Zyuskin <e.zyuskin@mildberry.com>
  */
-interface InterfaceColorModifier
+interface SrcModifierInterface
 {
     /**
      * @return string
      */
-    public function getColor();
+    public function getSrc();
 }

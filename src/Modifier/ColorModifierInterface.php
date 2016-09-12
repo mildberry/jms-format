@@ -5,10 +5,10 @@ namespace Mildberry\Library\ContentFormatter\Modifier;
 /**
  * @author Egor Zyuskin <e.zyuskin@mildberry.com>
  */
-interface InterfaceSizeModifier
+interface ColorModifierInterface
 {
     /**
      * @return string
      */
-    public function getSize();
+    public function getColor();
 }

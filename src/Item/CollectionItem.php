@@ -10,7 +10,7 @@ use IteratorAggregate;
 /**
  * @author Egor Zyuskin <e.zyuskin@mildberry.com>
  */
-class AbstractCollection extends AbstractItem implements IteratorAggregate , ArrayAccess, Countable
+class CollectionItem extends AbstractItem implements IteratorAggregate , ArrayAccess, Countable
 {
     /**
      * @var AbstractItem[]

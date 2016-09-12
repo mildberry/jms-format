@@ -2,7 +2,7 @@
 
 namespace Mildberry\Library\ContentFormatter\Format;
 
-use Mildberry\Library\ContentFormatter\Item\AbstractCollection;
+use Mildberry\Library\ContentFormatter\Item\CollectionItem;
 
 /**
  * @author Egor Zyuskin <e.zyuskin@mildberry.com>
@@ -11,18 +11,18 @@ class HtmlFormat implements FormatInterface
 {
     /**
      * @param $content
-     * @return AbstractCollection
+     * @return CollectionItem
      */
     public function toCollection($content)
     {
-        return new AbstractCollection();
+        return new CollectionItem();
     }
 
     /**
-     * @param AbstractCollection $collection
+     * @param CollectionItem $collection
      * @return string
      */
-    public function toContent(AbstractCollection $collection)
+    public function toContent(CollectionItem $collection)
     {
         return '';
     }

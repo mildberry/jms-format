@@ -5,29 +5,29 @@ namespace Mildberry\Library\ContentFormatter\Modifier;
 /**
  * @author Egor Zyuskin <e.zyuskin@mildberry.com>
  */
-trait TraitAlignmentModifier
+trait FloatingModifierTrait
 {
     /**
      * @var string
      */
-    protected $alignment;
+    protected $floating;
 
     /**
      * @return string
      */
-    public function getAlignment()
+    public function getFloating()
     {
-        return $this->alignment;
+        return $this->floating;
     }
 
     /**
-     * @param string $alignment
+     * @param string $floating
      *
      * @return $this
      */
-    public function setAlignment($alignment)
+    public function setFloating($floating)
     {
-        $this->alignment = $alignment;
+        $this->floating = $floating;
 
         return $this;
     }

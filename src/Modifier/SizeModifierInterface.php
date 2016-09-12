@@ -5,10 +5,10 @@ namespace Mildberry\Library\ContentFormatter\Modifier;
 /**
  * @author Egor Zyuskin <e.zyuskin@mildberry.com>
  */
-interface InterfaceAlignmentModifier
+interface SizeModifierInterface
 {
     /**
      * @return string
      */
-    public function getAlignment();
+    public function getSize();
 }

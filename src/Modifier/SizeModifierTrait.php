@@ -5,7 +5,7 @@ namespace Mildberry\Library\ContentFormatter\Modifier;
 /**
  * @author Egor Zyuskin <e.zyuskin@mildberry.com>
  */
-trait TraitSizeModifier
+trait SizeModifierTrait
 {
     /**
      * @var string

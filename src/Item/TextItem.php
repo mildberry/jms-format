@@ -2,15 +2,15 @@
 
 namespace Mildberry\Library\ContentFormatter\Item;
 
-use Mildberry\Library\ContentFormatter\Modifier\InterfaceColorModifier;
-use Mildberry\Library\ContentFormatter\Modifier\TraitColorModifier;
+use Mildberry\Library\ContentFormatter\Modifier\ColorModifierInterface;
+use Mildberry\Library\ContentFormatter\Modifier\ColorModifierTrait;
 
 /**
  * @author Egor Zyuskin <e.zyuskin@mildberry.com>
  */
-class TextItem extends AbstractContentItem implements InterfaceColorModifier
+class TextItem extends AbstractContentItem implements ColorModifierInterface
 {
-    use TraitColorModifier;
+    use ColorModifierTrait;
 
     /**
      * @var string

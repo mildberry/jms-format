@@ -2,7 +2,7 @@
 
 namespace Mildberry\Library\ContentFormatter\Format;
 
-use Mildberry\Library\ContentFormatter\Item\AbstractCollection;
+use Mildberry\Library\ContentFormatter\Item\CollectionItem;
 use Mildberry\Library\ContentFormatter\Item\AbstractContentItem;
 
 /**
@@ -12,18 +12,18 @@ class JsonFormat implements FormatInterface
 {
     /**
      * @param $content
-     * @return AbstractCollection
+     * @return CollectionItem
      */
     public function toCollection($content)
     {
-        return new AbstractCollection();
+        return new CollectionItem();
     }
 
     /**
-     * @param AbstractCollection $collection
+     * @param CollectionItem $collection
      * @return string
      */
-    public function toContent(AbstractCollection $collection)
+    public function toContent(CollectionItem $collection)
     {
         $content = [
             'version' => 'v1',
@@ -34,10 +34,10 @@ class JsonFormat implements FormatInterface
     }
 
     /**
-     * @param AbstractCollection $collection
+     * @param CollectionItem $collection
      * @return array
      */
-    private function getArrayItemsByCollection(AbstractCollection $collection)
+    private function getArrayItemsByCollection(CollectionItem $collection)
     {
         $contents = [];
 
@@ -48,7 +48,7 @@ class JsonFormat implements FormatInterface
                 'modifiers' => $item->getModifiers(),
             ];
 
-            if ($item instanceof AbstractCollection) {
+            if ($item instanceof CollectionItem) {
                 $content['content'] = $this->getArrayItemsByCollection($item);
             }
 

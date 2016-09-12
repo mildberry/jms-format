@@ -4,7 +4,7 @@ namespace Mildberry\Library\ContentFormatter;
 
 use Mildberry\Library\ContentFormatter\Exception\WrongFormatNameException;
 use Mildberry\Library\ContentFormatter\Format\FormatInterface;
-use Mildberry\Library\ContentFormatter\Item\AbstractCollection;
+use Mildberry\Library\ContentFormatter\Item\CollectionItem;
 
 /**
  * @author Egor Zyuskin <e.zyuskin@mildberry.com>
@@ -24,8 +24,8 @@ class ContentFormatter
 
     /**
      * @param string $fromFormat
-     * @param AbstractCollection $content
-     * @return AbstractCollection
+     * @param CollectionItem $content
+     * @return CollectionItem
      * @throws WrongFormatNameException
      */
     public function convertToCollection($fromFormat, $content)
@@ -35,11 +35,11 @@ class ContentFormatter
 
     /**
      * @param $toFormat
-     * @param AbstractCollection $collection
+     * @param CollectionItem $collection
      * @return string
      * @throws WrongFormatNameException
      */
-    public function convertToContent($toFormat, AbstractCollection $collection)
+    public function convertToContent($toFormat, CollectionItem $collection)
     {
         return $this->createFormat($toFormat)->toContent($collection);
     }

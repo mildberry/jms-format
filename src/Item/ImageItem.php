@@ -2,21 +2,21 @@
 
 namespace Mildberry\Library\ContentFormatter\Item;
 
-use Mildberry\Library\ContentFormatter\Modifier\InterfaceFloatingModifier;
-use Mildberry\Library\ContentFormatter\Modifier\InterfaceSizeModifier;
-use Mildberry\Library\ContentFormatter\Modifier\InterfaceSrcModifier;
-use Mildberry\Library\ContentFormatter\Modifier\TraitFloatingModifier;
-use Mildberry\Library\ContentFormatter\Modifier\TraitSizeModifier;
-use Mildberry\Library\ContentFormatter\Modifier\TraitSrcModifier;
+use Mildberry\Library\ContentFormatter\Modifier\FloatingModifierInterface;
+use Mildberry\Library\ContentFormatter\Modifier\SizeModifierInterface;
+use Mildberry\Library\ContentFormatter\Modifier\SrcModifierInterface;
+use Mildberry\Library\ContentFormatter\Modifier\FloatingModifierTrait;
+use Mildberry\Library\ContentFormatter\Modifier\SizeModifierTrait;
+use Mildberry\Library\ContentFormatter\Modifier\SrcModifierTrait;
 
 /**
  * @author Egor Zyuskin <e.zyuskin@mildberry.com>
  */
-class ImageItem extends AbstractItem implements InterfaceSrcModifier, InterfaceFloatingModifier, InterfaceSizeModifier
+class ImageItem extends AbstractItem implements SrcModifierInterface, FloatingModifierInterface, SizeModifierInterface
 {
-    use TraitSrcModifier;
-    use TraitFloatingModifier;
-    use TraitSizeModifier;
+    use SrcModifierTrait;
+    use FloatingModifierTrait;
+    use SizeModifierTrait;
 
     /**
      * @var string

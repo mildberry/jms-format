@@ -2,15 +2,15 @@
 
 namespace Mildberry\Library\ContentFormatter\Item;
 
-use Mildberry\Library\ContentFormatter\Modifier\InterfaceAlignmentModifier;
-use Mildberry\Library\ContentFormatter\Modifier\TraitAlignmentModifier;
+use Mildberry\Library\ContentFormatter\Modifier\AlignmentModifierInterface;
+use Mildberry\Library\ContentFormatter\Modifier\AlignmentModifierTrait;
 
 /**
  * @author Egor Zyuskin <e.zyuskin@mildberry.com>
  */
-class ParagraphItem extends AbstractCollection implements InterfaceAlignmentModifier
+class ParagraphItem extends CollectionItem implements AlignmentModifierInterface
 {
-    use TraitAlignmentModifier;
+    use AlignmentModifierTrait;
 
     /**
      * @var string

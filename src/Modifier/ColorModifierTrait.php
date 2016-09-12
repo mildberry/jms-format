@@ -5,29 +5,29 @@ namespace Mildberry\Library\ContentFormatter\Modifier;
 /**
  * @author Egor Zyuskin <e.zyuskin@mildberry.com>
  */
-trait TraitSrcModifier
+trait ColorModifierTrait
 {
     /**
      * @var string
      */
-    protected $src;
+    protected $color;
 
     /**
      * @return string
      */
-    public function getSrc()
+    public function getColor()
     {
-        return $this->src;
+        return $this->color;
     }
 
     /**
-     * @param string $src
+     * @param string $color
      *
      * @return $this
      */
-    public function setSrc($src)
+    public function setColor($color)
     {
-        $this->src = $src;
+        $this->color = $color;
 
         return $this;
     }
