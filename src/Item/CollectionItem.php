@@ -18,53 +18,6 @@ class CollectionItem extends AbstractItem implements IteratorAggregate , ArrayAc
     protected $items = [];
 
     /**
-     * Create a new collection instance if the value isn't one already.
-     *
-     * @param  mixed  $items
-     * @return static
-     */
-    public static function make($items = [])
-    {
-        return new static($items);
-    }
-
-    /**
-     * Get all of the items in the collection.
-     *
-     * @return AbstractItem[]
-     */
-    public function all()
-    {
-        return $this->items;
-    }
-
-    /**
-     * Get an item from the collection by key.
-     *
-     * @param  mixed  $key
-     * @param  mixed  $default
-     * @return AbstractItem
-     */
-    public function get($key, $default = null)
-    {
-        if ($this->offsetExists($key)) {
-            return $this->items[$key];
-        }
-
-        return $default;
-    }
-
-    /**
-     * Get and remove the last item from the collection.
-     *
-     * @return mixed
-     */
-    public function pop()
-    {
-        return array_pop($this->items);
-    }
-
-    /**
      * Push an item onto the end of the collection.
      *
      * @param  AbstractItem  $value
@@ -75,30 +28,6 @@ class CollectionItem extends AbstractItem implements IteratorAggregate , ArrayAc
         $this->offsetSet(null, $value);
 
         return $this;
-    }
-
-    /**
-     * Put an item in the collection by key.
-     *
-     * @param  mixed  $key
-     * @param  mixed  $value
-     * @return $this
-     */
-    public function put($key, $value)
-    {
-        $this->offsetSet($key, $value);
-
-        return $this;
-    }
-
-    /**
-     * Get and remove the first item from the collection.
-     *
-     * @return mixed
-     */
-    public function shift()
-    {
-        return array_shift($this->items);
     }
 
     /**
