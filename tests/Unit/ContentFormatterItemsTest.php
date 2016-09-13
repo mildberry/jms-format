@@ -54,7 +54,7 @@ class ContentFormatterItemsTest extends PHPUnit_Framework_TestCase
         try {
             $item->setFloating('left');
             $item->setSize('wide');
-            $item->setSrc('http://www.ya.ru');
+            $item->setSrc('https://www.ya.ru/favicon.ico');
             $this->assertTrue(true);
         } catch (\Exception $e) {
             $this->assertTrue(false);
