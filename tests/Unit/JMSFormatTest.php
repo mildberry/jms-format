@@ -31,7 +31,7 @@ class JMSFormatTest extends PHPUnit_Framework_TestCase
     public function testSuccessConvertFromHtmlToJson()
     {
         $contentFormatter = $this->createFormatter();
-        $this->assertEquals('{"version":"v1","content":[]}', $contentFormatter->convert('html', 'json', '<html></html>'));
+        $this->assertEquals('{"version":"v1","content":[]}', $contentFormatter->convert('html', 'JMS', '<html></html>'));
     }
 
     /**
