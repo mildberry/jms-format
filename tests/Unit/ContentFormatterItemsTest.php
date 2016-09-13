@@ -4,7 +4,6 @@ namespace Mildberry\Library\ContentFormatter\Test\Unit;
 
 use Exception;
 use Mildberry\Library\ContentFormatter\Item\BlockQuoteItem;
-use Mildberry\Library\ContentFormatter\Item\CollectionItem;
 use Mildberry\Library\ContentFormatter\Item\HeadLineItem;
 use Mildberry\Library\ContentFormatter\Item\ImageItem;
 use Mildberry\Library\ContentFormatter\Item\ParagraphItem;
@@ -25,7 +24,7 @@ class ContentFormatterItemsTest extends PHPUnit_Framework_TestCase
         } catch (Exception $e) {
             $this->assertTrue(false);
         }
-        $this->assertEquals('{"block":"blockquote","content":"content"}', $item->asJMSText());
+        $this->assertEquals('{"block":"blockquote","modifiers":[],"content":"content"}', $item->asJMSText());
     }
 
     public function testSuccessHeadLineItem()
@@ -69,7 +68,7 @@ class ContentFormatterItemsTest extends PHPUnit_Framework_TestCase
         } catch (Exception $e) {
             $this->assertTrue(false);
         }
-        $this->assertEquals('{"block":"paragraph","modifiers":{"alignment":"center"},"content":[{"block":"blockquote","content":"c"},{"block":"headline","content":"c"},{"block":"image"},{"block":"text","content":"c"},{"block":"paragraph","content":"c"}]}', $item->asJMSText());
+        $this->assertEquals('{"block":"paragraph","modifiers":{"alignment":"center"},"content":[{"block":"blockquote","modifiers":[],"content":"c"},{"block":"headline","modifiers":[],"content":"c"},{"block":"image","modifiers":[]},{"block":"text","modifiers":[],"content":"c"},{"block":"paragraph","modifiers":[],"content":"c"}]}', $item->asJMSText());
     }
 
     public function testSuccessTextItem()

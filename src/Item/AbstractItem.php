@@ -47,15 +47,10 @@ class AbstractItem
      */
     public function asJMSArray()
     {
-        $data = [
+        return [
             'block' => $this->getBlockName(),
+            'modifiers' => $this->getModifiers(),
         ];
-
-        if ($modifiers = $this->getModifiers()) {
-            $data['modifiers'] = $modifiers;
-        }
-
-        return $data;
     }
 
     /**
