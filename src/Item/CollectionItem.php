@@ -10,7 +10,7 @@ use IteratorAggregate;
 /**
  * @author Egor Zyuskin <e.zyuskin@mildberry.com>
  */
-class CollectionItem extends AbstractItem implements IteratorAggregate , ArrayAccess, Countable
+class CollectionItem extends AbstractContentItem implements IteratorAggregate , ArrayAccess, Countable
 {
     /**
      * @var AbstractItem[]
@@ -18,12 +18,25 @@ class CollectionItem extends AbstractItem implements IteratorAggregate , ArrayAc
     protected $items = [];
 
     /**
+     * @param string|array $content
+     */
+    public function __construct($content = '')
+    {
+        if (is_array($content)) {
+            $this->items = $content;
+            $content = '';
+        }
+
+        parent::__construct($content);
+    }
+
+    /**
      * Push an item onto the end of the collection.
      *
      * @param  AbstractItem  $value
      * @return $this
      */
-    public function push($value)
+    public function push(AbstractItem $value)
     {
         $this->offsetSet(null, $value);
 

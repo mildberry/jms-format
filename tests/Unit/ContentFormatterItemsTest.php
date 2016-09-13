@@ -30,6 +30,7 @@ class ContentFormatterItemsTest extends PHPUnit_Framework_TestCase
     {
         $item = new CollectionItem();
         try {
+            $item->setContent('content');
             $this->assertTrue(true);
         } catch (\Exception $e) {
             $this->assertTrue(false);
@@ -65,6 +66,7 @@ class ContentFormatterItemsTest extends PHPUnit_Framework_TestCase
     {
         $item = new ParagraphItem();
         try {
+            $item->setContent('content');
             $item->setAlignment('center');
             $this->assertTrue(true);
         } catch (\Exception $e) {
