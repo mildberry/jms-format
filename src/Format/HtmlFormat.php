@@ -9,13 +9,15 @@ use Mildberry\JMSFormat\Item\CollectionItem;
  */
 class HtmlFormat implements FormatInterface
 {
+    CONST ALLOWED_TAGS = '<p><span><img><b><i><del><blockquote>';
+
     /**
-     * @param $content
+     * @param string $content
      * @return CollectionItem
      */
     public function toCollection($content)
     {
-        return new CollectionItem();
+        return $this->createCollectionFormHtml($content);
     }
 
     /**
@@ -25,5 +27,19 @@ class HtmlFormat implements FormatInterface
     public function toContent(CollectionItem $collection)
     {
         return '';
+    }
+
+    /**
+     * @param string $content
+     * @return CollectionItem
+     */
+    private function createCollectionFormHtml($content)
+    {
+        $collection = new CollectionItem();
+
+//        $content = strip_tags($content, self::ALLOWED_TAGS);
+//        print $content;
+
+        return $collection;
     }
 }
