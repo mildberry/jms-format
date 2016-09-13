@@ -38,4 +38,17 @@ class AbstractContentItem extends AbstractItem
 
         return $this;
     }
+
+    /**
+     * @return array
+     */
+    public function asJMSArray()
+    {
+        return array_merge(
+            parent::asJMSArray(),
+            [
+                'content' => $this->getContent(),
+            ]
+        );
+    }
 }

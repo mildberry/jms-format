@@ -29,17 +29,40 @@ class AbstractItem
         $modifiers = [];
 
         foreach ($modifiersName as $name) {
-            $interfaceName = 'Mildberry\Library\ContentFormatter\Modifier\Interface'.ucfirst($name).'Modifier';
+            $interfaceName = 'Mildberry\Library\ContentFormatter\Modifier\\'.ucfirst($name).'ModifierInterface';
             $methodName = 'get'.ucfirst($name);
 
             if ($this instanceof $interfaceName) {
-                $modifiersValues = $this->$methodName();
-                if ($modifiersValues) {
-                    $modifiers[$name] = $modifiersValues;
+                if ($modifiersValue = $this->$methodName()) {
+                    $modifiers[$name] = $modifiersValue;
                 }
             }
         }
 
        return $modifiers;
+    }
+
+    /**
+     * @return array
+     */
+    public function asJMSArray()
+    {
+        $data = [
+            'block' => $this->getBlockName(),
+        ];
+
+        if ($modifiers = $this->getModifiers()) {
+            $data['modifiers'] = $modifiers;
+        }
+
+        return $data;
+    }
+
+    /**
+     * @return string
+     */
+    public function asJMSText()
+    {
+        return json_encode($this->asJMSArray());
     }
 }

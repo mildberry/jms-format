@@ -31,6 +31,33 @@ class CollectionItem extends AbstractContentItem implements IteratorAggregate , 
     }
 
     /**
+     * @return array
+     */
+    public function asJMSArray()
+    {
+        return array_merge(
+            parent::asJMSArray(),
+            [
+                'content' => ($this->count() > 0) ? $this->getContentAsJMSArray() : $this->getContent(),
+            ]
+        );
+    }
+
+    /**
+     * @return array
+     */
+    public function getContentAsJMSArray()
+    {
+        $items = [];
+
+        foreach ($this->items as $item) {
+            $items[] = $item->asJMSArray();
+        }
+
+        return $items;
+    }
+
+    /**
      * Push an item onto the end of the collection.
      *
      * @param  AbstractItem  $value

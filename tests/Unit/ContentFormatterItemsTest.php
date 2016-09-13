@@ -2,6 +2,7 @@
 
 namespace Mildberry\Library\ContentFormatter\Test\Unit;
 
+use Exception;
 use Mildberry\Library\ContentFormatter\Item\BlockQuoteItem;
 use Mildberry\Library\ContentFormatter\Item\CollectionItem;
 use Mildberry\Library\ContentFormatter\Item\HeadLineItem;
@@ -21,20 +22,10 @@ class ContentFormatterItemsTest extends PHPUnit_Framework_TestCase
         try {
             $item->setContent('content');
             $this->assertTrue(true);
-        } catch (\Exception $e) {
+        } catch (Exception $e) {
             $this->assertTrue(false);
         }
-    }
-
-    public function testSuccessCollectionItem()
-    {
-        $item = new CollectionItem();
-        try {
-            $item->setContent('content');
-            $this->assertTrue(true);
-        } catch (\Exception $e) {
-            $this->assertTrue(false);
-        }
+        $this->assertEquals('{"block":"blockquote","content":"content"}', $item->asJMSText());
     }
 
     public function testSuccessHeadLineItem()
@@ -44,9 +35,10 @@ class ContentFormatterItemsTest extends PHPUnit_Framework_TestCase
             $item->setContent('content');
             $item->setWeight('h1');
             $this->assertTrue(true);
-        } catch (\Exception $e) {
+        } catch (Exception $e) {
             $this->assertTrue(false);
         }
+        $this->assertEquals('{"block":"headline","modifiers":{"weight":"h1"},"content":"content"}', $item->asJMSText());
     }
 
     public function testSuccessImageItem()
@@ -57,21 +49,27 @@ class ContentFormatterItemsTest extends PHPUnit_Framework_TestCase
             $item->setSize('wide');
             $item->setSrc('https://www.ya.ru/favicon.ico');
             $this->assertTrue(true);
-        } catch (\Exception $e) {
+        } catch (Exception $e) {
             $this->assertTrue(false);
         }
+        $this->assertEquals('{"block":"image","modifiers":{"floating":"left","size":"wide","src":"https:\/\/www.ya.ru\/favicon.ico"}}', $item->asJMSText());
     }
 
     public function testParagraphItem()
     {
         $item = new ParagraphItem();
         try {
-            $item->setContent('content');
             $item->setAlignment('center');
+            $item->push((new BlockQuoteItem('c')));
+            $item->push((new HeadLineItem('c')));
+            $item->push((new ImageItem()));
+            $item->push((new TextItem('c')));
+            $item->push((new ParagraphItem('c')));
             $this->assertTrue(true);
-        } catch (\Exception $e) {
+        } catch (Exception $e) {
             $this->assertTrue(false);
         }
+        $this->assertEquals('{"block":"paragraph","modifiers":{"alignment":"center"},"content":[{"block":"blockquote","content":"c"},{"block":"headline","content":"c"},{"block":"image"},{"block":"text","content":"c"},{"block":"paragraph","content":"c"}]}', $item->asJMSText());
     }
 
     public function testSuccessTextItem()
@@ -81,8 +79,9 @@ class ContentFormatterItemsTest extends PHPUnit_Framework_TestCase
             $item->setContent('content');
             $item->setColor('info');
             $this->assertTrue(true);
-        } catch (\Exception $e) {
+        } catch (Exception $e) {
             $this->assertTrue(false);
         }
+        $this->assertEquals('{"block":"text","modifiers":{"color":"info"},"content":"content"}', $item->asJMSText());
     }
 }
