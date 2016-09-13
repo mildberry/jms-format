@@ -29,7 +29,7 @@ trait SizeModifierTrait
      */
     public function setSize($size)
     {
-        if (!in_array($size, $this->getFloatingAllowedValues())) {
+        if (!in_array($size, $this->getSizeAllowedValues())) {
             throw new WrongModifierValueException('Size value: "'.$size.'" not valid, must be ['.implode(',', $this->getSizeAllowedValues()).']');
         }
 
