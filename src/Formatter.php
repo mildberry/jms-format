@@ -9,7 +9,7 @@ use Mildberry\JMSFormat\Item\CollectionItem;
 /**
  * @author Egor Zyuskin <e.zyuskin@mildberry.com>
  */
-class JMSFormat
+class Formatter
 {
     /**
      * @param string $fromFormat

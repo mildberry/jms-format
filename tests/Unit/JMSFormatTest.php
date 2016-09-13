@@ -2,7 +2,7 @@
 
 namespace Mildberry\JMSFormat\Test\Unit;
 
-use Mildberry\JMSFormat\JMSFormat;
+use Mildberry\JMSFormat\Formatter;
 use Mildberry\JMSFormat\Exception\WrongFormatNameException;
 use PHPUnit_Framework_TestCase;
 
@@ -13,13 +13,13 @@ class JMSFormatTest extends PHPUnit_Framework_TestCase
 {
     public function testSuccessConstruct()
     {
-        $contentFormatter = $this->createJMSFormat();
-        $this->assertTrue(($contentFormatter instanceof JMSFormat));
+        $contentFormatter = $this->createFormatter();
+        $this->assertTrue(($contentFormatter instanceof Formatter));
     }
 
     public function testFailedConvertFromHtmlToJson()
     {
-        $contentFormatter = $this->createJMSFormat();
+        $contentFormatter = $this->createFormatter();
         try {
             $contentFormatter->convert('wrongFormat1', 'wrongFormat2', '<html></html>');
             $this->assertTrue(false);
@@ -30,15 +30,15 @@ class JMSFormatTest extends PHPUnit_Framework_TestCase
 
     public function testSuccessConvertFromHtmlToJson()
     {
-        $contentFormatter = $this->createJMSFormat();
+        $contentFormatter = $this->createFormatter();
         $this->assertEquals('{"version":"v1","content":[]}', $contentFormatter->convert('html', 'json', '<html></html>'));
     }
 
     /**
-     * @return JMSFormat
+     * @return Formatter
      */
-    private function createJMSFormat()
+    private function createFormatter()
     {
-        return new JMSFormat();
+        return new Formatter();
     }
 }
