@@ -1,1 +1,1 @@
-# php-content-formatter
+# JSON markup structure format
