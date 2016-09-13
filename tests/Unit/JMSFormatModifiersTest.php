@@ -1,18 +1,18 @@
 <?php
 
-namespace Mildberry\Library\ContentFormatter\Test\Unit;
+namespace Mildberry\JMSFormat\Test\Unit;
 
-use Mildberry\Library\ContentFormatter\Exception\WrongModifierValueException;
-use Mildberry\Library\ContentFormatter\Item\HeadLineItem;
-use Mildberry\Library\ContentFormatter\Item\ImageItem;
-use Mildberry\Library\ContentFormatter\Item\ParagraphItem;
-use Mildberry\Library\ContentFormatter\Item\TextItem;
+use Mildberry\JMSFormat\Exception\WrongModifierValueException;
+use Mildberry\JMSFormat\Item\HeadLineItem;
+use Mildberry\JMSFormat\Item\ImageItem;
+use Mildberry\JMSFormat\Item\ParagraphItem;
+use Mildberry\JMSFormat\Item\TextItem;
 use PHPUnit_Framework_TestCase;
 
 /**
  * @author Egor Zyuskin <e.zyuskin@mildberry.com>
  */
-class ContentFormatterModifiersTest extends PHPUnit_Framework_TestCase
+class JMSFormatModifiersTest extends PHPUnit_Framework_TestCase
 {
     public function testFiledAlignmentModifier()
     {

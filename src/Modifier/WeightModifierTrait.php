@@ -1,8 +1,8 @@
 <?php
 
-namespace Mildberry\Library\ContentFormatter\Modifier;
+namespace Mildberry\JMSFormat\Modifier;
 
-use Mildberry\Library\ContentFormatter\Exception\WrongModifierValueException;
+use Mildberry\JMSFormat\Exception\WrongModifierValueException;
 
 /**
  * @author Egor Zyuskin <e.zyuskin@mildberry.com>

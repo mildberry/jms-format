@@ -1,8 +1,8 @@
 <?php
 
-namespace Mildberry\Library\ContentFormatter\Format;
+namespace Mildberry\JMSFormat\Format;
 
-use Mildberry\Library\ContentFormatter\Item\CollectionItem;
+use Mildberry\JMSFormat\Item\CollectionItem;
 
 /**
  * @author Egor Zyuskin <e.zyuskin@mildberry.com>

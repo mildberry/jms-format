@@ -1,9 +1,9 @@
 <?php
 
-namespace Mildberry\Library\ContentFormatter\Item;
+namespace Mildberry\JMSFormat\Item;
 
-use Mildberry\Library\ContentFormatter\Modifier\AlignmentModifierInterface;
-use Mildberry\Library\ContentFormatter\Modifier\AlignmentModifierTrait;
+use Mildberry\JMSFormat\Modifier\AlignmentModifierInterface;
+use Mildberry\JMSFormat\Modifier\AlignmentModifierTrait;
 
 /**
  * @author Egor Zyuskin <e.zyuskin@mildberry.com>

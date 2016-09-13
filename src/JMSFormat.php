@@ -1,15 +1,15 @@
 <?php
 
-namespace Mildberry\Library\ContentFormatter;
+namespace Mildberry\JMSFormat;
 
-use Mildberry\Library\ContentFormatter\Exception\WrongFormatNameException;
-use Mildberry\Library\ContentFormatter\Format\FormatInterface;
-use Mildberry\Library\ContentFormatter\Item\CollectionItem;
+use Mildberry\JMSFormat\Exception\WrongFormatNameException;
+use Mildberry\JMSFormat\Format\FormatInterface;
+use Mildberry\JMSFormat\Item\CollectionItem;
 
 /**
  * @author Egor Zyuskin <e.zyuskin@mildberry.com>
  */
-class ContentFormatter
+class JMSFormat
 {
     /**
      * @param string $fromFormat
@@ -72,6 +72,6 @@ class ContentFormatter
      */
     private function getFormatClassByName($name)
     {
-        return 'Mildberry\\Library\\ContentFormatter\\Format\\'.ucfirst($name).'Format';
+        return 'Mildberry\\JMSFormat\\Format\\'.ucfirst($name).'Format';
     }
 }

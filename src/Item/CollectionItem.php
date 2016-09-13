@@ -1,6 +1,6 @@
 <?php
 
-namespace Mildberry\Library\ContentFormatter\Item;
+namespace Mildberry\JMSFormat\Item;
 
 use ArrayAccess;
 use ArrayIterator;

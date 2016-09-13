@@ -1,9 +1,9 @@
 <?php
 
-namespace Mildberry\Library\ContentFormatter\Item;
+namespace Mildberry\JMSFormat\Item;
 
-use Mildberry\Library\ContentFormatter\Modifier\WeightModifierInterface;
-use Mildberry\Library\ContentFormatter\Modifier\WeightModifierTrait;
+use Mildberry\JMSFormat\Modifier\WeightModifierInterface;
+use Mildberry\JMSFormat\Modifier\WeightModifierTrait;
 
 /**
  * @author Egor Zyuskin <e.zyuskin@mildberry.com>

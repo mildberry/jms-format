@@ -1,6 +1,6 @@
 <?php
 
-namespace Mildberry\Library\ContentFormatter\Item;
+namespace Mildberry\JMSFormat\Item;
 
 /**
  * @author Egor Zyuskin <e.zyuskin@mildberry.com>

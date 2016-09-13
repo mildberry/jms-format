@@ -1,13 +1,13 @@
 <?php
 
-namespace Mildberry\Library\ContentFormatter\Item;
+namespace Mildberry\JMSFormat\Item;
 
-use Mildberry\Library\ContentFormatter\Modifier\FloatingModifierInterface;
-use Mildberry\Library\ContentFormatter\Modifier\SizeModifierInterface;
-use Mildberry\Library\ContentFormatter\Modifier\SrcModifierInterface;
-use Mildberry\Library\ContentFormatter\Modifier\FloatingModifierTrait;
-use Mildberry\Library\ContentFormatter\Modifier\SizeModifierTrait;
-use Mildberry\Library\ContentFormatter\Modifier\SrcModifierTrait;
+use Mildberry\JMSFormat\Modifier\FloatingModifierInterface;
+use Mildberry\JMSFormat\Modifier\SizeModifierInterface;
+use Mildberry\JMSFormat\Modifier\SrcModifierInterface;
+use Mildberry\JMSFormat\Modifier\FloatingModifierTrait;
+use Mildberry\JMSFormat\Modifier\SizeModifierTrait;
+use Mildberry\JMSFormat\Modifier\SrcModifierTrait;
 
 /**
  * @author Egor Zyuskin <e.zyuskin@mildberry.com>

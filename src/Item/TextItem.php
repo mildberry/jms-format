@@ -1,9 +1,9 @@
 <?php
 
-namespace Mildberry\Library\ContentFormatter\Item;
+namespace Mildberry\JMSFormat\Item;
 
-use Mildberry\Library\ContentFormatter\Modifier\ColorModifierInterface;
-use Mildberry\Library\ContentFormatter\Modifier\ColorModifierTrait;
+use Mildberry\JMSFormat\Modifier\ColorModifierInterface;
+use Mildberry\JMSFormat\Modifier\ColorModifierTrait;
 
 /**
  * @author Egor Zyuskin <e.zyuskin@mildberry.com>

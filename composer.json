@@ -1,23 +1,23 @@
 {
-    "name": "mildberry/php-content-formatter",
-    "description": "Library for format html text to json and vice versa",
+    "name": "mildberry/jms-format",
+    "description": "JSON markup structure format",
     "keywords": [ "php", "html", "xml", "json"],
-    "homepage": "https://github.com/mildberry/php-content-formatter",
+    "homepage": "https://github.com/mildberry/jms-format",
     "license": "MIT",
     "type": "library",
     "require": {
-        "php": ">=5.3"
+        "php": ">=5.4"
     },
     "require-dev": {
         "phpunit/phpunit": "^4.7"
     },
     "autoload": {
         "psr-4": {
-            "Mildberry\\Library\\ContentFormatter\\": "src/"
+            "Mildberry\\JMSFormat\\": "src/"
         }
     },
     "autoload-dev": {
-        "psr-4": { "Mildberry\\Library\\ContentFormatter\\Tests\\": "tests/" }
+        "psr-4": { "Mildberry\\JMSFormat\\Tests\\": "tests/" }
     },
     "extra": {
         "branch-alias": {

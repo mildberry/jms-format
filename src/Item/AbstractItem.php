@@ -1,6 +1,6 @@
 <?php
 
-namespace Mildberry\Library\ContentFormatter\Item;
+namespace Mildberry\JMSFormat\Item;
 
 /**
  * @author Egor Zyuskin <e.zyuskin@mildberry.com>
@@ -29,7 +29,7 @@ class AbstractItem
         $modifiers = [];
 
         foreach ($modifiersName as $name) {
-            $interfaceName = 'Mildberry\Library\ContentFormatter\Modifier\\'.ucfirst($name).'ModifierInterface';
+            $interfaceName = 'Mildberry\JMSFormat\Modifier\\'.ucfirst($name).'ModifierInterface';
             $methodName = 'get'.ucfirst($name);
 
             if ($this instanceof $interfaceName) {
