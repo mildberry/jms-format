@@ -15,9 +15,9 @@ class AbstractContentItem extends AbstractItem
     /**
      * @param string $content
      */
-    public function __construct($content)
+    public function __construct($content = '')
     {
-        $this->content = $content;
+        $this->setContent($content);
     }
 
     /**
