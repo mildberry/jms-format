@@ -19,25 +19,26 @@ class JMSFormatItemsTest extends PHPUnit_Framework_TestCase
     {
         $item = new BlockQuoteItem();
         try {
-            $item->setContent('content');
             $this->assertTrue(true);
+            $item->push((new ImageItem()));
+            $item->push((new TextItem('c')));
         } catch (Exception $e) {
             $this->assertTrue(false);
         }
-        $this->assertEquals('{"block":"blockquote","modifiers":[],"content":"content"}', $item->asJMSText());
+        $this->assertEquals('{"block":"blockquote","modifiers":[],"content":[{"block":"image","modifiers":[]},{"block":"text","modifiers":[],"content":"c"}]}', $item->asJMSText());
     }
 
     public function testSuccessHeadLineItem()
     {
         $item = new HeadLineItem();
         try {
-            $item->setContent('content');
             $item->setWeight('xs');
+            $item->push((new TextItem('c')));
             $this->assertTrue(true);
         } catch (Exception $e) {
             $this->assertTrue(false);
         }
-        $this->assertEquals('{"block":"headline","modifiers":{"weight":"xs"},"content":"content"}', $item->asJMSText());
+        $this->assertEquals('{"block":"headline","modifiers":{"weight":"xs"},"content":[{"block":"text","modifiers":[],"content":"c"}]}', $item->asJMSText());
     }
 
     public function testSuccessImageItem()
@@ -59,16 +60,13 @@ class JMSFormatItemsTest extends PHPUnit_Framework_TestCase
         $item = new ParagraphItem();
         try {
             $item->setAlignment('center');
-            $item->push((new BlockQuoteItem('c')));
-            $item->push((new HeadLineItem('c')));
             $item->push((new ImageItem()));
             $item->push((new TextItem('c')));
-            $item->push((new ParagraphItem('c')));
             $this->assertTrue(true);
         } catch (Exception $e) {
             $this->assertTrue(false);
         }
-        $this->assertEquals('{"block":"paragraph","modifiers":{"alignment":"center"},"content":[{"block":"blockquote","modifiers":[],"content":"c"},{"block":"headline","modifiers":[],"content":"c"},{"block":"image","modifiers":[]},{"block":"text","modifiers":[],"content":"c"},{"block":"paragraph","modifiers":[],"content":"c"}]}', $item->asJMSText());
+        $this->assertEquals('{"block":"paragraph","modifiers":{"alignment":"center"},"content":[{"block":"image","modifiers":[]},{"block":"text","modifiers":[],"content":"c"}]}', $item->asJMSText());
     }
 
     public function testSuccessTextItem()

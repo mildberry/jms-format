@@ -16,4 +16,9 @@ class ParagraphItem extends CollectionItem implements AlignmentModifierInterface
      * @var string
      */
     protected $blockName = 'paragraph';
+
+    /**
+     * @var array
+     */
+    protected $allowedBlocks = ['text', 'image'];
 }

@@ -8,7 +8,7 @@ use Mildberry\JMSFormat\Modifier\WeightModifierTrait;
 /**
  * @author Egor Zyuskin <e.zyuskin@mildberry.com>
  */
-class HeadLineItem extends AbstractContentItem implements WeightModifierInterface
+class HeadLineItem extends CollectionItem implements WeightModifierInterface
 {
     use WeightModifierTrait;
 
@@ -16,4 +16,9 @@ class HeadLineItem extends AbstractContentItem implements WeightModifierInterfac
      * @var string
      */
     protected $blockName = 'headline';
+
+    /**
+     * @var array
+     */
+    protected $allowedBlocks = ['text'];
 }

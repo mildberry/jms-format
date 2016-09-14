@@ -6,11 +6,12 @@ use ArrayAccess;
 use ArrayIterator;
 use Countable;
 use IteratorAggregate;
+use Mildberry\JMSFormat\Exception\BadBlockTypeForAddToCollection;
 
 /**
  * @author Egor Zyuskin <e.zyuskin@mildberry.com>
  */
-class CollectionItem extends AbstractContentItem implements IteratorAggregate , ArrayAccess, Countable
+class CollectionItem extends AbstractItem implements IteratorAggregate , ArrayAccess, Countable
 {
     /**
      * @var AbstractItem[]
@@ -18,17 +19,9 @@ class CollectionItem extends AbstractContentItem implements IteratorAggregate , 
     protected $items = [];
 
     /**
-     * @param string|array $content
+     * @var string[]
      */
-    public function __construct($content = '')
-    {
-        if (is_array($content)) {
-            $this->items = $content;
-            $content = '';
-        }
-
-        parent::__construct($content);
-    }
+    protected $allowedBlocks = [];
 
     /**
      * @return array
@@ -38,7 +31,7 @@ class CollectionItem extends AbstractContentItem implements IteratorAggregate , 
         return array_merge(
             parent::asJMSArray(),
             [
-                'content' => ($this->count() > 0) ? $this->getContentAsJMSArray() : $this->getContent(),
+                'content' => $this->getContentAsJMSArray(),
             ]
         );
     }
@@ -60,12 +53,28 @@ class CollectionItem extends AbstractContentItem implements IteratorAggregate , 
     /**
      * Push an item onto the end of the collection.
      *
-     * @param  AbstractItem  $value
+     * @param  AbstractItem $item
+     * @return $this
+     * @throws BadBlockTypeForAddToCollection
+     */
+    public function push(AbstractItem $item)
+    {
+        if (!empty($this->allowedBlocks) && !in_array($item->getBlockName(), $this->allowedBlocks)) {
+            throw new BadBlockTypeForAddToCollection('Block class '.$item->getBlockName().' not allowed to add this collection');
+        }
+
+        $this->offsetSet(null, $item);
+
+        return $this;
+    }
+
+    /**
+     * @param AbstractItem $item
      * @return $this
      */
-    public function push(AbstractItem $value)
+    public function unshift(AbstractItem $item)
     {
-        $this->offsetSet(null, $value);
+        array_unshift($this->items, $item);
 
         return $this;
     }
