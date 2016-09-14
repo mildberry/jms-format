@@ -1,6 +1,6 @@
 <?php
 
-namespace Mildberry\JMSFormat\Item;
+namespace Mildberry\JMSFormat\Block;
 
 use Mildberry\JMSFormat\Modifier\AlignmentModifierInterface;
 use Mildberry\JMSFormat\Modifier\AlignmentModifierTrait;
@@ -8,7 +8,7 @@ use Mildberry\JMSFormat\Modifier\AlignmentModifierTrait;
 /**
  * @author Egor Zyuskin <e.zyuskin@mildberry.com>
  */
-class ParagraphItem extends CollectionItem implements AlignmentModifierInterface
+class ParagraphBlock extends CollectionBlock implements AlignmentModifierInterface
 {
     use AlignmentModifierTrait;
 

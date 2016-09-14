@@ -2,7 +2,7 @@
 
 namespace Mildberry\JMSFormat\Format;
 
-use Mildberry\JMSFormat\Item\CollectionItem;
+use Mildberry\JMSFormat\Block\CollectionBlock;
 
 /**
  * @author Egor Zyuskin <e.zyuskin@mildberry.com>
@@ -11,13 +11,13 @@ interface FormatInterface
 {
     /**
      * @param $content
-     * @return CollectionItem
+     * @return CollectionBlock
      */
     public function toCollection($content);
 
     /**
-     * @param CollectionItem $collection
+     * @param CollectionBlock $collection
      * @return string
      */
-    public function toContent(CollectionItem $collection);
+    public function toContent(CollectionBlock $collection);
 }

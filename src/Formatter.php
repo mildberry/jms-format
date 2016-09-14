@@ -4,7 +4,7 @@ namespace Mildberry\JMSFormat;
 
 use Mildberry\JMSFormat\Exception\BadFormatNameException;
 use Mildberry\JMSFormat\Format\FormatInterface;
-use Mildberry\JMSFormat\Item\CollectionItem;
+use Mildberry\JMSFormat\Block\CollectionBlock;
 
 /**
  * @author Egor Zyuskin <e.zyuskin@mildberry.com>
@@ -24,8 +24,8 @@ class Formatter
 
     /**
      * @param string $fromFormat
-     * @param CollectionItem $content
-     * @return CollectionItem
+     * @param CollectionBlock $content
+     * @return CollectionBlock
      * @throws BadFormatNameException
      */
     public function convertToCollection($fromFormat, $content)
@@ -35,11 +35,11 @@ class Formatter
 
     /**
      * @param $toFormat
-     * @param CollectionItem $collection
+     * @param CollectionBlock $collection
      * @return string
      * @throws BadFormatNameException
      */
-    public function convertToContent($toFormat, CollectionItem $collection)
+    public function convertToContent($toFormat, CollectionBlock $collection)
     {
         return $this->createFormat($toFormat)->toContent($collection);
     }

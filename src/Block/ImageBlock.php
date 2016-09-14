@@ -1,6 +1,6 @@
 <?php
 
-namespace Mildberry\JMSFormat\Item;
+namespace Mildberry\JMSFormat\Block;
 
 use Mildberry\JMSFormat\Modifier\FloatingModifierInterface;
 use Mildberry\JMSFormat\Modifier\SizeModifierInterface;
@@ -12,7 +12,7 @@ use Mildberry\JMSFormat\Modifier\SrcModifierTrait;
 /**
  * @author Egor Zyuskin <e.zyuskin@mildberry.com>
  */
-class ImageItem extends AbstractItem implements SrcModifierInterface, FloatingModifierInterface, SizeModifierInterface
+class ImageBlock extends AbstractBlock implements SrcModifierInterface, FloatingModifierInterface, SizeModifierInterface
 {
     use SrcModifierTrait;
     use FloatingModifierTrait;

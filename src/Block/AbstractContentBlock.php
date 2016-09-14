@@ -1,11 +1,11 @@
 <?php
 
-namespace Mildberry\JMSFormat\Item;
+namespace Mildberry\JMSFormat\Block;
 
 /**
  * @author Egor Zyuskin <e.zyuskin@mildberry.com>
  */
-class AbstractContentItem extends AbstractItem
+class AbstractContentBlock extends AbstractBlock
 {
     /**
      * @var string

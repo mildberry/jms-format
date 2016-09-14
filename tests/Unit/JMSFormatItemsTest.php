@@ -3,11 +3,11 @@
 namespace Mildberry\JMSFormat\Test\Unit;
 
 use Exception;
-use Mildberry\JMSFormat\Item\BlockQuoteItem;
-use Mildberry\JMSFormat\Item\HeadLineItem;
-use Mildberry\JMSFormat\Item\ImageItem;
-use Mildberry\JMSFormat\Item\ParagraphItem;
-use Mildberry\JMSFormat\Item\TextItem;
+use Mildberry\JMSFormat\Block\BlockQuoteBlock;
+use Mildberry\JMSFormat\Block\HeadLineItem;
+use Mildberry\JMSFormat\Block\ImageBlock;
+use Mildberry\JMSFormat\Block\ParagraphBlock;
+use Mildberry\JMSFormat\Block\TextItem;
 use PHPUnit_Framework_TestCase;
 
 /**
@@ -17,10 +17,10 @@ class JMSFormatItemsTest extends PHPUnit_Framework_TestCase
 {
     public function testSuccessBlockQuoteItem()
     {
-        $item = new BlockQuoteItem();
+        $item = new BlockQuoteBlock();
         try {
             $this->assertTrue(true);
-            $item->push((new ImageItem()));
+            $item->push((new ImageBlock()));
             $item->push((new TextItem('c')));
         } catch (Exception $e) {
             $this->assertTrue(false);
@@ -43,7 +43,7 @@ class JMSFormatItemsTest extends PHPUnit_Framework_TestCase
 
     public function testSuccessImageItem()
     {
-        $item = new ImageItem();
+        $item = new ImageBlock();
         try {
             $item->setFloating('left');
             $item->setSize('wide');
@@ -57,10 +57,10 @@ class JMSFormatItemsTest extends PHPUnit_Framework_TestCase
 
     public function testParagraphItem()
     {
-        $item = new ParagraphItem();
+        $item = new ParagraphBlock();
         try {
             $item->setAlignment('center');
-            $item->push((new ImageItem()));
+            $item->push((new ImageBlock()));
             $item->push((new TextItem('c')));
             $this->assertTrue(true);
         } catch (Exception $e) {

@@ -1,6 +1,6 @@
 <?php
 
-namespace Mildberry\JMSFormat\Item;
+namespace Mildberry\JMSFormat\Block;
 
 use ArrayAccess;
 use ArrayIterator;
@@ -11,12 +11,12 @@ use Mildberry\JMSFormat\Exception\BadBlockTypeForAddToCollection;
 /**
  * @author Egor Zyuskin <e.zyuskin@mildberry.com>
  */
-class CollectionItem extends AbstractItem implements IteratorAggregate , ArrayAccess, Countable
+class CollectionBlock extends AbstractBlock implements IteratorAggregate , ArrayAccess, Countable
 {
     /**
-     * @var AbstractItem[]
+     * @var AbstractBlock[]
      */
-    protected $items = [];
+    protected $blocks = [];
 
     /**
      * @var string[]
@@ -43,7 +43,7 @@ class CollectionItem extends AbstractItem implements IteratorAggregate , ArrayAc
     {
         $items = [];
 
-        foreach ($this->items as $item) {
+        foreach ($this->blocks as $item) {
             $items[] = $item->asJMSArray();
         }
 
@@ -53,11 +53,11 @@ class CollectionItem extends AbstractItem implements IteratorAggregate , ArrayAc
     /**
      * Push an item onto the end of the collection.
      *
-     * @param  AbstractItem $item
+     * @param  AbstractBlock $item
      * @return $this
      * @throws BadBlockTypeForAddToCollection
      */
-    public function push(AbstractItem $item)
+    public function push(AbstractBlock $item)
     {
         if (!empty($this->allowedBlocks) && !in_array($item->getBlockName(), $this->allowedBlocks)) {
             throw new BadBlockTypeForAddToCollection('Block class '.$item->getBlockName().' not allowed to add this collection');
@@ -69,12 +69,12 @@ class CollectionItem extends AbstractItem implements IteratorAggregate , ArrayAc
     }
 
     /**
-     * @param AbstractItem $item
+     * @param AbstractBlock $item
      * @return $this
      */
-    public function unshift(AbstractItem $item)
+    public function unshift(AbstractBlock $item)
     {
-        array_unshift($this->items, $item);
+        array_unshift($this->blocks, $item);
 
         return $this;
     }
@@ -87,7 +87,7 @@ class CollectionItem extends AbstractItem implements IteratorAggregate , ArrayAc
      */
     public function toJson($options = 0)
     {
-        return json_encode($this->items, $options);
+        return json_encode($this->blocks, $options);
     }
 
     /**
@@ -98,7 +98,7 @@ class CollectionItem extends AbstractItem implements IteratorAggregate , ArrayAc
      */
     public function offsetExists($key)
     {
-        return array_key_exists($key, $this->items);
+        return array_key_exists($key, $this->blocks);
     }
 
     /**
@@ -109,7 +109,7 @@ class CollectionItem extends AbstractItem implements IteratorAggregate , ArrayAc
      */
     public function offsetGet($key)
     {
-        return $this->items[$key];
+        return $this->blocks[$key];
     }
 
     /**
@@ -122,9 +122,9 @@ class CollectionItem extends AbstractItem implements IteratorAggregate , ArrayAc
     public function offsetSet($key, $value)
     {
         if (is_null($key)) {
-            $this->items[] = $value;
+            $this->blocks[] = $value;
         } else {
-            $this->items[$key] = $value;
+            $this->blocks[$key] = $value;
         }
     }
 
@@ -136,7 +136,7 @@ class CollectionItem extends AbstractItem implements IteratorAggregate , ArrayAc
      */
     public function offsetUnset($key)
     {
-        unset($this->items[$key]);
+        unset($this->blocks[$key]);
     }
 
     /**
@@ -146,7 +146,7 @@ class CollectionItem extends AbstractItem implements IteratorAggregate , ArrayAc
      */
     public function count()
     {
-        return count($this->items);
+        return count($this->blocks);
     }
 
     /**
@@ -166,6 +166,6 @@ class CollectionItem extends AbstractItem implements IteratorAggregate , ArrayAc
      */
     public function getIterator()
     {
-        return new ArrayIterator($this->items);
+        return new ArrayIterator($this->blocks);
     }
 }

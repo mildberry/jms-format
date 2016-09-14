@@ -8,13 +8,13 @@ use DOMNamedNodeMap;
 use DOMNodeList;
 use DOMText;
 use Mildberry\JMSFormat\Exception\BadTagNameException;
-use Mildberry\JMSFormat\Item\AbstractItem;
-use Mildberry\JMSFormat\Item\BlockQuoteItem;
-use Mildberry\JMSFormat\Item\CollectionItem;
-use Mildberry\JMSFormat\Item\HeadLineItem;
-use Mildberry\JMSFormat\Item\ImageItem;
-use Mildberry\JMSFormat\Item\ParagraphItem;
-use Mildberry\JMSFormat\Item\TextItem;
+use Mildberry\JMSFormat\Block\AbstractBlock;
+use Mildberry\JMSFormat\Block\BlockQuoteBlock;
+use Mildberry\JMSFormat\Block\CollectionBlock;
+use Mildberry\JMSFormat\Block\HeadLineItem;
+use Mildberry\JMSFormat\Block\ImageBlock;
+use Mildberry\JMSFormat\Block\ParagraphBlock;
+use Mildberry\JMSFormat\Block\TextItem;
 
 /**
  * @author Egor Zyuskin <e.zyuskin@mildberry.com>
@@ -27,7 +27,7 @@ class HtmlFormat implements FormatInterface
 
     /**
      * @param string $content
-     * @return CollectionItem
+     * @return CollectionBlock
      */
     public function toCollection($content)
     {
@@ -35,21 +35,21 @@ class HtmlFormat implements FormatInterface
     }
 
     /**
-     * @param CollectionItem $collection
+     * @param CollectionBlock $collection
      * @return string
      */
-    public function toContent(CollectionItem $collection)
+    public function toContent(CollectionBlock $collection)
     {
         return ''; //TODO: make this
     }
 
     /**
      * @param string $content
-     * @return CollectionItem
+     * @return CollectionBlock
      */
     private function createCollectionFormHtml($content)
     {
-        $collection = new CollectionItem();
+        $collection = new CollectionBlock();
 
         foreach ($this->createDOMElementsByHtml($content) as $element) {
             if ($element instanceof DOMText) {
@@ -81,7 +81,7 @@ class HtmlFormat implements FormatInterface
 
     /**
      * @param DOMElement $element
-     * @return AbstractItem
+     * @return AbstractBlock
      */
     private function createItemFromDOMElement($element)
     {
@@ -98,7 +98,7 @@ class HtmlFormat implements FormatInterface
             }
         }
 
-        if ($item instanceof CollectionItem) {
+        if ($item instanceof CollectionBlock) {
             $item = $this->updateCollectionBlocksByHTML($item, $this->getDOMElementHtmlValue($element));
         }
 
@@ -120,9 +120,9 @@ class HtmlFormat implements FormatInterface
     }
 
     /**
-     * @param CollectionItem $item
+     * @param CollectionBlock $item
      * @param string $html
-     * @return CollectionItem
+     * @return CollectionBlock
      */
     private function updateCollectionBlocksByHTML($item, $html)
     {
@@ -142,10 +142,10 @@ class HtmlFormat implements FormatInterface
     }
 
     /**
-     * @param AbstractItem $item
+     * @param AbstractBlock $item
      * @param string $tagName
      * @param DOMNamedNodeMap $attributes
-     * @return AbstractItem
+     * @return AbstractBlock
      */
     private function updateBlockModifiersByTagNam($item, $tagName, DOMNamedNodeMap $attributes)
     {
@@ -176,13 +176,13 @@ class HtmlFormat implements FormatInterface
             case 'h1': case 'h2': case 'h3': case 'h4':
                 return HeadLineItem::class;
             case 'img':
-                return ImageItem::class;
+                return ImageBlock::class;
             case 'p':
-                return ParagraphItem::class;
+                return ParagraphBlock::class;
             case 'blockquote':
-                return BlockQuoteItem::class;
+                return BlockQuoteBlock::class;
             case 'body':
-                return CollectionItem::class;
+                return CollectionBlock::class;
         }
 
         throw new BadTagNameException();

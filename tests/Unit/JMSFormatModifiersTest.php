@@ -3,10 +3,10 @@
 namespace Mildberry\JMSFormat\Test\Unit;
 
 use Mildberry\JMSFormat\Exception\BadModifierValueException;
-use Mildberry\JMSFormat\Item\HeadLineItem;
-use Mildberry\JMSFormat\Item\ImageItem;
-use Mildberry\JMSFormat\Item\ParagraphItem;
-use Mildberry\JMSFormat\Item\TextItem;
+use Mildberry\JMSFormat\Block\HeadLineItem;
+use Mildberry\JMSFormat\Block\ImageBlock;
+use Mildberry\JMSFormat\Block\ParagraphBlock;
+use Mildberry\JMSFormat\Block\TextItem;
 use PHPUnit_Framework_TestCase;
 
 /**
@@ -16,7 +16,7 @@ class JMSFormatModifiersTest extends PHPUnit_Framework_TestCase
 {
     public function testFiledAlignmentModifier()
     {
-        $item = new ParagraphItem();
+        $item = new ParagraphBlock();
         try {
             $item->setAlignment('tam');
             $this->assertTrue(false);
@@ -27,7 +27,7 @@ class JMSFormatModifiersTest extends PHPUnit_Framework_TestCase
 
     public function testSuccessAlignmentModifier()
     {
-        $item = new ParagraphItem();
+        $item = new ParagraphBlock();
         try {
             $item->setAlignment('left');
             $item->setAlignment('center');
@@ -72,7 +72,7 @@ class JMSFormatModifiersTest extends PHPUnit_Framework_TestCase
 
     public function testFiledFloatingModifier()
     {
-        $item = new ImageItem();
+        $item = new ImageBlock();
         try {
             $item->setFloating('tut');
             $this->assertTrue(false);
@@ -83,7 +83,7 @@ class JMSFormatModifiersTest extends PHPUnit_Framework_TestCase
 
     public function testSuccessFloatingModifier()
     {
-        $item = new ImageItem();
+        $item = new ImageBlock();
         try {
             $item->setFloating('left');
             $item->setFloating('right');
@@ -96,7 +96,7 @@ class JMSFormatModifiersTest extends PHPUnit_Framework_TestCase
 
     public function testFiledSizeModifier()
     {
-        $item = new ImageItem();
+        $item = new ImageBlock();
         try {
             $item->setSize('super mega big');
             $this->assertTrue(false);
@@ -107,7 +107,7 @@ class JMSFormatModifiersTest extends PHPUnit_Framework_TestCase
 
     public function testSuccessSizeModifier()
     {
-        $item = new ImageItem();
+        $item = new ImageBlock();
         try {
             $item->setSize('wide');
             $this->assertTrue(true);

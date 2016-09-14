@@ -1,6 +1,6 @@
 <?php
 
-namespace Mildberry\JMSFormat\Item;
+namespace Mildberry\JMSFormat\Block;
 
 use Mildberry\JMSFormat\Modifier\WeightModifierInterface;
 use Mildberry\JMSFormat\Modifier\WeightModifierTrait;
@@ -8,7 +8,7 @@ use Mildberry\JMSFormat\Modifier\WeightModifierTrait;
 /**
  * @author Egor Zyuskin <e.zyuskin@mildberry.com>
  */
-class HeadLineItem extends CollectionItem implements WeightModifierInterface
+class HeadLineItem extends CollectionBlock implements WeightModifierInterface
 {
     use WeightModifierTrait;
 
