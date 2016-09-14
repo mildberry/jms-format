@@ -25,7 +25,7 @@ class AbstractItem
      */
     public function getModifiers()
     {
-        $modifiersName = ['alignment', 'color', 'floating', 'size', 'src', 'weight'];
+        $modifiersName = ['alignment', 'color', 'floating', 'size', 'src', 'weight', 'decoration'];
         $modifiers = [];
 
         foreach ($modifiersName as $name) {

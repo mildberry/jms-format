@@ -59,11 +59,15 @@ class JMSFormatModifiersTest extends PHPUnit_Framework_TestCase
             $item->setColor('info');
             $item->setColor('warning');
             $item->setColor('danger');
+            $item->setDecoration('bold');
+            $item->setDecoration('italic');
+            $item->setDecoration('del');
             $this->assertTrue(true);
         } catch (\Exception $e) {
             $this->assertTrue(false);
         }
         $this->assertEquals(5, count($item->getColorAllowedValues()));
+        $this->assertEquals(3, count($item->getDecorationAllowedValues()));
     }
 
     public function testFiledFloatingModifier()
