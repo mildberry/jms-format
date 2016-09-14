@@ -9,11 +9,11 @@ use DOMNodeList;
 use DOMText;
 use Mildberry\JMSFormat\Exception\BadTagNameException;
 use Mildberry\JMSFormat\Block\AbstractBlock;
-use Mildberry\JMSFormat\Block\BlockQuoteBlock;
+use Mildberry\JMSFormat\Block\BlockQuoteCollectionBlock;
 use Mildberry\JMSFormat\Block\CollectionBlock;
-use Mildberry\JMSFormat\Block\HeadLineItem;
+use Mildberry\JMSFormat\Block\HeadLineCollectionBlock;
 use Mildberry\JMSFormat\Block\ImageBlock;
-use Mildberry\JMSFormat\Block\ParagraphBlock;
+use Mildberry\JMSFormat\Block\ParagraphCollectionBlock;
 use Mildberry\JMSFormat\Block\TextItem;
 
 /**
@@ -174,13 +174,13 @@ class HtmlFormat implements FormatInterface
             case 'span': case 'b': case 'i': case 'del':
                 return TextItem::class;
             case 'h1': case 'h2': case 'h3': case 'h4':
-                return HeadLineItem::class;
+                return HeadLineCollectionBlock::class;
             case 'img':
                 return ImageBlock::class;
             case 'p':
-                return ParagraphBlock::class;
+                return ParagraphCollectionBlock::class;
             case 'blockquote':
-                return BlockQuoteBlock::class;
+                return BlockQuoteCollectionBlock::class;
             case 'body':
                 return CollectionBlock::class;
         }

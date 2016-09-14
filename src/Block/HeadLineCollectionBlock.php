@@ -8,7 +8,7 @@ use Mildberry\JMSFormat\Modifier\WeightModifierTrait;
 /**
  * @author Egor Zyuskin <e.zyuskin@mildberry.com>
  */
-class HeadLineItem extends CollectionBlock implements WeightModifierInterface
+class HeadLineCollectionBlock extends CollectionBlock implements WeightModifierInterface
 {
     use WeightModifierTrait;
 

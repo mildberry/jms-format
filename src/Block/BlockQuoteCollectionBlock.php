@@ -5,7 +5,7 @@ namespace Mildberry\JMSFormat\Block;
 /**
  * @author Egor Zyuskin <e.zyuskin@mildberry.com>
  */
-class BlockQuoteBlock extends CollectionBlock
+class BlockQuoteCollectionBlock extends CollectionBlock
 {
     /**
      * @var string

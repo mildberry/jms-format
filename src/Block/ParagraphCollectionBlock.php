@@ -8,7 +8,7 @@ use Mildberry\JMSFormat\Modifier\AlignmentModifierTrait;
 /**
  * @author Egor Zyuskin <e.zyuskin@mildberry.com>
  */
-class ParagraphBlock extends CollectionBlock implements AlignmentModifierInterface
+class ParagraphCollectionBlock extends CollectionBlock implements AlignmentModifierInterface
 {
     use AlignmentModifierTrait;
 
