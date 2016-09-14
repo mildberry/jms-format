@@ -6,7 +6,7 @@ use Mildberry\JMSFormat\Exception\BadModifierValueException;
 use Mildberry\JMSFormat\Block\HeadLineCollectionBlock;
 use Mildberry\JMSFormat\Block\ImageBlock;
 use Mildberry\JMSFormat\Block\ParagraphCollectionBlock;
-use Mildberry\JMSFormat\Block\TextItem;
+use Mildberry\JMSFormat\Block\TextBlock;
 use PHPUnit_Framework_TestCase;
 
 /**
@@ -41,7 +41,7 @@ class JMSFormatModifiersTest extends PHPUnit_Framework_TestCase
 
     public function testFiledColorModifier()
     {
-        $item = new TextItem('context');
+        $item = new TextBlock('context');
         try {
             $item->setColor('baclajane');
             $this->assertTrue(false);
@@ -52,7 +52,7 @@ class JMSFormatModifiersTest extends PHPUnit_Framework_TestCase
 
     public function testSuccessColorModifier()
     {
-        $item = new TextItem('context');
+        $item = new TextBlock('context');
         try {
             $item->setColor('muted');
             $item->setColor('success');

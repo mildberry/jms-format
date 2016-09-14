@@ -7,7 +7,7 @@ use Mildberry\JMSFormat\Block\BlockQuoteCollectionBlock;
 use Mildberry\JMSFormat\Block\HeadLineCollectionBlock;
 use Mildberry\JMSFormat\Block\ImageBlock;
 use Mildberry\JMSFormat\Block\ParagraphCollectionBlock;
-use Mildberry\JMSFormat\Block\TextItem;
+use Mildberry\JMSFormat\Block\TextBlock;
 use PHPUnit_Framework_TestCase;
 
 /**
@@ -21,7 +21,7 @@ class JMSFormatItemsTest extends PHPUnit_Framework_TestCase
         try {
             $this->assertTrue(true);
             $item->push((new ImageBlock()));
-            $item->push((new TextItem('c')));
+            $item->push((new TextBlock('c')));
         } catch (Exception $e) {
             $this->assertTrue(false);
         }
@@ -33,7 +33,7 @@ class JMSFormatItemsTest extends PHPUnit_Framework_TestCase
         $item = new HeadLineCollectionBlock();
         try {
             $item->setWeight('xs');
-            $item->push((new TextItem('c')));
+            $item->push((new TextBlock('c')));
             $this->assertTrue(true);
         } catch (Exception $e) {
             $this->assertTrue(false);
@@ -61,7 +61,7 @@ class JMSFormatItemsTest extends PHPUnit_Framework_TestCase
         try {
             $item->setAlignment('center');
             $item->push((new ImageBlock()));
-            $item->push((new TextItem('c')));
+            $item->push((new TextBlock('c')));
             $this->assertTrue(true);
         } catch (Exception $e) {
             $this->assertTrue(false);
@@ -71,7 +71,7 @@ class JMSFormatItemsTest extends PHPUnit_Framework_TestCase
 
     public function testSuccessTextItem()
     {
-        $item = new TextItem();
+        $item = new TextBlock();
         try {
             $item->setContent('content');
             $item->setColor('info');

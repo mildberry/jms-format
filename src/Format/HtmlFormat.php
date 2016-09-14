@@ -14,7 +14,7 @@ use Mildberry\JMSFormat\Block\CollectionBlock;
 use Mildberry\JMSFormat\Block\HeadLineCollectionBlock;
 use Mildberry\JMSFormat\Block\ImageBlock;
 use Mildberry\JMSFormat\Block\ParagraphCollectionBlock;
-use Mildberry\JMSFormat\Block\TextItem;
+use Mildberry\JMSFormat\Block\TextBlock;
 
 /**
  * @author Egor Zyuskin <e.zyuskin@mildberry.com>
@@ -54,7 +54,7 @@ class HtmlFormat implements FormatInterface
         foreach ($this->createDOMElementsByHtml($content) as $element) {
             if ($element instanceof DOMText) {
                 if ($text = trim(strip_tags($element->nodeValue))) {
-                    $collection->push(new TextItem($text));
+                    $collection->push(new TextBlock($text));
                 }
             } else {
                 $collection->push($this->createItemFromDOMElement($element));
@@ -129,13 +129,13 @@ class HtmlFormat implements FormatInterface
         $pos = strpos($html, '<');
         if ($pos !== false) {
             if ($pos > 0) {
-                $item->unshift(new TextItem(substr($html, 0, $pos)));
+                $item->unshift(new TextBlock(substr($html, 0, $pos)));
             }
             if ($html = substr($html, strrpos($html, '>')+1)) {
-                $item->push(new TextItem($html));
+                $item->push(new TextBlock($html));
             }
         } else {
-            $item->push(new TextItem($html));
+            $item->push(new TextBlock($html));
         }
 
         return $item;
@@ -172,7 +172,7 @@ class HtmlFormat implements FormatInterface
     {
         switch ($name) {
             case 'span': case 'b': case 'i': case 'del':
-                return TextItem::class;
+                return TextBlock::class;
             case 'h1': case 'h2': case 'h3': case 'h4':
                 return HeadLineCollectionBlock::class;
             case 'img':
