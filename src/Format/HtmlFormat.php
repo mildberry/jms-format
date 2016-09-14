@@ -5,7 +5,6 @@ namespace Mildberry\JMSFormat\Format;
 use DOMDocument;
 use DOMElement;
 use DOMNamedNodeMap;
-use DOMNodeList;
 use DOMText;
 use Mildberry\JMSFormat\Exception\BadTagNameException;
 use Mildberry\JMSFormat\Block\AbstractBlock;
