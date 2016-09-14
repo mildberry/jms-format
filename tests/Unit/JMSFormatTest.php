@@ -3,7 +3,7 @@
 namespace Mildberry\JMSFormat\Test\Unit;
 
 use Mildberry\JMSFormat\Formatter;
-use Mildberry\JMSFormat\Exception\WrongFormatNameException;
+use Mildberry\JMSFormat\Exception\BadFormatNameException;
 use PHPUnit_Framework_TestCase;
 
 /**
@@ -23,7 +23,7 @@ class JMSFormatTest extends PHPUnit_Framework_TestCase
         try {
             $contentFormatter->convert('wrongFormat1', 'wrongFormat2', $this->getHtmlText());
             $this->assertTrue(false);
-        } catch (WrongFormatNameException $e) {
+        } catch (BadFormatNameException $e) {
             $this->assertTrue(true);
         }
     }

@@ -2,7 +2,7 @@
 
 namespace Mildberry\JMSFormat\Test\Unit;
 
-use Mildberry\JMSFormat\Exception\WrongModifierValueException;
+use Mildberry\JMSFormat\Exception\BadModifierValueException;
 use Mildberry\JMSFormat\Item\HeadLineItem;
 use Mildberry\JMSFormat\Item\ImageItem;
 use Mildberry\JMSFormat\Item\ParagraphItem;
@@ -20,7 +20,7 @@ class JMSFormatModifiersTest extends PHPUnit_Framework_TestCase
         try {
             $item->setAlignment('tam');
             $this->assertTrue(false);
-        } catch (WrongModifierValueException $e) {
+        } catch (BadModifierValueException $e) {
             $this->assertTrue(true);
         }
     }
@@ -45,7 +45,7 @@ class JMSFormatModifiersTest extends PHPUnit_Framework_TestCase
         try {
             $item->setColor('baclajane');
             $this->assertTrue(false);
-        } catch (WrongModifierValueException $e) {
+        } catch (BadModifierValueException $e) {
             $this->assertTrue(true);
         }
     }
@@ -76,7 +76,7 @@ class JMSFormatModifiersTest extends PHPUnit_Framework_TestCase
         try {
             $item->setFloating('tut');
             $this->assertTrue(false);
-        } catch (WrongModifierValueException $e) {
+        } catch (BadModifierValueException $e) {
             $this->assertTrue(true);
         }
     }
@@ -100,7 +100,7 @@ class JMSFormatModifiersTest extends PHPUnit_Framework_TestCase
         try {
             $item->setSize('super mega big');
             $this->assertTrue(false);
-        } catch (WrongModifierValueException $e) {
+        } catch (BadModifierValueException $e) {
             $this->assertTrue(true);
         }
     }
@@ -123,7 +123,7 @@ class JMSFormatModifiersTest extends PHPUnit_Framework_TestCase
         try {
             $item->setWeight('uaaaH!!!');
             $this->assertTrue(false);
-        } catch (WrongModifierValueException $e) {
+        } catch (BadModifierValueException $e) {
             $this->assertTrue(true);
         }
     }

@@ -2,7 +2,7 @@
 
 namespace Mildberry\JMSFormat\Modifier;
 
-use Mildberry\JMSFormat\Exception\WrongModifierValueException;
+use Mildberry\JMSFormat\Exception\BadModifierValueException;
 
 /**
  * @author Egor Zyuskin <e.zyuskin@mildberry.com>
@@ -25,12 +25,12 @@ trait ColorModifierTrait
     /**
      * @param string $color
      * @return $this
-     * @throws WrongModifierValueException
+     * @throws BadModifierValueException
      */
     public function setColor($color)
     {
         if (!in_array($color, $this->getColorAllowedValues())) {
-            throw new WrongModifierValueException('Color value: "'.$color.'" not valid, must be ['.implode(',', $this->getColorAllowedValues()).']');
+            throw new BadModifierValueException('Color value: "'.$color.'" not valid, must be ['.implode(',', $this->getColorAllowedValues()).']');
         }
 
         $this->color = $color;

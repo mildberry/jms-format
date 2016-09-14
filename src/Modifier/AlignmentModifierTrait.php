@@ -2,7 +2,7 @@
 
 namespace Mildberry\JMSFormat\Modifier;
 
-use Mildberry\JMSFormat\Exception\WrongModifierValueException;
+use Mildberry\JMSFormat\Exception\BadModifierValueException;
 
 /**
  * @author Egor Zyuskin <e.zyuskin@mildberry.com>
@@ -25,12 +25,12 @@ trait AlignmentModifierTrait
     /**
      * @param string $alignment
      * @return $this
-     * @throws WrongModifierValueException
+     * @throws BadModifierValueException
      */
     public function setAlignment($alignment)
     {
         if (!in_array($alignment, $this->getAlignmentAllowedValues())) {
-            throw new WrongModifierValueException('Alignment value: "'.$alignment.'" not valid, must be ['.implode(',', $this->getAlignmentAllowedValues()).']');
+            throw new BadModifierValueException('Alignment value: "'.$alignment.'" not valid, must be ['.implode(',', $this->getAlignmentAllowedValues()).']');
         }
 
         $this->alignment = $alignment;

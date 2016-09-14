@@ -2,7 +2,7 @@
 
 namespace Mildberry\JMSFormat\Modifier;
 
-use Mildberry\JMSFormat\Exception\WrongModifierValueException;
+use Mildberry\JMSFormat\Exception\BadModifierValueException;
 
 /**
  * @author Egor Zyuskin <e.zyuskin@mildberry.com>
@@ -25,12 +25,12 @@ trait WeightModifierTrait
     /**
      * @param string $weight
      * @return $this
-     * @throws WrongModifierValueException
+     * @throws BadModifierValueException
      */
     public function setWeight($weight)
     {
         if (!in_array($weight, $this->getWeightAllowedValues())) {
-            throw new WrongModifierValueException('Weight value: "'.$weight.'" not valid, must be ['.implode(',', $this->getWeightAllowedValues()).']');
+            throw new BadModifierValueException('Weight value: "'.$weight.'" not valid, must be ['.implode(',', $this->getWeightAllowedValues()).']');
         }
 
         $this->weight = $weight;

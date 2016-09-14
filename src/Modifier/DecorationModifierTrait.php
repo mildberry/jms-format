@@ -2,7 +2,7 @@
 
 namespace Mildberry\JMSFormat\Modifier;
 
-use Mildberry\JMSFormat\Exception\WrongModifierValueException;
+use Mildberry\JMSFormat\Exception\BadModifierValueException;
 
 /**
  * @author Egor Zyuskin <e.zyuskin@mildberry.com>
@@ -25,12 +25,12 @@ trait DecorationModifierTrait
     /**
      * @param string $decoration
      * @return $this
-     * @throws WrongModifierValueException
+     * @throws BadModifierValueException
      */
     public function setDecoration($decoration)
     {
         if (!in_array($decoration, $this->getDecorationAllowedValues())) {
-            throw new WrongModifierValueException('Decoration value: "'.$decoration.'" not valid, must be ['.implode(',', $this->getDecorationAllowedValues()).']');
+            throw new BadModifierValueException('Decoration value: "'.$decoration.'" not valid, must be ['.implode(',', $this->getDecorationAllowedValues()).']');
         }
 
         $this->decoration = $decoration;

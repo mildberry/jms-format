@@ -5,6 +5,6 @@ namespace Mildberry\JMSFormat\Exception;
 /**
  * @author Egor Zyuskin <e.zyuskin@mildberry.com>
  */
-class WrongFormatNameException extends \Exception
+class BadFormatNameException extends \Exception
 {
 }

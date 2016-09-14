@@ -2,7 +2,7 @@
 
 namespace Mildberry\JMSFormat;
 
-use Mildberry\JMSFormat\Exception\WrongFormatNameException;
+use Mildberry\JMSFormat\Exception\BadFormatNameException;
 use Mildberry\JMSFormat\Format\FormatInterface;
 use Mildberry\JMSFormat\Item\CollectionItem;
 
@@ -26,7 +26,7 @@ class Formatter
      * @param string $fromFormat
      * @param CollectionItem $content
      * @return CollectionItem
-     * @throws WrongFormatNameException
+     * @throws BadFormatNameException
      */
     public function convertToCollection($fromFormat, $content)
     {
@@ -37,7 +37,7 @@ class Formatter
      * @param $toFormat
      * @param CollectionItem $collection
      * @return string
-     * @throws WrongFormatNameException
+     * @throws BadFormatNameException
      */
     public function convertToContent($toFormat, CollectionItem $collection)
     {
@@ -47,20 +47,20 @@ class Formatter
     /**
      * @param string $name
      * @return FormatInterface
-     * @throws WrongFormatNameException
+     * @throws BadFormatNameException
      */
     private function createFormat($name)
     {
         $formatName = $this->getFormatClassByName($name);
 
         if (!class_exists($formatName)) {
-            throw new WrongFormatNameException('Class '.$name.' format not found.');
+            throw new BadFormatNameException('Class '.$name.' format not found.');
         }
 
         $format = new $formatName;
 
         if (!$format instanceof FormatInterface) {
-            throw new WrongFormatNameException('Handler for '.$name.' format not found.');
+            throw new BadFormatNameException('Handler for '.$name.' format not found.');
         }
 
         return $format;

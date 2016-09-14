@@ -2,7 +2,7 @@
 
 namespace Mildberry\JMSFormat\Modifier;
 
-use Mildberry\JMSFormat\Exception\WrongModifierValueException;
+use Mildberry\JMSFormat\Exception\BadModifierValueException;
 
 /**
  * @author Egor Zyuskin <e.zyuskin@mildberry.com>
@@ -25,12 +25,12 @@ trait FloatingModifierTrait
     /**
      * @param string $floating
      * @return $this
-     * @throws WrongModifierValueException
+     * @throws BadModifierValueException
      */
     public function setFloating($floating)
     {
         if (!in_array($floating, $this->getFloatingAllowedValues())) {
-            throw new WrongModifierValueException('Floating value: "'.$floating.'" not valid, must be ['.implode(',', $this->getFloatingAllowedValues()).']');
+            throw new BadModifierValueException('Floating value: "'.$floating.'" not valid, must be ['.implode(',', $this->getFloatingAllowedValues()).']');
         }
 
         $this->floating = $floating;
