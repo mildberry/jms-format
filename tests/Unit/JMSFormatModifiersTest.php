@@ -128,15 +128,14 @@ class JMSFormatModifiersTest extends PHPUnit_Framework_TestCase
     {
         $item = new HeadLineItem('');
         try {
-            $item->setWeight('h1');
-            $item->setWeight('h2');
-            $item->setWeight('h3');
-            $item->setWeight('h4');
-            $item->setWeight('h5');
+            $item->setWeight('xs');
+            $item->setWeight('sm');
+            $item->setWeight('md');
+            $item->setWeight('lg');
             $this->assertTrue(true);
         } catch (\Exception $e) {
             $this->assertTrue(false);
         }
-        $this->assertEquals(5, count($item->getWeightAllowedValues()));
+        $this->assertEquals(4, count($item->getWeightAllowedValues()));
     }
 }

@@ -32,12 +32,12 @@ class JMSFormatItemsTest extends PHPUnit_Framework_TestCase
         $item = new HeadLineItem();
         try {
             $item->setContent('content');
-            $item->setWeight('h1');
+            $item->setWeight('xs');
             $this->assertTrue(true);
         } catch (Exception $e) {
             $this->assertTrue(false);
         }
-        $this->assertEquals('{"block":"headline","modifiers":{"weight":"h1"},"content":"content"}', $item->asJMSText());
+        $this->assertEquals('{"block":"headline","modifiers":{"weight":"xs"},"content":"content"}', $item->asJMSText());
     }
 
     public function testSuccessImageItem()

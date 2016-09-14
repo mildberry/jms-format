@@ -43,6 +43,6 @@ trait WeightModifierTrait
      */
     public function getWeightAllowedValues()
     {
-        return ['h1', 'h2', 'h3', 'h4', 'h5'];
+        return ['xs', 'sm', 'md', 'lg'];
     }
 }
