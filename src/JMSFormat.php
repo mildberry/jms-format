@@ -12,6 +12,51 @@ use Mildberry\JMSFormat\Block\JMSCollectionBlock;
 class JMSFormat
 {
     /**
+     * @var JMSCollectionBlock
+     */
+    private $data;
+
+    /**
+     * @param string $formatName
+     * @param string $content
+     * @return $this
+     */
+    public function loadFormFormat($formatName, $content)
+    {
+        $this->data = $this->convertToCollection($formatName, $content);
+
+        return $this;
+    }
+
+    /**
+     * @param $formatName
+     * @return string
+     */
+    public function saveToFormat($formatName)
+    {
+        return $this->convertToContent($formatName, $this->data);
+    }
+
+    /**
+     * @return JMSCollectionBlock
+     */
+    public function getData()
+    {
+        return $this->data;
+    }
+
+    /**
+     * @param JMSCollectionBlock $data
+     * @return $this
+     */
+    public function setData($data)
+    {
+        $this->data = $data;
+
+        return $this;
+    }
+
+    /**
      * @param string $fromFormat
      * @param string $toFormat
      * @param string $content
@@ -19,18 +64,18 @@ class JMSFormat
      */
     public function convert($fromFormat, $toFormat, $content)
     {
-        return $this->createFormat($toFormat)->toContent($this->createFormat($fromFormat)->toCollection($content));
+        return $this->createParserFromFormatName($toFormat)->toContent($this->createParserFromFormatName($fromFormat)->toCollection($content));
     }
 
     /**
      * @param string $fromFormat
-     * @param JMSCollectionBlock $content
+     * @param string $content
      * @return JMSCollectionBlock
      * @throws BadParserNameException
      */
     public function convertToCollection($fromFormat, $content)
     {
-        return $this->createFormat($fromFormat)->toCollection($content);
+        return $this->createParserFromFormatName($fromFormat)->toCollection($content);
     }
 
     /**
@@ -41,7 +86,7 @@ class JMSFormat
      */
     public function convertToContent($toFormat, JMSCollectionBlock $collection)
     {
-        return $this->createFormat($toFormat)->toContent($collection);
+        return $this->createParserFromFormatName($toFormat)->toContent($collection);
     }
 
     /**
@@ -49,18 +94,18 @@ class JMSFormat
      * @return ParserInterface
      * @throws BadParserNameException
      */
-    private function createFormat($name)
+    private function createParserFromFormatName($name)
     {
         $formatName = $this->getFormatClassByName($name);
 
         if (!class_exists($formatName)) {
-            throw new BadParserNameException('Class '.$name.' format not found.');
+            throw new BadParserNameException('Parser class for format '.$name.' not found.');
         }
 
         $format = new $formatName;
 
         if (!$format instanceof ParserInterface) {
-            throw new BadParserNameException('Handler for '.$name.' format not found.');
+            throw new BadParserNameException('Handler for format '.$name.' not found.');
         }
 
         return $format;

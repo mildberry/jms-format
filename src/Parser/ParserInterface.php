@@ -10,7 +10,7 @@ use Mildberry\JMSFormat\Block\JMSCollectionBlock;
 interface ParserInterface
 {
     /**
-     * @param $content
+     * @param string $content
      * @return JMSCollectionBlock
      */
     public function toCollection($content);
