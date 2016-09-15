@@ -10,7 +10,7 @@ use Mildberry\JMSFormat\Modifier\DecorationModifierTrait;
 /**
  * @author Egor Zyuskin <e.zyuskin@mildberry.com>
  */
-class TextBlock extends AbstractContentBlock implements ColorModifierInterface, DecorationModifierInterface
+class JMSTextBlock extends JMSAbstractContentBlock implements ColorModifierInterface, DecorationModifierInterface
 {
     use ColorModifierTrait;
     use DecorationModifierTrait;

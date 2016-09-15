@@ -3,11 +3,11 @@
 namespace Mildberry\JMSFormat\Test\Unit;
 
 use Exception;
-use Mildberry\JMSFormat\Block\BlockQuoteCollectionBlock;
-use Mildberry\JMSFormat\Block\HeadLineCollectionBlock;
-use Mildberry\JMSFormat\Block\ImageBlock;
-use Mildberry\JMSFormat\Block\ParagraphCollectionBlock;
-use Mildberry\JMSFormat\Block\TextBlock;
+use Mildberry\JMSFormat\Block\JMSBlockQuoteCollectionBlock;
+use Mildberry\JMSFormat\Block\JMSHeadLineCollectionBlock;
+use Mildberry\JMSFormat\Block\JMSImageBlock;
+use Mildberry\JMSFormat\Block\JMSParagraphCollectionBlock;
+use Mildberry\JMSFormat\Block\JMSTextBlock;
 use PHPUnit_Framework_TestCase;
 
 /**
@@ -17,11 +17,11 @@ class JMSFormatItemsTest extends PHPUnit_Framework_TestCase
 {
     public function testSuccessBlockQuoteItem()
     {
-        $item = new BlockQuoteCollectionBlock();
+        $item = new JMSBlockQuoteCollectionBlock();
         try {
             $this->assertTrue(true);
-            $item->push((new ImageBlock()));
-            $item->push((new TextBlock('c')));
+            $item->push((new JMSImageBlock()));
+            $item->push((new JMSTextBlock('c')));
         } catch (Exception $e) {
             $this->assertTrue(false);
         }
@@ -30,10 +30,10 @@ class JMSFormatItemsTest extends PHPUnit_Framework_TestCase
 
     public function testSuccessHeadLineItem()
     {
-        $item = new HeadLineCollectionBlock();
+        $item = new JMSHeadLineCollectionBlock();
         try {
             $item->setWeight('xs');
-            $item->push((new TextBlock('c')));
+            $item->push((new JMSTextBlock('c')));
             $this->assertTrue(true);
         } catch (Exception $e) {
             $this->assertTrue(false);
@@ -43,7 +43,7 @@ class JMSFormatItemsTest extends PHPUnit_Framework_TestCase
 
     public function testSuccessImageItem()
     {
-        $item = new ImageBlock();
+        $item = new JMSImageBlock();
         try {
             $item->setFloating('left');
             $item->setSize('wide');
@@ -57,11 +57,11 @@ class JMSFormatItemsTest extends PHPUnit_Framework_TestCase
 
     public function testParagraphItem()
     {
-        $item = new ParagraphCollectionBlock();
+        $item = new JMSParagraphCollectionBlock();
         try {
             $item->setAlignment('center');
-            $item->push((new ImageBlock()));
-            $item->push((new TextBlock('c')));
+            $item->push((new JMSImageBlock()));
+            $item->push((new JMSTextBlock('c')));
             $this->assertTrue(true);
         } catch (Exception $e) {
             $this->assertTrue(false);
@@ -71,7 +71,7 @@ class JMSFormatItemsTest extends PHPUnit_Framework_TestCase
 
     public function testSuccessTextItem()
     {
-        $item = new TextBlock();
+        $item = new JMSTextBlock();
         try {
             $item->setContent('content');
             $item->setColor('info');

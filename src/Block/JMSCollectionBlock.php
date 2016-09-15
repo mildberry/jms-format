@@ -11,10 +11,10 @@ use Mildberry\JMSFormat\Exception\BadBlockTypeForAddToCollection;
 /**
  * @author Egor Zyuskin <e.zyuskin@mildberry.com>
  */
-class CollectionBlock extends AbstractBlock implements IteratorAggregate , ArrayAccess, Countable
+class JMSCollectionBlock extends JMSAbstractBlock implements IteratorAggregate , ArrayAccess, Countable
 {
     /**
-     * @var AbstractBlock[]
+     * @var JMSAbstractBlock[]
      */
     protected $blocks = [];
 
@@ -53,11 +53,11 @@ class CollectionBlock extends AbstractBlock implements IteratorAggregate , Array
     /**
      * Push an item onto the end of the collection.
      *
-     * @param  AbstractBlock $item
+     * @param  JMSAbstractBlock $item
      * @return $this
      * @throws BadBlockTypeForAddToCollection
      */
-    public function push(AbstractBlock $item)
+    public function push(JMSAbstractBlock $item)
     {
         if (!empty($this->allowedBlocks) && !in_array($item->getBlockName(), $this->allowedBlocks)) {
             throw new BadBlockTypeForAddToCollection('Block class '.$item->getBlockName().' not allowed to add this collection');
@@ -69,10 +69,10 @@ class CollectionBlock extends AbstractBlock implements IteratorAggregate , Array
     }
 
     /**
-     * @param AbstractBlock $item
+     * @param JMSAbstractBlock $item
      * @return $this
      */
-    public function unshift(AbstractBlock $item)
+    public function unshift(JMSAbstractBlock $item)
     {
         array_unshift($this->blocks, $item);
 

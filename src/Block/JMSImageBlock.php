@@ -12,7 +12,7 @@ use Mildberry\JMSFormat\Modifier\SrcModifierTrait;
 /**
  * @author Egor Zyuskin <e.zyuskin@mildberry.com>
  */
-class ImageBlock extends AbstractBlock implements SrcModifierInterface, FloatingModifierInterface, SizeModifierInterface
+class JMSImageBlock extends JMSAbstractBlock implements SrcModifierInterface, FloatingModifierInterface, SizeModifierInterface
 {
     use SrcModifierTrait;
     use FloatingModifierTrait;

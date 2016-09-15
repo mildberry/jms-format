@@ -7,13 +7,13 @@ use DOMElement;
 use DOMNamedNodeMap;
 use DOMText;
 use Mildberry\JMSFormat\Exception\BadTagNameException;
-use Mildberry\JMSFormat\Block\AbstractBlock;
-use Mildberry\JMSFormat\Block\BlockQuoteCollectionBlock;
-use Mildberry\JMSFormat\Block\CollectionBlock;
-use Mildberry\JMSFormat\Block\HeadLineCollectionBlock;
-use Mildberry\JMSFormat\Block\ImageBlock;
-use Mildberry\JMSFormat\Block\ParagraphCollectionBlock;
-use Mildberry\JMSFormat\Block\TextBlock;
+use Mildberry\JMSFormat\Block\JMSAbstractBlock;
+use Mildberry\JMSFormat\Block\JMSBlockQuoteCollectionBlock;
+use Mildberry\JMSFormat\Block\JMSCollectionBlock;
+use Mildberry\JMSFormat\Block\JMSHeadLineCollectionBlock;
+use Mildberry\JMSFormat\Block\JMSImageBlock;
+use Mildberry\JMSFormat\Block\JMSParagraphCollectionBlock;
+use Mildberry\JMSFormat\Block\JMSTextBlock;
 
 /**
  * @author Egor Zyuskin <e.zyuskin@mildberry.com>
@@ -26,7 +26,7 @@ class HtmlParser implements ParserInterface
 
     /**
      * @param string $content
-     * @return CollectionBlock
+     * @return JMSCollectionBlock
      */
     public function toCollection($content)
     {
@@ -34,26 +34,26 @@ class HtmlParser implements ParserInterface
     }
 
     /**
-     * @param CollectionBlock $collection
+     * @param JMSCollectionBlock $collection
      * @return string
      */
-    public function toContent(CollectionBlock $collection)
+    public function toContent(JMSCollectionBlock $collection)
     {
         return ''; //TODO: make this
     }
 
     /**
      * @param string $content
-     * @return CollectionBlock
+     * @return JMSCollectionBlock
      */
     private function createCollectionFormHtml($content)
     {
-        $collection = new CollectionBlock();
+        $collection = new JMSCollectionBlock();
 
         foreach ($this->createDOMElementsByHtml($content) as $element) {
             if ($element instanceof DOMText) {
                 if ($text = trim(strip_tags($element->nodeValue))) {
-                    $collection->push(new TextBlock($text));
+                    $collection->push(new JMSTextBlock($text));
                 }
             } else {
                 $collection->push($this->createItemFromDOMElement($element));
@@ -80,7 +80,7 @@ class HtmlParser implements ParserInterface
 
     /**
      * @param DOMElement $element
-     * @return AbstractBlock
+     * @return JMSAbstractBlock
      */
     private function createItemFromDOMElement($element)
     {
@@ -97,7 +97,7 @@ class HtmlParser implements ParserInterface
             }
         }
 
-        if ($item instanceof CollectionBlock) {
+        if ($item instanceof JMSCollectionBlock) {
             $item = $this->updateCollectionBlocksByHTML($item, $this->getDOMElementHtmlValue($element));
         }
 
@@ -119,32 +119,32 @@ class HtmlParser implements ParserInterface
     }
 
     /**
-     * @param CollectionBlock $item
+     * @param JMSCollectionBlock $item
      * @param string $html
-     * @return CollectionBlock
+     * @return JMSCollectionBlock
      */
     private function updateCollectionBlocksByHTML($item, $html)
     {
         $pos = strpos($html, '<');
         if ($pos !== false) {
             if ($pos > 0) {
-                $item->unshift(new TextBlock(substr($html, 0, $pos)));
+                $item->unshift(new JMSTextBlock(substr($html, 0, $pos)));
             }
             if ($html = substr($html, strrpos($html, '>')+1)) {
-                $item->push(new TextBlock($html));
+                $item->push(new JMSTextBlock($html));
             }
         } else {
-            $item->push(new TextBlock($html));
+            $item->push(new JMSTextBlock($html));
         }
 
         return $item;
     }
 
     /**
-     * @param AbstractBlock $item
+     * @param JMSAbstractBlock $item
      * @param string $tagName
      * @param DOMNamedNodeMap $attributes
-     * @return AbstractBlock
+     * @return JMSAbstractBlock
      */
     private function updateBlockModifiersByTagNam($item, $tagName, DOMNamedNodeMap $attributes)
     {
@@ -171,17 +171,17 @@ class HtmlParser implements ParserInterface
     {
         switch ($name) {
             case 'span': case 'b': case 'i': case 'del':
-                return TextBlock::class;
+                return JMSTextBlock::class;
             case 'h1': case 'h2': case 'h3': case 'h4':
-                return HeadLineCollectionBlock::class;
+                return JMSHeadLineCollectionBlock::class;
             case 'img':
-                return ImageBlock::class;
+                return JMSImageBlock::class;
             case 'p':
-                return ParagraphCollectionBlock::class;
+                return JMSParagraphCollectionBlock::class;
             case 'blockquote':
-                return BlockQuoteCollectionBlock::class;
+                return JMSBlockQuoteCollectionBlock::class;
             case 'body':
-                return CollectionBlock::class;
+                return JMSCollectionBlock::class;
         }
 
         throw new BadTagNameException();

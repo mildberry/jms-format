@@ -2,7 +2,7 @@
 
 namespace Mildberry\JMSFormat\Parser;
 
-use Mildberry\JMSFormat\Block\CollectionBlock;
+use Mildberry\JMSFormat\Block\JMSCollectionBlock;
 
 /**
  * @author Egor Zyuskin <e.zyuskin@mildberry.com>
@@ -11,18 +11,18 @@ class JMSParser implements ParserInterface
 {
     /**
      * @param $content
-     * @return CollectionBlock
+     * @return JMSCollectionBlock
      */
     public function toCollection($content)
     {
-        return new CollectionBlock();
+        return new JMSCollectionBlock();
     }
 
     /**
-     * @param CollectionBlock $collection
+     * @param JMSCollectionBlock $collection
      * @return string
      */
-    public function toContent(CollectionBlock $collection)
+    public function toContent(JMSCollectionBlock $collection)
     {
         $content = [
             'version' => 'v1',

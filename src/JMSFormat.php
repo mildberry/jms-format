@@ -4,7 +4,7 @@ namespace Mildberry\JMSFormat;
 
 use Mildberry\JMSFormat\Exception\BadParserNameException;
 use Mildberry\JMSFormat\Parser\ParserInterface;
-use Mildberry\JMSFormat\Block\CollectionBlock;
+use Mildberry\JMSFormat\Block\JMSCollectionBlock;
 
 /**
  * @author Egor Zyuskin <e.zyuskin@mildberry.com>
@@ -24,8 +24,8 @@ class JMSFormat
 
     /**
      * @param string $fromFormat
-     * @param CollectionBlock $content
-     * @return CollectionBlock
+     * @param JMSCollectionBlock $content
+     * @return JMSCollectionBlock
      * @throws BadParserNameException
      */
     public function convertToCollection($fromFormat, $content)
@@ -35,11 +35,11 @@ class JMSFormat
 
     /**
      * @param $toFormat
-     * @param CollectionBlock $collection
+     * @param JMSCollectionBlock $collection
      * @return string
      * @throws BadParserNameException
      */
-    public function convertToContent($toFormat, CollectionBlock $collection)
+    public function convertToContent($toFormat, JMSCollectionBlock $collection)
     {
         return $this->createFormat($toFormat)->toContent($collection);
     }
