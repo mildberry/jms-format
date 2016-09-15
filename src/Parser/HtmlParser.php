@@ -1,6 +1,6 @@
 <?php
 
-namespace Mildberry\JMSFormat\Format;
+namespace Mildberry\JMSFormat\Parser;
 
 use DOMDocument;
 use DOMElement;
@@ -18,7 +18,7 @@ use Mildberry\JMSFormat\Block\TextBlock;
 /**
  * @author Egor Zyuskin <e.zyuskin@mildberry.com>
  */
-class HtmlFormat implements FormatInterface
+class HtmlParser implements ParserInterface
 {
     const ROOT_NODE_ID = 'DOMRootBodyElement';
 

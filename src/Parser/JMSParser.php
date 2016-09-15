@@ -1,13 +1,13 @@
 <?php
 
-namespace Mildberry\JMSFormat\Format;
+namespace Mildberry\JMSFormat\Parser;
 
 use Mildberry\JMSFormat\Block\CollectionBlock;
 
 /**
  * @author Egor Zyuskin <e.zyuskin@mildberry.com>
  */
-class JMSFormat implements FormatInterface
+class JMSParser implements ParserInterface
 {
     /**
      * @param $content

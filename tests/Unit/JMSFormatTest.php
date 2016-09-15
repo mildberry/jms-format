@@ -2,8 +2,8 @@
 
 namespace Mildberry\JMSFormat\Test\Unit;
 
-use Mildberry\JMSFormat\JMSFormatter;
-use Mildberry\JMSFormat\Exception\BadFormatNameException;
+use Mildberry\JMSFormat\JMSFormat;
+use Mildberry\JMSFormat\Exception\BadParserNameException;
 use PHPUnit_Framework_TestCase;
 
 /**
@@ -14,7 +14,7 @@ class JMSFormatTest extends PHPUnit_Framework_TestCase
     public function testSuccessConstruct()
     {
         $contentFormatter = $this->createFormatter();
-        $this->assertTrue(($contentFormatter instanceof JMSFormatter));
+        $this->assertTrue(($contentFormatter instanceof JMSFormat));
     }
 
     public function testFailedConvertFromHtmlToJson()
@@ -23,7 +23,7 @@ class JMSFormatTest extends PHPUnit_Framework_TestCase
         try {
             $contentFormatter->convert('wrongFormat1', 'wrongFormat2', $this->getHtmlText());
             $this->assertTrue(false);
-        } catch (BadFormatNameException $e) {
+        } catch (BadParserNameException $e) {
             $this->assertTrue(true);
         }
     }
@@ -35,11 +35,11 @@ class JMSFormatTest extends PHPUnit_Framework_TestCase
     }
 
     /**
-     * @return JMSFormatter
+     * @return JMSFormat
      */
     private function createFormatter()
     {
-        return new JMSFormatter();
+        return new JMSFormat();
     }
 
     /**

@@ -2,14 +2,14 @@
 
 namespace Mildberry\JMSFormat;
 
-use Mildberry\JMSFormat\Exception\BadFormatNameException;
-use Mildberry\JMSFormat\Format\FormatInterface;
+use Mildberry\JMSFormat\Exception\BadParserNameException;
+use Mildberry\JMSFormat\Parser\ParserInterface;
 use Mildberry\JMSFormat\Block\CollectionBlock;
 
 /**
  * @author Egor Zyuskin <e.zyuskin@mildberry.com>
  */
-class JMSFormatter
+class JMSFormat
 {
     /**
      * @param string $fromFormat
@@ -26,7 +26,7 @@ class JMSFormatter
      * @param string $fromFormat
      * @param CollectionBlock $content
      * @return CollectionBlock
-     * @throws BadFormatNameException
+     * @throws BadParserNameException
      */
     public function convertToCollection($fromFormat, $content)
     {
@@ -37,7 +37,7 @@ class JMSFormatter
      * @param $toFormat
      * @param CollectionBlock $collection
      * @return string
-     * @throws BadFormatNameException
+     * @throws BadParserNameException
      */
     public function convertToContent($toFormat, CollectionBlock $collection)
     {
@@ -46,21 +46,21 @@ class JMSFormatter
 
     /**
      * @param string $name
-     * @return FormatInterface
-     * @throws BadFormatNameException
+     * @return ParserInterface
+     * @throws BadParserNameException
      */
     private function createFormat($name)
     {
         $formatName = $this->getFormatClassByName($name);
 
         if (!class_exists($formatName)) {
-            throw new BadFormatNameException('Class '.$name.' format not found.');
+            throw new BadParserNameException('Class '.$name.' format not found.');
         }
 
         $format = new $formatName;
 
-        if (!$format instanceof FormatInterface) {
-            throw new BadFormatNameException('Handler for '.$name.' format not found.');
+        if (!$format instanceof ParserInterface) {
+            throw new BadParserNameException('Handler for '.$name.' format not found.');
         }
 
         return $format;
@@ -72,6 +72,6 @@ class JMSFormatter
      */
     private function getFormatClassByName($name)
     {
-        return 'Mildberry\\JMSFormat\\Format\\'.ucfirst($name).'Format';
+        return 'Mildberry\\JMSFormat\\Parser\\'.ucfirst($name).'Parser';
     }
 }
