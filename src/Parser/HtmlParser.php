@@ -39,7 +39,8 @@ class HtmlParser implements ParserInterface
      */
     public function toContent(JMSCollectionBlock $collection)
     {
-        return ''; //TODO: make this
+        // Need make this functional
+        return '';
     }
 
     /**
