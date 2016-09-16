@@ -48,6 +48,6 @@ trait DecorationModifierTrait
      */
     public function getDecorationAllowedValues()
     {
-        return ['bold', 'italic', 'del'];
+        return ['bold', 'italic', 'del', 'underline'];
     }
 }

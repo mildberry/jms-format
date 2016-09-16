@@ -23,7 +23,7 @@ class HtmlParser implements ParserInterface
 {
     const ROOT_NODE_ID = 'DOMRootBodyElement';
 
-    const ALLOWED_TAGS = '<p><span><img><b><i><del><blockquote><h1><h2><h3><h4>';
+    const ALLOWED_TAGS = '<p><b><i><del><u><blockquote><h1><h2><h3><h4><img>';
 
     /**
      * @param string $content
@@ -125,6 +125,7 @@ class HtmlParser implements ParserInterface
             case 'b': $item->setDecoration('bold'); break;
             case 'i': $item->setDecoration('italic'); break;
             case 'del': $item->setDecoration('del'); break;
+            case 'u': $item->setDecoration('underline'); break;
             case 'h1': $item->setWeight('lg'); break;
             case 'h2': $item->setWeight('md'); break;
             case 'h3': $item->setWeight('sm'); break;
@@ -143,7 +144,7 @@ class HtmlParser implements ParserInterface
     private function getClassNameByTagName($name)
     {
         switch ($name) {
-            case 'span': case 'b': case 'i': case 'del':
+            case 'u': case 'b': case 'i': case 'del':
                 return JMSTextBlock::class;
             case 'h1': case 'h2': case 'h3': case 'h4':
                 return JMSHeadLineCollectionBlock::class;
