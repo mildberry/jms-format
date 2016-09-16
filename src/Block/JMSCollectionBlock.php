@@ -57,7 +57,7 @@ class JMSCollectionBlock extends JMSAbstractBlock implements IteratorAggregate ,
      * @return $this
      * @throws BadBlockTypeForAddToCollection
      */
-    public function push(JMSAbstractBlock $item)
+    public function addBlock(JMSAbstractBlock $item)
     {
         if (!empty($this->allowedBlocks) && !in_array($item->getBlockName(), $this->allowedBlocks)) {
             throw new BadBlockTypeForAddToCollection('Block class '.$item->getBlockName().' not allowed to add this collection');
@@ -69,10 +69,21 @@ class JMSCollectionBlock extends JMSAbstractBlock implements IteratorAggregate ,
     }
 
     /**
+     * @param JMSCollectionBlock $collection
+     * @return $this
+     */
+    public function addCollection(JMSCollectionBlock $collection)
+    {
+        $this->blocks = array_merge($this->blocks, $collection->getBlocks());
+
+        return $this;
+    }
+
+    /**
      * @param JMSAbstractBlock $item
      * @return $this
      */
-    public function unshift(JMSAbstractBlock $item)
+    public function insertFirstBlock(JMSAbstractBlock $item)
     {
         array_unshift($this->blocks, $item);
 
@@ -167,5 +178,13 @@ class JMSCollectionBlock extends JMSAbstractBlock implements IteratorAggregate ,
     public function getIterator()
     {
         return new ArrayIterator($this->blocks);
+    }
+
+    /**
+     * @return JMSAbstractBlock[]
+     */
+    public function getBlocks()
+    {
+        return $this->blocks;
     }
 }

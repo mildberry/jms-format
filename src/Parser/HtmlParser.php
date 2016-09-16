@@ -54,10 +54,10 @@ class HtmlParser implements ParserInterface
         foreach ($this->createDOMElementsByHtml($content) as $element) {
             if ($element instanceof DOMText) {
                 if ($text = trim(strip_tags($element->nodeValue))) {
-                    $collection->push(new JMSTextBlock($text));
+                    $collection->addBlock(new JMSTextBlock($text));
                 }
             } else {
-                $collection->push($this->createItemFromDOMElement($element));
+                $collection->addBlock($this->createItemFromDOMElement($element));
             }
         }
 
@@ -93,7 +93,7 @@ class HtmlParser implements ParserInterface
         if ($element->hasChildNodes()) {
             foreach ($element->childNodes as $childNode) {
                 if (XML_ELEMENT_NODE === $childNode->nodeType) {
-                    $item->push($this->createItemFromDOMElement($childNode));
+                    $item->addBlock($this->createItemFromDOMElement($childNode));
                 }
             }
         }
@@ -129,13 +129,13 @@ class HtmlParser implements ParserInterface
         $pos = strpos($html, '<');
         if ($pos !== false) {
             if ($pos > 0) {
-                $item->unshift(new JMSTextBlock(substr($html, 0, $pos)));
+                $item->insertFirstBlock(new JMSTextBlock(substr($html, 0, $pos)));
             }
             if ($html = substr($html, strrpos($html, '>')+1)) {
-                $item->push(new JMSTextBlock($html));
+                $item->addBlock(new JMSTextBlock($html));
             }
         } else {
-            $item->push(new JMSTextBlock($html));
+            $item->addBlock(new JMSTextBlock($html));
         }
 
         return $item;

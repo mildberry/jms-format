@@ -4,6 +4,7 @@ namespace Mildberry\JMSFormat\Test\Unit;
 
 use Exception;
 use Mildberry\JMSFormat\Block\JMSBlockQuoteCollectionBlock;
+use Mildberry\JMSFormat\Block\JMSCollectionBlock;
 use Mildberry\JMSFormat\Block\JMSHeadLineCollectionBlock;
 use Mildberry\JMSFormat\Block\JMSImageBlock;
 use Mildberry\JMSFormat\Block\JMSParagraphCollectionBlock;
@@ -20,8 +21,8 @@ class JMSFormatItemsTest extends PHPUnit_Framework_TestCase
         $item = new JMSBlockQuoteCollectionBlock();
         try {
             $this->assertTrue(true);
-            $item->push((new JMSImageBlock()));
-            $item->push((new JMSTextBlock('c')));
+            $item->addBlock((new JMSImageBlock()));
+            $item->addBlock((new JMSTextBlock('c')));
         } catch (Exception $e) {
             $this->assertTrue(false);
         }
@@ -33,7 +34,7 @@ class JMSFormatItemsTest extends PHPUnit_Framework_TestCase
         $item = new JMSHeadLineCollectionBlock();
         try {
             $item->setWeight('xs');
-            $item->push((new JMSTextBlock('c')));
+            $item->addBlock((new JMSTextBlock('c')));
             $this->assertTrue(true);
         } catch (Exception $e) {
             $this->assertTrue(false);
@@ -60,13 +61,17 @@ class JMSFormatItemsTest extends PHPUnit_Framework_TestCase
         $item = new JMSParagraphCollectionBlock();
         try {
             $item->setAlignment('center');
-            $item->push((new JMSImageBlock()));
-            $item->push((new JMSTextBlock('c')));
+            $item->addBlock((new JMSImageBlock()));
+            $item->addBlock((new JMSTextBlock('c')));
             $this->assertTrue(true);
+
+            $collection = new JMSCollectionBlock();
+            $collection->addBlock(new JMSTextBlock('c'));
+            $item->addCollection($collection);
         } catch (Exception $e) {
             $this->assertTrue(false);
         }
-        $this->assertEquals('{"block":"paragraph","modifiers":{"alignment":"center"},"content":[{"block":"image","modifiers":[]},{"block":"text","modifiers":[],"content":"c"}]}', $item->asJMSText());
+        $this->assertEquals('{"block":"paragraph","modifiers":{"alignment":"center"},"content":[{"block":"image","modifiers":[]},{"block":"text","modifiers":[],"content":"c"},{"block":"text","modifiers":[],"content":"c"}]}', $item->asJMSText());
     }
 
     public function testSuccessTextItem()
