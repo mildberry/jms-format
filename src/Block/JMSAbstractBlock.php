@@ -43,6 +43,24 @@ class JMSAbstractBlock
     }
 
     /**
+     * @param array $modifiers
+     * @return $this
+     */
+    public function setModifiers(array $modifiers)
+    {
+        foreach ($modifiers as $name => $value) {
+            $interfaceName = 'Mildberry\JMSFormat\Modifier\\'.ucfirst($name).'ModifierInterface';
+            $methodName = 'set'.ucfirst($name);
+
+            if ($this instanceof $interfaceName) {
+                $this->$methodName($value);
+            }
+        }
+
+        return $this;
+    }
+
+    /**
      * @return array
      */
     public function asJMSArray()

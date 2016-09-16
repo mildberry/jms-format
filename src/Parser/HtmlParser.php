@@ -67,9 +67,10 @@ class HtmlParser implements ParserInterface
 
     /**
      * @param DOMNodeList $elements
+     * @param array $modifiers
      * @return JMSCollectionBlock
      */
-    public function createCollectionByDOMElements(DOMNodeList $elements)
+    public function createCollectionByDOMElements(DOMNodeList $elements, $modifiers = [])
     {
         $collection = new JMSCollectionBlock();
 
@@ -77,18 +78,16 @@ class HtmlParser implements ParserInterface
             // as text has no tags
             if ($element instanceof DOMText) {
                 if ($text = strip_tags($element->nodeValue)) {
-                    $collection->addBlock(new JMSTextBlock($text));
+                    $collection->addBlock((new JMSTextBlock($text))->setModifiers($modifiers));
                 }
             } elseif ($element instanceof DOMElement) {
-                $item = $this->createItemFromDOMElement($element);
-
+                $item = $this->createItemFromDOMElement($element, $modifiers);
                 if ($element->hasChildNodes()) {
                     if ($item instanceof JMSCollectionBlock) {
                         $item->addCollection($this->createCollectionByDOMElements($element->childNodes));
-                        //$item = $this->updateCollectionBlockByHTML($item, $this->getDOMElementHtmlValue($element));
                         $collection->addBlock($item);
                     } else {
-                        $collection->addCollection($this->createCollectionByDOMElements($element->childNodes));
+                        $collection->addCollection($this->createCollectionByDOMElements($element->childNodes, $item->getModifiers()));
                     }
                 } else {
                     $collection->addBlock($item);
@@ -101,50 +100,17 @@ class HtmlParser implements ParserInterface
 
     /**
      * @param DOMElement $element
+     * @param array $modifiers
      * @return JMSAbstractBlock
      */
-    private function createItemFromDOMElement($element)
+    private function createItemFromDOMElement($element, $modifiers = [])
     {
         $tagName = mb_strtolower($element->tagName);
         $className = $this->getClassNameByTagName($tagName);
+        /** @var JMSAbstractBlock $item */
+        $item = (new $className(strip_tags($element->nodeValue)))->setModifiers($modifiers);
 
-        return $this->updateBlockModifiersByTagNam(new $className(strip_tags($element->nodeValue)), $tagName, $element->attributes);
-    }
-
-    /**
-     * @param DOMElement $element
-     * @return string
-     */
-    private function getDOMElementHtmlValue(DOMElement $element)
-    {
-        $innerHTML = '';
-        foreach ($element->childNodes as $child) {
-            $innerHTML .= $element->ownerDocument->saveHTML($child);
-        }
-
-        return $innerHTML;
-    }
-
-    /**
-     * @param JMSCollectionBlock $item
-     * @param string $html
-     * @return JMSCollectionBlock
-     */
-    private function updateCollectionBlockByHTML($item, $html)
-    {
-        $pos = strpos($html, '<');
-        if ($pos !== false) {
-            if ($pos > 0) {
-                $item->insertFirstBlock(new JMSTextBlock(substr($html, 0, $pos)));
-            }
-            if ($html = substr($html, strrpos($html, '>')+1)) {
-                $item->addBlock(new JMSTextBlock($html));
-            }
-        } else {
-            $item->addBlock(new JMSTextBlock($html));
-        }
-
-        return $item;
+        return $this->updateBlockModifiersByTagNam($item, $tagName, $element->attributes);
     }
 
     /**
