@@ -10,12 +10,12 @@ use Mildberry\JMSFormat\Exception\BadModifierValueException;
 trait DecorationModifierTrait
 {
     /**
-     * @var string
+     * @var array
      */
-    protected $decoration;
+    protected $decoration = [];
 
     /**
-     * @return string
+     * @return array
      */
     public function getDecoration()
     {
@@ -23,17 +23,22 @@ trait DecorationModifierTrait
     }
 
     /**
-     * @param string $decoration
+     * @param string|array $decoration
      * @return $this
      * @throws BadModifierValueException
      */
     public function setDecoration($decoration)
     {
-        if (!in_array($decoration, $this->getDecorationAllowedValues())) {
-            throw new BadModifierValueException('Decoration value: "'.$decoration.'" not valid, must be ['.implode(',', $this->getDecorationAllowedValues()).']');
-        }
+        if (is_array($decoration)) {
+            $this->decoration = $decoration;
+        } else {
+            if (!in_array($decoration, $this->getDecorationAllowedValues())) {
+                throw new BadModifierValueException('Decoration value: "' . $decoration . '" not valid, must be [' . implode(',', $this->getDecorationAllowedValues()) . ']');
+            }
 
-        $this->decoration = $decoration;
+            array_push($this->decoration, $decoration);
+        }
+        $this->decoration = array_unique($this->decoration);
 
         return $this;
     }

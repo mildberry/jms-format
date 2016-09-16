@@ -8,7 +8,7 @@ namespace Mildberry\JMSFormat\Modifier;
 interface DecorationModifierInterface
 {
     /**
-     * @return string
+     * @return array
      */
     public function getDecoration();
 }

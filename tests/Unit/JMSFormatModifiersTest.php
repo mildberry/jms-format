@@ -69,7 +69,7 @@ class JMSFormatModifiersTest extends PHPUnit_Framework_TestCase
         }
         $this->assertEquals(5, count($item->getColorAllowedValues()));
         $this->assertEquals(3, count($item->getDecorationAllowedValues()));
-        $this->assertEquals('{"block":"text","modifiers":{"color":"danger","decoration":"del"},"content":"content"}', $item->asJMSText());
+        $this->assertEquals('{"block":"text","modifiers":{"color":"danger","decoration":["bold","italic","del"]},"content":"content"}', $item->asJMSText());
     }
 
     public function testFiledFloatingModifier()

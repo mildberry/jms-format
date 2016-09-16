@@ -85,6 +85,6 @@ class JMSFormatItemsTest extends PHPUnit_Framework_TestCase
         } catch (Exception $e) {
             $this->assertTrue(false);
         }
-        $this->assertEquals('{"block":"text","modifiers":{"color":"info","decoration":"bold"},"content":"content"}', $item->asJMSText());
+        $this->assertEquals('{"block":"text","modifiers":{"color":"info","decoration":["bold"]},"content":"content"}', $item->asJMSText());
     }
 }
