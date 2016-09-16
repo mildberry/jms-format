@@ -37,11 +37,12 @@ class JMSFormatModifiersTest extends PHPUnit_Framework_TestCase
             $this->assertTrue(false);
         }
         $this->assertEquals(3, count($item->getAlignmentAllowedValues()));
+        $this->assertEquals('{"block":"paragraph","modifiers":{"alignment":"right"},"content":[]}', $item->asJMSText());
     }
 
     public function testFiledColorModifier()
     {
-        $item = new JMSTextBlock('context');
+        $item = new JMSTextBlock('content');
         try {
             $item->setColor('baclajane');
             $this->assertTrue(false);
@@ -52,7 +53,7 @@ class JMSFormatModifiersTest extends PHPUnit_Framework_TestCase
 
     public function testSuccessColorModifier()
     {
-        $item = new JMSTextBlock('context');
+        $item = new JMSTextBlock('content');
         try {
             $item->setColor('muted');
             $item->setColor('success');
@@ -68,6 +69,7 @@ class JMSFormatModifiersTest extends PHPUnit_Framework_TestCase
         }
         $this->assertEquals(5, count($item->getColorAllowedValues()));
         $this->assertEquals(3, count($item->getDecorationAllowedValues()));
+        $this->assertEquals('{"block":"text","modifiers":{"color":"danger","decoration":"del"},"content":"content"}', $item->asJMSText());
     }
 
     public function testFiledFloatingModifier()
@@ -92,6 +94,7 @@ class JMSFormatModifiersTest extends PHPUnit_Framework_TestCase
             $this->assertTrue(false);
         }
         $this->assertEquals(2, count($item->getFloatingAllowedValues()));
+        $this->assertEquals('{"block":"image","modifiers":{"floating":"right"}}', $item->asJMSText());
     }
 
     public function testFiledSizeModifier()
@@ -115,6 +118,7 @@ class JMSFormatModifiersTest extends PHPUnit_Framework_TestCase
             $this->assertTrue(false);
         }
         $this->assertEquals(1, count($item->getSizeAllowedValues()));
+        $this->assertEquals('{"block":"image","modifiers":{"size":"wide"}}', $item->asJMSText());
     }
 
     public function testFiledWeightModifier()
@@ -141,5 +145,6 @@ class JMSFormatModifiersTest extends PHPUnit_Framework_TestCase
             $this->assertTrue(false);
         }
         $this->assertEquals(4, count($item->getWeightAllowedValues()));
+        $this->assertEquals('{"block":"headline","modifiers":{"weight":"lg"},"content":[]}', $item->asJMSText());
     }
 }

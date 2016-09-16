@@ -5,6 +5,7 @@ namespace Mildberry\JMSFormat\Parser;
 use DOMDocument;
 use DOMElement;
 use DOMNamedNodeMap;
+use DOMNodeList;
 use DOMText;
 use Mildberry\JMSFormat\Exception\BadTagNameException;
 use Mildberry\JMSFormat\Block\JMSAbstractBlock;
@@ -49,34 +50,53 @@ class HtmlParser implements ParserInterface
      */
     private function createCollectionFormHtml($content)
     {
-        $collection = new JMSCollectionBlock();
-
-        foreach ($this->createDOMElementsByHtml($content) as $element) {
-            if ($element instanceof DOMText) {
-                if ($text = trim(strip_tags($element->nodeValue))) {
-                    $collection->addBlock(new JMSTextBlock($text));
-                }
-            } else {
-                $collection->addBlock($this->createItemFromDOMElement($element));
-            }
-        }
-
-        return $collection;
+        return $this->createCollectionByDOMElements($this->createDOMElementsByHtml($content));
     }
 
     /**
      * @param string $content
-     * @return DOMElement
+     * @return DOMNodeList
      */
     private function createDOMElementsByHtml($content)
     {
         $DOMDocument = new DOMDocument('1.0', 'UTF-8');
-
-        libxml_use_internal_errors(true);
         $DOMDocument->loadHTML('<body id="'.self::ROOT_NODE_ID.'">'.strip_tags($content, self::ALLOWED_TAGS).'</body>');
-        libxml_clear_errors();
 
         return $DOMDocument->getElementById(self::ROOT_NODE_ID)->childNodes;
+    }
+
+    /**
+     * @param DOMNodeList $elements
+     * @return JMSCollectionBlock
+     */
+    public function createCollectionByDOMElements(DOMNodeList $elements)
+    {
+        $collection = new JMSCollectionBlock();
+
+        foreach ($elements as $element) {
+            // as text has no tags
+            if ($element instanceof DOMText) {
+                if ($text = strip_tags($element->nodeValue)) {
+                    $collection->addBlock(new JMSTextBlock($text));
+                }
+            } elseif ($element instanceof DOMElement) {
+                $item = $this->createItemFromDOMElement($element);
+
+                if ($element->hasChildNodes()) {
+                    if ($item instanceof JMSCollectionBlock) {
+                        $item->addCollection($this->createCollectionByDOMElements($element->childNodes));
+                        //$item = $this->updateCollectionBlockByHTML($item, $this->getDOMElementHtmlValue($element));
+                        $collection->addBlock($item);
+                    } else {
+                        $collection->addCollection($this->createCollectionByDOMElements($element->childNodes));
+                    }
+                } else {
+                    $collection->addBlock($item);
+                }
+            }
+        }
+
+        return $collection;
     }
 
     /**
@@ -88,21 +108,7 @@ class HtmlParser implements ParserInterface
         $tagName = mb_strtolower($element->tagName);
         $className = $this->getClassNameByTagName($tagName);
 
-        $item = $this->updateBlockModifiersByTagNam(new $className(strip_tags($element->nodeValue)), $tagName, $element->attributes);
-
-        if ($element->hasChildNodes()) {
-            foreach ($element->childNodes as $childNode) {
-                if (XML_ELEMENT_NODE === $childNode->nodeType) {
-                    $item->addBlock($this->createItemFromDOMElement($childNode));
-                }
-            }
-        }
-
-        if ($item instanceof JMSCollectionBlock) {
-            $item = $this->updateCollectionBlocksByHTML($item, $this->getDOMElementHtmlValue($element));
-        }
-
-        return $item;
+        return $this->updateBlockModifiersByTagNam(new $className(strip_tags($element->nodeValue)), $tagName, $element->attributes);
     }
 
     /**
@@ -124,7 +130,7 @@ class HtmlParser implements ParserInterface
      * @param string $html
      * @return JMSCollectionBlock
      */
-    private function updateCollectionBlocksByHTML($item, $html)
+    private function updateCollectionBlockByHTML($item, $html)
     {
         $pos = strpos($html, '<');
         if ($pos !== false) {
