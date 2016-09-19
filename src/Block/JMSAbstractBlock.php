@@ -76,6 +76,6 @@ class JMSAbstractBlock
      */
     public function asJMSText()
     {
-        return json_encode($this->asJMSArray());
+        return json_encode($this->asJMSArray(), JSON_UNESCAPED_SLASHES);
     }
 }

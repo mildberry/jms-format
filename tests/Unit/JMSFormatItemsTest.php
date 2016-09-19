@@ -52,7 +52,7 @@ class JMSFormatItemsTest extends PHPUnit_Framework_TestCase
         $item->setFloating('left');
         $item->setSize('wide');
         $item->setSrc('https://www.ya.ru/favicon.ico');
-        $this->assertEquals('{"block":"image","modifiers":{"floating":"left","size":"wide","src":"https:\/\/www.ya.ru\/favicon.ico"}}', $item->asJMSText());
+        $this->assertEquals('{"block":"image","modifiers":{"floating":"left","size":"wide","src":"https://www.ya.ru/favicon.ico"}}', $item->asJMSText());
     }
 
     public function testFiledParagraphItem()
