@@ -16,58 +16,40 @@ class JMSFormatModifiersTest extends PHPUnit_Framework_TestCase
 {
     public function testFiledAlignmentModifier()
     {
+        $this->setExpectedException(BadModifierValueException::class);
         $item = new JMSParagraphCollectionBlock();
-        try {
-            $item->setAlignment('tam');
-            $this->assertTrue(false);
-        } catch (BadModifierValueException $e) {
-            $this->assertTrue(true);
-        }
+        $item->setAlignment('tam');
     }
 
     public function testSuccessAlignmentModifier()
     {
         $item = new JMSParagraphCollectionBlock();
-        try {
-            $item->setAlignment('left');
-            $item->setAlignment('center');
-            $item->setAlignment('right');
-            $this->assertTrue(true);
-        } catch (\Exception $e) {
-            $this->assertTrue(false);
-        }
+        $item->setAlignment('left');
+        $item->setAlignment('center');
+        $item->setAlignment('right');
         $this->assertEquals(3, count($item->getAlignmentAllowedValues()));
         $this->assertEquals('{"block":"paragraph","modifiers":{"alignment":"right"},"content":[]}', $item->asJMSText());
     }
 
     public function testFiledColorModifier()
     {
+        $this->setExpectedException(BadModifierValueException::class);
         $item = new JMSTextBlock('content');
-        try {
-            $item->setColor('baclajane');
-            $this->assertTrue(false);
-        } catch (BadModifierValueException $e) {
-            $this->assertTrue(true);
-        }
+        $item->setColor('baclajane');
     }
 
     public function testSuccessColorModifier()
     {
         $item = new JMSTextBlock('content');
-        try {
-            $item->setColor('muted');
-            $item->setColor('success');
-            $item->setColor('info');
-            $item->setColor('warning');
-            $item->setColor('danger');
-            $item->setDecoration('bold');
-            $item->setDecoration('italic');
-            $item->setDecoration('del');
-            $item->setDecoration('underline');
-            $this->assertTrue(true);
-        } catch (\Exception $e) {
-            $this->assertTrue(false);
-        }
+        $item->setColor('muted');
+        $item->setColor('success');
+        $item->setColor('info');
+        $item->setColor('warning');
+        $item->setColor('danger');
+        $item->setDecoration('bold');
+        $item->setDecoration('italic');
+        $item->setDecoration('del');
+        $item->setDecoration('underline');
         $this->assertEquals(5, count($item->getColorAllowedValues()));
         $this->assertEquals(4, count($item->getDecorationAllowedValues()));
         $this->assertEquals('{"block":"text","modifiers":{"color":"danger","decoration":["bold","italic","del","underline"]},"content":"content"}', $item->asJMSText());
@@ -75,76 +57,50 @@ class JMSFormatModifiersTest extends PHPUnit_Framework_TestCase
 
     public function testFiledFloatingModifier()
     {
+        $this->setExpectedException(BadModifierValueException::class);
         $item = new JMSImageBlock();
-        try {
-            $item->setFloating('tut');
-            $this->assertTrue(false);
-        } catch (BadModifierValueException $e) {
-            $this->assertTrue(true);
-        }
+        $item->setFloating('tut');
     }
 
     public function testSuccessFloatingModifier()
     {
         $item = new JMSImageBlock();
-        try {
-            $item->setFloating('left');
-            $item->setFloating('right');
-            $this->assertTrue(true);
-        } catch (\Exception $e) {
-            $this->assertTrue(false);
-        }
+        $item->setFloating('left');
+        $item->setFloating('right');
         $this->assertEquals(2, count($item->getFloatingAllowedValues()));
         $this->assertEquals('{"block":"image","modifiers":{"floating":"right"}}', $item->asJMSText());
     }
 
     public function testFiledSizeModifier()
     {
+        $this->setExpectedException(BadModifierValueException::class);
         $item = new JMSImageBlock();
-        try {
-            $item->setSize('super mega big');
-            $this->assertTrue(false);
-        } catch (BadModifierValueException $e) {
-            $this->assertTrue(true);
-        }
+        $item->setSize('super mega big');
     }
 
     public function testSuccessSizeModifier()
     {
         $item = new JMSImageBlock();
-        try {
-            $item->setSize('wide');
-            $this->assertTrue(true);
-        } catch (\Exception $e) {
-            $this->assertTrue(false);
-        }
+        $item->setSize('wide');
+        $this->assertTrue(true);
         $this->assertEquals(1, count($item->getSizeAllowedValues()));
         $this->assertEquals('{"block":"image","modifiers":{"size":"wide"}}', $item->asJMSText());
     }
 
     public function testFiledWeightModifier()
     {
+        $this->setExpectedException(BadModifierValueException::class);
         $item = new JMSHeadLineCollectionBlock('');
-        try {
-            $item->setWeight('uaaaH!!!');
-            $this->assertTrue(false);
-        } catch (BadModifierValueException $e) {
-            $this->assertTrue(true);
-        }
+        $item->setWeight('uaaaH!!!');
     }
 
     public function testSuccessWeightModifier()
     {
         $item = new JMSHeadLineCollectionBlock('');
-        try {
-            $item->setWeight('xs');
-            $item->setWeight('sm');
-            $item->setWeight('md');
-            $item->setWeight('lg');
-            $this->assertTrue(true);
-        } catch (\Exception $e) {
-            $this->assertTrue(false);
-        }
+        $item->setWeight('xs');
+        $item->setWeight('sm');
+        $item->setWeight('md');
+        $item->setWeight('lg');
         $this->assertEquals(4, count($item->getWeightAllowedValues()));
         $this->assertEquals('{"block":"headline","modifiers":{"weight":"lg"},"content":[]}', $item->asJMSText());
     }

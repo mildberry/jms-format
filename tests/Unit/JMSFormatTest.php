@@ -19,13 +19,9 @@ class JMSFormatTest extends PHPUnit_Framework_TestCase
 
     public function testFailedConvertFromHtmlToJson()
     {
+        $this->setExpectedException(BadParserNameException::class);
         $contentFormatter = $this->createFormatter();
-        try {
-            $contentFormatter->convert('wrongFormat1', 'wrongFormat2', $this->getHtmlText());
-            $this->assertTrue(false);
-        } catch (BadParserNameException $e) {
-            $this->assertTrue(true);
-        }
+        $contentFormatter->convert('wrongFormat1', 'wrongFormat2', $this->getHtmlText());
     }
 
     public function testSuccessConvertFromHtmlToJson()
