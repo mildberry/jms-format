@@ -7,7 +7,7 @@ use Mildberry\JMSFormat\Block\JMSCollectionBlock;
 /**
  * @author Egor Zyuskin <e.zyuskin@mildberry.com>
  */
-class JMSParser implements ParserInterface
+class JmsParser implements ParserInterface
 {
     /**
      * @param $content
