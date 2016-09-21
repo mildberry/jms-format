@@ -1,6 +1,7 @@
 <?php
 
 namespace Mildberry\JMSFormat\Block;
+use Mildberry\JMSFormat\JMSModifierHelper;
 
 /**
  * @author Egor Zyuskin <e.zyuskin@mildberry.com>
@@ -25,12 +26,12 @@ class JMSAbstractBlock
      */
     public function getModifiers()
     {
-        $modifiersName = ['alignment', 'color', 'floating', 'size', 'src', 'weight', 'decoration'];
+        $modifiersName = JMSModifierHelper::getAllowedModifiers();
         $modifiers = [];
 
         foreach ($modifiersName as $name) {
-            $interfaceName = 'Mildberry\JMSFormat\Modifier\\'.ucfirst($name).'ModifierInterface';
-            $methodName = 'get'.ucfirst($name);
+            $interfaceName = JMSModifierHelper::getModifierInterfaceClassName($name);
+            $methodName = JMSModifierHelper::getModifierGetterName($name);
 
             if ($this instanceof $interfaceName) {
                 if ($modifiersValue = $this->$methodName()) {
@@ -49,8 +50,8 @@ class JMSAbstractBlock
     public function setModifiers(array $modifiers)
     {
         foreach ($modifiers as $name => $value) {
-            $interfaceName = 'Mildberry\JMSFormat\Modifier\\'.ucfirst($name).'ModifierInterface';
-            $methodName = 'set'.ucfirst($name);
+            $interfaceName = JMSModifierHelper::getModifierInterfaceClassName($name);
+            $methodName = JMSModifierHelper::getModifierSetterName($name);
 
             if ($this instanceof $interfaceName) {
                 $this->$methodName($value);

@@ -7,6 +7,7 @@ use Mildberry\JMSFormat\Block\JMSParagraphCollectionBlock;
 use Mildberry\JMSFormat\Block\JMSHeadLineCollectionBlock;
 use Mildberry\JMSFormat\Block\JMSImageBlock;
 use Mildberry\JMSFormat\Block\JMSTextBlock;
+use Mildberry\JMSFormat\JMSModifierHelper;
 use PHPUnit_Framework_TestCase;
 
 /**
@@ -14,6 +15,14 @@ use PHPUnit_Framework_TestCase;
  */
 class JMSFormatModifiersTest extends PHPUnit_Framework_TestCase
 {
+    public function testSuccessModifierHelper()
+    {
+        $this->assertEquals(['alignment', 'color', 'floating', 'size', 'src', 'weight', 'decoration'], JMSModifierHelper::getAllowedModifiers());
+        $this->assertEquals('Mildberry\JMSFormat\Modifier\ColorModifierInterface', JMSModifierHelper::getModifierInterfaceClassName('COLOR'));
+        $this->assertEquals('getColor', JMSModifierHelper::getModifierGetterName('cOlOr'));
+        $this->assertEquals('setColor', JMSModifierHelper::getModifierSetterName('cOlOr'));
+    }
+
     public function testFiledAlignmentModifier()
     {
         $this->setExpectedException(BadModifierValueException::class);
