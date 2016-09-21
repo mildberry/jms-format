@@ -29,6 +29,6 @@ class JMSParser implements ParserInterface
             'content' => $collection->getContentAsJMSArray(),
         ];
 
-        return json_encode($content, JSON_UNESCAPED_SLASHES);
+        return json_encode($content, JSON_UNESCAPED_SLASHES | JSON_UNESCAPED_UNICODE);
     }
 }
