@@ -27,7 +27,7 @@ class JMSFormatTest extends PHPUnit_Framework_TestCase
     public function testSuccessConvertFromHtmlToJson()
     {
         $contentFormatter = $this->createFormatter();
-        $this->assertEquals('{"version":"v1","content":[{"block":"headline","modifiers":{"weight":"lg"},"content":[{"block":"text","modifiers":[],"content":"Header "},{"block":"text","modifiers":{"decoration":["italic"]},"content":"1"}]},{"block":"paragraph","modifiers":[],"content":[{"block":"text","modifiers":[],"content":"Paragraph "},{"block":"text","modifiers":{"decoration":["bold"]},"content":"BOLD"},{"block":"text","modifiers":[],"content":" text inside tag "},{"block":"text","modifiers":{"decoration":["bold","italic"]},"content":"BOLD AND ITALIC"},{"block":"image","modifiers":{"src":"https://www.ya.ru/favicon.ico"}}]},{"block":"headline","modifiers":{"weight":"md"},"content":[{"block":"text","modifiers":[],"content":"Next header"}]},{"block":"blockquote","modifiers":[],"content":[{"block":"text","modifiers":[],"content":"Block "},{"block":"text","modifiers":{"decoration":["underline"]},"content":"quote"},{"block":"text","modifiers":[],"content":" "},{"block":"text","modifiers":{"decoration":["del"]},"content":"text"}]}]}', $contentFormatter->convert('html', 'JMS', $this->getHtmlText()));
+        $this->assertEquals('{"version":"v1","content":[{"block":"headline","modifiers":{"weight":"lg"},"content":[{"block":"text","modifiers":[],"content":"Header "},{"block":"text","modifiers":{"decoration":["italic","bold"]},"content":"1"}]},{"block":"paragraph","modifiers":{"alignment":"left"},"content":[{"block":"text","modifiers":[],"content":"Paragraph "},{"block":"text","modifiers":{"color":"danger","decoration":["bold"]},"content":"BOLD"},{"block":"text","modifiers":[],"content":" text inside tag "},{"block":"text","modifiers":{"decoration":["bold","italic"]},"content":"BOLD AND ITALIC"},{"block":"text","modifiers":{"decoration":["bold","italic"]},"content":" BOLD AND ITALIC2 "},{"block":"image","modifiers":{"size":"wide","src":"https://www.ya.ru/favicon.ico"}}]},{"block":"headline","modifiers":{"weight":"md"},"content":[{"block":"text","modifiers":[],"content":"Next header"}]},{"block":"blockquote","modifiers":[],"content":[{"block":"text","modifiers":[],"content":"Block "},{"block":"text","modifiers":{"decoration":["underline"]},"content":"quote"},{"block":"text","modifiers":[],"content":" "},{"block":"text","modifiers":{"decoration":["del"]},"content":"text"}]}]}', $contentFormatter->convert('html', 'JMS', $this->getHtmlText()));
     }
 
     /**
@@ -43,6 +43,6 @@ class JMSFormatTest extends PHPUnit_Framework_TestCase
      */
     private function getHtmlText()
     {
-        return '<h1>Header <i>1</i></h1><p>Paragraph <b>BOLD</b> text inside tag <b><i>BOLD AND ITALIC</i></b><img src="https://www.ya.ru/favicon.ico"></p><h2>Next header</h2><blockquote>Block <u>quote</u> <del>text</del></blockquote>';
+        return '<h1>Header <i class="decoration-bold">1</i></h1><p class="alignment-left">Paragraph <b class="color-danger">BOLD</b> text inside tag <b><i>BOLD AND ITALIC</i></b><span class="decoration-bold decoration-italic"> BOLD AND ITALIC2 </span><img class="size-wide" src="https://www.ya.ru/favicon.ico"></p><h2>Next header</h2><blockquote>Block <u>quote</u> <del>text</del></blockquote>';
     }
 }

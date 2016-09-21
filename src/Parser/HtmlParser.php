@@ -15,6 +15,7 @@ use Mildberry\JMSFormat\Block\JMSHeadLineCollectionBlock;
 use Mildberry\JMSFormat\Block\JMSImageBlock;
 use Mildberry\JMSFormat\Block\JMSParagraphCollectionBlock;
 use Mildberry\JMSFormat\Block\JMSTextBlock;
+use Mildberry\JMSFormat\JMSModifierHelper;
 
 /**
  * @author Egor Zyuskin <e.zyuskin@mildberry.com>
@@ -131,6 +132,20 @@ class HtmlParser implements ParserInterface
             case 'h3': $item->setWeight('sm'); break;
             case 'h4': $item->setWeight('xs'); break;
             case 'img': $item->setSrc($attributes->getNamedItem('src')->nodeValue); break;
+        }
+
+        if ($classes = $attributes->getNamedItem('class')) {
+            foreach (explode(' ', $classes->nodeValue) as $class) {
+                list($modifier, $value) = array_pad(explode('-', $class), 2, '');
+
+                if ($modifier && $value) {
+                    $modifierClassName = JMSModifierHelper::getModifierInterfaceClassName($modifier);
+                    if ($item instanceof $modifierClassName) {
+                        $methodName = JMSModifierHelper::getModifierSetterName($modifier);
+                        $item->$methodName($value);
+                    }
+                }
+            }
         }
 
         return $item;
