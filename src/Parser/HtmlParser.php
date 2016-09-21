@@ -60,7 +60,7 @@ class HtmlParser implements ParserInterface
     private function createDOMElementsByHtml($content)
     {
         $DOMDocument = new DOMDocument('1.0', 'UTF-8');
-        $DOMDocument->loadHTML('<body id="'.self::ROOT_NODE_ID.'">'.strip_tags($content, self::ALLOWED_TAGS).'</body>');
+        $DOMDocument->loadHTML('<?xml version="1.0" encoding="UTF-8"?><body id="'.self::ROOT_NODE_ID.'">'.strip_tags($content, self::ALLOWED_TAGS).'</body>');
 
         return $DOMDocument->getElementById(self::ROOT_NODE_ID)->childNodes;
     }
