@@ -117,6 +117,6 @@ class JMSFormat
      */
     private function getFormatClassByName($name)
     {
-        return 'Mildberry\\JMSFormat\\Parser\\'.ucfirst(strtolower($name)).'Parser';
+        return __NAMESPACE__.'\\Parser\\'.ucfirst(strtolower($name)).'Parser';
     }
 }
