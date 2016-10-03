@@ -7,7 +7,7 @@ use ArrayIterator;
 use Countable;
 use IteratorAggregate;
 use Mildberry\JMSFormat\Exception\BadBlockTypeForAddToCollection;
-use Mildberry\JMSFormat\JMSFormat;
+use Mildberry\JMSFormat\JMSBlockHelper;
 
 /**
  * @author Egor Zyuskin <e.zyuskin@mildberry.com>
@@ -39,7 +39,7 @@ class JMSCollectionBlock extends JMSAbstractBlock implements IteratorAggregate ,
 
         if (!empty($data['content'])) {
             foreach ($data['content'] as $blockData) {
-                $block = JMSFormat::createBlockByName($blockData['block']);
+                $block = JMSBlockHelper::createBlockByName($blockData['block']);
                 $block->loadFromJMSArray($blockData);
                 $this->addBlock($block);
             }
