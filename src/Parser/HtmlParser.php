@@ -173,7 +173,5 @@ class HtmlParser implements ParserInterface
             case 'body':
                 return JMSCollectionBlock::class;
         }
-
-        throw new BadTagNameException();
     }
 }

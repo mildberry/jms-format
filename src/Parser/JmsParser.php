@@ -13,7 +13,7 @@ class JmsParser implements ParserInterface
     const VERSION = 'v1';
 
     /**
-     * @param $content
+     * @param string $content
      * @return JMSCollectionBlock
      */
     public function toCollection($content)
