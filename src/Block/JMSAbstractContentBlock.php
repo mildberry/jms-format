@@ -40,6 +40,17 @@ abstract class JMSAbstractContentBlock extends JMSAbstractBlock
     }
 
     /**
+     * @param array $data
+     * @return $this
+     */
+    public function loadFromJMSArray(array $data)
+    {
+        parent::loadFromJMSArray($data);
+
+        $this->setContent($data['content']);
+    }
+
+    /**
      * @return array
      */
     public function asJMSArray()

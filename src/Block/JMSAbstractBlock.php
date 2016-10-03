@@ -68,7 +68,9 @@ abstract class JMSAbstractBlock
      */
     public function loadFromJMSArray(array $data)
     {
-        $this->setModifiers($data['modifiers']);
+        if (!empty($data['modifiers'])) {
+            $this->setModifiers($data['modifiers']);
+        }
 
         return $this;
     }

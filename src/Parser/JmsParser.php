@@ -22,8 +22,8 @@ class JmsParser implements ParserInterface
 
         $data = json_decode($content, true);
 
-        if (!empty($data['version']) && !empty($data['block']) && $data['block'] == 'body' && !empty($data['content'])) {
-            $collection->loadFromJMSArray($data['content']);
+        if (!empty($data['version']) && !empty($data['content'])) {
+            $collection->loadFromJMSArray($data);
         }
 
         return $collection;

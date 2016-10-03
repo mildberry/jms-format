@@ -43,7 +43,7 @@ class JMSFormatTest extends PHPUnit_Framework_TestCase
         $contentFormatter->setData(new JMSCollectionBlock());
         $this->assertEquals('{"block":"body","modifiers":[],"content":[]}', $contentFormatter->getData()->asJMSText());
 
-        $this->assertEquals('{"version":"v1","content":[]}', $contentFormatter->loadFormFormat('JMS', '')->saveToFormat('JMS'));
+        $this->assertEquals($this->getJMSText(), $contentFormatter->loadFormFormat('JMS', $this->getJMSText())->saveToFormat('JMS'));
     }
 
     public function testSuccessJMSParser()
