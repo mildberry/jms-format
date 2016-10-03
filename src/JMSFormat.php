@@ -2,6 +2,8 @@
 
 namespace Mildberry\JMSFormat;
 
+use Mildberry\JMSFormat\Block\JMSAbstractBlock;
+use Mildberry\JMSFormat\Exception\BadBlocNameException;
 use Mildberry\JMSFormat\Exception\BadParserNameException;
 use Mildberry\JMSFormat\Interfaces\ParserInterface;
 use Mildberry\JMSFormat\Block\JMSCollectionBlock;
@@ -118,5 +120,27 @@ class JMSFormat
     private function getFormatClassByName($name)
     {
         return __NAMESPACE__.'\\Parser\\'.ucfirst(strtolower($name)).'Parser';
+    }
+
+    /**
+     * @param string $name
+     * @return JMSAbstractBlock
+     * @throws BadBlocNameException
+     */
+    public static function createBlockByName($name)
+    {
+        $className = __NAMESPACE__.'\\Block\\JMS'.ucfirst(strtolower($name)).'Block';
+
+        if (!class_exists($className)) {
+            throw new BadBlocNameException('Class from block "'.$name.'" not exists');
+        }
+
+        $block = new $className;
+
+        if (!$block instanceof JMSAbstractBlock) {
+            throw new BadBlocNameException('Class "'.$className.'" not block');
+        }
+
+        return $block;
     }
 }

@@ -7,7 +7,7 @@ use Mildberry\JMSFormat\JMSModifierHelper;
 /**
  * @author Egor Zyuskin <e.zyuskin@mildberry.com>
  */
-class JMSAbstractBlock
+abstract class JMSAbstractBlock
 {
     /**
      * @var string
@@ -58,6 +58,17 @@ class JMSAbstractBlock
                 $this->$methodName($value);
             }
         }
+
+        return $this;
+    }
+
+    /**
+     * @param array $data
+     * @return $this
+     */
+    public function loadFromJMSArray(array $data)
+    {
+        $this->setModifiers($data['modifiers']);
 
         return $this;
     }

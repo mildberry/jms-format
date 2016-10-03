@@ -18,7 +18,15 @@ class JmsParser implements ParserInterface
      */
     public function toCollection($content)
     {
-        return new JMSCollectionBlock();
+        $collection = new JMSCollectionBlock();
+
+        $data = json_decode($content, true);
+
+        if (!empty($data['version']) && !empty($data['block']) && $data['block'] == 'body' && !empty($data['content'])) {
+            $collection->loadFromJMSArray($data['content']);
+        }
+
+        return $collection;
     }
 
     /**
