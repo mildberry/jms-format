@@ -55,13 +55,26 @@ class JMSFormatModifiersTest extends PHPUnit_Framework_TestCase
         $item->setColor('info');
         $item->setColor('warning');
         $item->setColor('danger');
+        $this->assertEquals(5, count($item->getColorAllowedValues()));
+        $this->assertEquals('{"block":"text","modifiers":{"color":"danger"},"content":"content"}', $item->asJMSText());
+    }
+
+    public function testFiledDecorationModifier()
+    {
+        $this->setExpectedException(BadModifierValueException::class);
+        $item = new JMSTextBlock('content');
+        $item->setDecoration('top');
+    }
+
+    public function testSuccessDecorationModifier()
+    {
+        $item = new JMSTextBlock('content');
         $item->setDecoration('bold');
         $item->setDecoration('italic');
         $item->setDecoration('del');
         $item->setDecoration('underline');
-        $this->assertEquals(5, count($item->getColorAllowedValues()));
         $this->assertEquals(4, count($item->getDecorationAllowedValues()));
-        $this->assertEquals('{"block":"text","modifiers":{"color":"danger","decoration":["bold","italic","del","underline"]},"content":"content"}', $item->asJMSText());
+        $this->assertEquals('{"block":"text","modifiers":{"decoration":["bold","italic","del","underline"]},"content":"content"}', $item->asJMSText());
     }
 
     public function testFiledFloatingModifier()
