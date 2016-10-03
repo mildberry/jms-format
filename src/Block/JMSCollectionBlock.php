@@ -14,6 +14,11 @@ use Mildberry\JMSFormat\Exception\BadBlockTypeForAddToCollection;
 class JMSCollectionBlock extends JMSAbstractBlock implements IteratorAggregate , ArrayAccess, Countable
 {
     /**
+     * @var string
+     */
+    protected $blockName = 'body';
+
+    /**
      * @var JMSAbstractBlock[]
      */
     protected $blocks = [];
@@ -98,7 +103,7 @@ class JMSCollectionBlock extends JMSAbstractBlock implements IteratorAggregate ,
      */
     public function toJson($options = 0)
     {
-        return json_encode($this->blocks, $options);
+        return json_encode($this->asJMSArray(), $options);
     }
 
     /**
