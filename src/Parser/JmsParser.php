@@ -10,6 +10,8 @@ use Mildberry\JMSFormat\Interfaces\ParserInterface;
  */
 class JmsParser implements ParserInterface
 {
+    const VERSION = 'v1';
+
     /**
      * @param $content
      * @return JMSCollectionBlock
@@ -26,7 +28,7 @@ class JmsParser implements ParserInterface
     public function toContent(JMSCollectionBlock $collection)
     {
         $content = [
-            'version' => 'v1',
+            'version' => self::VERSION,
             'content' => $collection->getContentAsJMSArray(),
         ];
 
