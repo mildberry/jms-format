@@ -5,6 +5,6 @@ namespace Mildberry\JMSFormat\Exception;
 /**
  * @author Egor Zyuskin <e.zyuskin@mildberry.com>
  */
-class BadModifierValueException extends \Exception
+class BadModifierValueException extends JMSFormatException
 {
 }
