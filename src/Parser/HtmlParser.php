@@ -7,7 +7,6 @@ use DOMElement;
 use DOMNamedNodeMap;
 use DOMNodeList;
 use DOMText;
-use Mildberry\JMSFormat\Exception\BadTagNameException;
 use Mildberry\JMSFormat\Block\JMSAbstractBlock;
 use Mildberry\JMSFormat\Block\JMSBlockQuoteCollectionBlock;
 use Mildberry\JMSFormat\Block\JMSCollectionBlock;
@@ -155,7 +154,6 @@ class HtmlParser implements ParserInterface
     /**
      * @param string $name
      * @return string
-     * @throws BadTagNameException
      */
     private function getClassNameByTagName($name)
     {
@@ -170,8 +168,6 @@ class HtmlParser implements ParserInterface
                 return JMSParagraphCollectionBlock::class;
             case 'blockquote':
                 return JMSBlockQuoteCollectionBlock::class;
-            case 'body':
-                return JMSCollectionBlock::class;
         }
     }
 }
