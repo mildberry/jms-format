@@ -5,7 +5,7 @@ namespace Mildberry\JMSFormat\Block;
 /**
  * @author Egor Zyuskin <e.zyuskin@mildberry.com>
  */
-class JMSAbstractContentBlock extends JMSAbstractBlock
+abstract class JMSAbstractContentBlock extends JMSAbstractBlock
 {
     /**
      * @var string

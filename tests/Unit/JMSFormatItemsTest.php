@@ -2,11 +2,11 @@
 
 namespace Mildberry\JMSFormat\Test\Unit;
 
-use Mildberry\JMSFormat\Block\JMSBlockQuoteCollectionBlock;
+use Mildberry\JMSFormat\Block\JMSBlockquoteBlock;
 use Mildberry\JMSFormat\Block\JMSCollectionBlock;
-use Mildberry\JMSFormat\Block\JMSHeadLineCollectionBlock;
+use Mildberry\JMSFormat\Block\JMSHeadlineBlock;
 use Mildberry\JMSFormat\Block\JMSImageBlock;
-use Mildberry\JMSFormat\Block\JMSParagraphCollectionBlock;
+use Mildberry\JMSFormat\Block\JMSParagraphBlock;
 use Mildberry\JMSFormat\Block\JMSTextBlock;
 use Mildberry\JMSFormat\Exception\BadBlockTypeForAddToCollection;
 use PHPUnit_Framework_TestCase;
@@ -19,13 +19,13 @@ class JMSFormatItemsTest extends PHPUnit_Framework_TestCase
     public function testFiledBlockQuoteItem()
     {
         $this->setExpectedException(BadBlockTypeForAddToCollection::class);
-        $item = new JMSBlockQuoteCollectionBlock();
-        $item->addBlock(new JMSHeadLineCollectionBlock());
+        $item = new JMSBlockquoteBlock();
+        $item->addBlock(new JMSHeadlineBlock());
     }
 
     public function testSuccessBlockQuoteItem()
     {
-        $item = new JMSBlockQuoteCollectionBlock();
+        $item = new JMSBlockquoteBlock();
         $item->addBlock((new JMSImageBlock()));
         $item->addBlock((new JMSTextBlock('c')));
         $this->assertEquals('{"block":"blockquote","modifiers":[],"content":[{"block":"image","modifiers":[]},{"block":"text","modifiers":[],"content":"c"}]}', $item->asJMSText());
@@ -34,13 +34,13 @@ class JMSFormatItemsTest extends PHPUnit_Framework_TestCase
     public function testFiledHeadLineItem()
     {
         $this->setExpectedException(BadBlockTypeForAddToCollection::class);
-        $item = new JMSHeadLineCollectionBlock();
-        $item->addBlock(new JMSParagraphCollectionBlock());
+        $item = new JMSHeadlineBlock();
+        $item->addBlock(new JMSParagraphBlock());
     }
 
     public function testSuccessHeadLineItem()
     {
-        $item = new JMSHeadLineCollectionBlock();
+        $item = new JMSHeadlineBlock();
         $item->setWeight('xs');
         $item->addBlock((new JMSTextBlock('c')));
         $this->assertEquals('{"block":"headline","modifiers":{"weight":"xs"},"content":[{"block":"text","modifiers":[],"content":"c"}]}', $item->asJMSText());
@@ -58,13 +58,13 @@ class JMSFormatItemsTest extends PHPUnit_Framework_TestCase
     public function testFiledParagraphItem()
     {
         $this->setExpectedException(BadBlockTypeForAddToCollection::class);
-        $item = new JMSParagraphCollectionBlock();
-        $item->addBlock(new JMSHeadLineCollectionBlock());
+        $item = new JMSParagraphBlock();
+        $item->addBlock(new JMSHeadlineBlock());
     }
 
     public function testSuccessParagraphItem()
     {
-        $item = new JMSParagraphCollectionBlock();
+        $item = new JMSParagraphBlock();
         $item->setAlignment('center');
         $item->addBlock((new JMSImageBlock()));
         $item->addBlock((new JMSTextBlock('c')));

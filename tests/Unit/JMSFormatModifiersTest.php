@@ -3,8 +3,8 @@
 namespace Mildberry\JMSFormat\Test\Unit;
 
 use Mildberry\JMSFormat\Exception\BadModifierValueException;
-use Mildberry\JMSFormat\Block\JMSParagraphCollectionBlock;
-use Mildberry\JMSFormat\Block\JMSHeadLineCollectionBlock;
+use Mildberry\JMSFormat\Block\JMSParagraphBlock;
+use Mildberry\JMSFormat\Block\JMSHeadlineBlock;
 use Mildberry\JMSFormat\Block\JMSImageBlock;
 use Mildberry\JMSFormat\Block\JMSTextBlock;
 use Mildberry\JMSFormat\JMSModifierHelper;
@@ -26,13 +26,13 @@ class JMSFormatModifiersTest extends PHPUnit_Framework_TestCase
     public function testFiledAlignmentModifier()
     {
         $this->setExpectedException(BadModifierValueException::class);
-        $item = new JMSParagraphCollectionBlock();
+        $item = new JMSParagraphBlock();
         $item->setAlignment('tam');
     }
 
     public function testSuccessAlignmentModifier()
     {
-        $item = new JMSParagraphCollectionBlock();
+        $item = new JMSParagraphBlock();
         $item->setAlignment('left');
         $item->setAlignment('center');
         $item->setAlignment('right');
@@ -112,13 +112,13 @@ class JMSFormatModifiersTest extends PHPUnit_Framework_TestCase
     public function testFiledWeightModifier()
     {
         $this->setExpectedException(BadModifierValueException::class);
-        $item = new JMSHeadLineCollectionBlock('');
+        $item = new JMSHeadlineBlock('');
         $item->setWeight('uaaaH!!!');
     }
 
     public function testSuccessWeightModifier()
     {
-        $item = new JMSHeadLineCollectionBlock('');
+        $item = new JMSHeadlineBlock('');
         $item->setWeight('xs');
         $item->setWeight('sm');
         $item->setWeight('md');
