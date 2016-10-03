@@ -1,6 +1,6 @@
 <?php
 
-namespace Mildberry\JMSFormat\Parser;
+namespace Mildberry\JMSFormat\Interfaces;
 
 use Mildberry\JMSFormat\Block\JMSCollectionBlock;
 

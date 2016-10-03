@@ -15,6 +15,7 @@ use Mildberry\JMSFormat\Block\JMSHeadLineCollectionBlock;
 use Mildberry\JMSFormat\Block\JMSImageBlock;
 use Mildberry\JMSFormat\Block\JMSParagraphCollectionBlock;
 use Mildberry\JMSFormat\Block\JMSTextBlock;
+use Mildberry\JMSFormat\Interfaces\ParserInterface;
 use Mildberry\JMSFormat\JMSModifierHelper;
 
 /**

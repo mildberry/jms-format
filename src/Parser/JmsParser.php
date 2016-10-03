@@ -3,6 +3,7 @@
 namespace Mildberry\JMSFormat\Parser;
 
 use Mildberry\JMSFormat\Block\JMSCollectionBlock;
+use Mildberry\JMSFormat\Interfaces\ParserInterface;
 
 /**
  * @author Egor Zyuskin <e.zyuskin@mildberry.com>

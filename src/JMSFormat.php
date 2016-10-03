@@ -3,7 +3,7 @@
 namespace Mildberry\JMSFormat;
 
 use Mildberry\JMSFormat\Exception\BadParserNameException;
-use Mildberry\JMSFormat\Parser\ParserInterface;
+use Mildberry\JMSFormat\Interfaces\ParserInterface;
 use Mildberry\JMSFormat\Block\JMSCollectionBlock;
 
 /**
