@@ -2,9 +2,9 @@
 
 namespace Mildberry\JMSFormat\Block;
 
-use Mildberry\JMSFormat\Modifier\ColorModifierInterface;
+use Mildberry\JMSFormat\Interfaces\ColorModifierInterface;
+use Mildberry\JMSFormat\Interfaces\DecorationModifierInterface;
 use Mildberry\JMSFormat\Modifier\ColorModifierTrait;
-use Mildberry\JMSFormat\Modifier\DecorationModifierInterface;
 use Mildberry\JMSFormat\Modifier\DecorationModifierTrait;
 
 /**

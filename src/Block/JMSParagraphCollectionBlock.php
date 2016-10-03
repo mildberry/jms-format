@@ -2,7 +2,7 @@
 
 namespace Mildberry\JMSFormat\Block;
 
-use Mildberry\JMSFormat\Modifier\AlignmentModifierInterface;
+use Mildberry\JMSFormat\Interfaces\AlignmentModifierInterface;
 use Mildberry\JMSFormat\Modifier\AlignmentModifierTrait;
 
 /**

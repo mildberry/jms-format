@@ -1,14 +1,14 @@
 <?php
 
-namespace Mildberry\JMSFormat\Modifier;
+namespace Mildberry\JMSFormat\Interfaces;
 
 /**
  * @author Egor Zyuskin <e.zyuskin@mildberry.com>
  */
-interface ColorModifierInterface
+interface SrcModifierInterface
 {
     /**
      * @return string
      */
-    public function getColor();
+    public function getSrc();
 }

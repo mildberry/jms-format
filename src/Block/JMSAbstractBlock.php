@@ -1,6 +1,7 @@
 <?php
 
 namespace Mildberry\JMSFormat\Block;
+
 use Mildberry\JMSFormat\JMSModifierHelper;
 
 /**

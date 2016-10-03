@@ -21,7 +21,7 @@ class JMSModifierHelper
      */
     public static function getModifierInterfaceClassName($name)
     {
-        return 'Mildberry\JMSFormat\Modifier\\'.ucfirst(strtolower($name)).'ModifierInterface';
+        return 'Mildberry\JMSFormat\Interfaces\\'.ucfirst(strtolower($name)).'ModifierInterface';
     }
 
     /**

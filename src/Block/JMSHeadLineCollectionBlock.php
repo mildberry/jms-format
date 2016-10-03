@@ -2,7 +2,7 @@
 
 namespace Mildberry\JMSFormat\Block;
 
-use Mildberry\JMSFormat\Modifier\WeightModifierInterface;
+use Mildberry\JMSFormat\Interfaces\WeightModifierInterface;
 use Mildberry\JMSFormat\Modifier\WeightModifierTrait;
 
 /**

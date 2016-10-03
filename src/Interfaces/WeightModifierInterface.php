@@ -1,6 +1,6 @@
 <?php
 
-namespace Mildberry\JMSFormat\Modifier;
+namespace Mildberry\JMSFormat\Interfaces;
 
 /**
  * @author Egor Zyuskin <e.zyuskin@mildberry.com>

@@ -1,14 +1,14 @@
 <?php
 
-namespace Mildberry\JMSFormat\Modifier;
+namespace Mildberry\JMSFormat\Interfaces;
 
 /**
  * @author Egor Zyuskin <e.zyuskin@mildberry.com>
  */
-interface SizeModifierInterface
+interface ColorModifierInterface
 {
     /**
      * @return string
      */
-    public function getSize();
+    public function getColor();
 }

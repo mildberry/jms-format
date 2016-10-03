@@ -18,7 +18,7 @@ class JMSFormatModifiersTest extends PHPUnit_Framework_TestCase
     public function testSuccessModifierHelper()
     {
         $this->assertEquals(['alignment', 'color', 'floating', 'size', 'src', 'weight', 'decoration'], JMSModifierHelper::getAllowedModifiers());
-        $this->assertEquals('Mildberry\JMSFormat\Modifier\ColorModifierInterface', JMSModifierHelper::getModifierInterfaceClassName('COLOR'));
+        $this->assertEquals('Mildberry\JMSFormat\Interfaces\ColorModifierInterface', JMSModifierHelper::getModifierInterfaceClassName('COLOR'));
         $this->assertEquals('getColor', JMSModifierHelper::getModifierGetterName('cOlOr'));
         $this->assertEquals('setColor', JMSModifierHelper::getModifierSetterName('cOlOr'));
     }

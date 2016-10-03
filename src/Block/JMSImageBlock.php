@@ -2,9 +2,9 @@
 
 namespace Mildberry\JMSFormat\Block;
 
-use Mildberry\JMSFormat\Modifier\FloatingModifierInterface;
-use Mildberry\JMSFormat\Modifier\SizeModifierInterface;
-use Mildberry\JMSFormat\Modifier\SrcModifierInterface;
+use Mildberry\JMSFormat\Interfaces\FloatingModifierInterface;
+use Mildberry\JMSFormat\Interfaces\SizeModifierInterface;
+use Mildberry\JMSFormat\Interfaces\SrcModifierInterface;
 use Mildberry\JMSFormat\Modifier\FloatingModifierTrait;
 use Mildberry\JMSFormat\Modifier\SizeModifierTrait;
 use Mildberry\JMSFormat\Modifier\SrcModifierTrait;
