@@ -24,6 +24,7 @@ class JMSFormatCollectionTest extends \PHPUnit_Framework_TestCase
         $collection->offsetSet(0, $block);
         $this->assertEquals('{"block":"body","modifiers":[],"content":[{"block":"text","modifiers":[],"content":"content"}]}', $collection->toJson());
         $collection->offsetUnset(0);
+        $this->assertEquals(0, $collection->getIterator()->count());
 
         print $collection;
     }
