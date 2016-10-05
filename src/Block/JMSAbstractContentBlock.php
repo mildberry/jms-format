@@ -13,6 +13,11 @@ abstract class JMSAbstractContentBlock extends JMSAbstractBlock
     protected $content;
 
     /**
+     * @var array
+     */
+    protected $modifiers;
+
+    /**
      * @param string $content
      */
     public function __construct($content = '')
@@ -48,18 +53,28 @@ abstract class JMSAbstractContentBlock extends JMSAbstractBlock
         parent::loadFromJMSArray($data);
 
         $this->setContent($data['content']);
+
+        return $this;
     }
 
     /**
      * @return array
      */
-    public function asJMSArray()
+    public function getJMSArray()
     {
         return array_merge(
-            parent::asJMSArray(),
+            parent::getJMSArray(),
             [
                 'content' => $this->getContent(),
             ]
         );
+    }
+
+    /**
+     * @return string
+     */
+    public function getHTMLText()
+    {
+        return parent::getHTMLText().$this->getContent().'</'.$this->getTagName().'>';
     }
 }

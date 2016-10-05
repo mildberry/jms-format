@@ -61,34 +61,26 @@ class HtmlParser implements ParserInterface
      */
     private function createHtmlFromCollection(JMSCollectionBlock $collection)
     {
-        $html = '';
-
-        /** @var JMSAbstractBlock $block */
-        foreach ($collection as $block) {
-            if ($block instanceof JMSCollectionBlock) {
-                $tag1 = JMSBlockHelper::getTagSourceByBlock($block);
-                $html .= '<'.$tag1.'>';
-                if ($block->count() == 1) {
-                    $tag = JMSBlockHelper::getTagSourceByBlock($block[0]);
-                    $html .= '<'.$tag.'>';
-                    if ($block[0] instanceof JMSAbstractContentBlock) {
-                        $html .= $block[0]->getContent().'</'.explode(' ', $tag)[0].'>';
-                    }
-                } else {
-                    $html .= $this->createHtmlFromCollection($block);
-                }
-                $html .= '</'.explode(' ', $tag1)[0].'>';
-
-            } else {
-                $tag = JMSBlockHelper::getTagSourceByBlock($block);
-                $html .= '<'.$tag.'>';
-                if ($block instanceof JMSAbstractContentBlock) {
-                    $html .= $block->getContent().'</'.explode(' ', $tag)[0].'>';
-                }
-            }
-        }
-
-        return $html;
+        return $collection->getContentAsHTMLText();
+//        $html = '';
+//
+//        /** @var JMSAbstractBlock $block */
+//        foreach ($collection as $block) {
+//            if ($block instanceof JMSCollectionBlock) {
+//                if ($block->count() == 1) {
+//                    $content = ($block[0] instanceof JMSAbstractContentBlock) ? $block[0]->getContent() : null;
+//                    $html .= JMSBlockHelper::getTagSourceByBlock($block[0], $content);
+//                } else {
+//                    $content = $this->createHtmlFromCollection($block);
+//                    $html .= JMSBlockHelper::getTagSourceByBlock($block, $content);
+//                }
+//            } else {
+//                $content = ($block instanceof JMSAbstractContentBlock) ? $block->getContent() : null;
+//                $html .= JMSBlockHelper::getTagSourceByBlock($block, $content);
+//            }
+//        }
+//
+//        return $html;
     }
 
     /**

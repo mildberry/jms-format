@@ -28,7 +28,7 @@ class JMSFormatItemsTest extends PHPUnit_Framework_TestCase
         $item = new JMSBlockquoteBlock();
         $item->addBlock((new JMSImageBlock()));
         $item->addBlock((new JMSTextBlock('c')));
-        $this->assertEquals('{"block":"blockquote","modifiers":[],"content":[{"block":"image","modifiers":[]},{"block":"text","modifiers":[],"content":"c"}]}', $item->asJMSText());
+        $this->assertEquals('{"block":"blockquote","modifiers":[],"content":[{"block":"image","modifiers":[]},{"block":"text","modifiers":[],"content":"c"}]}', $item->getJMSText());
     }
 
     public function testFiledHeadLineItem()
@@ -43,7 +43,7 @@ class JMSFormatItemsTest extends PHPUnit_Framework_TestCase
         $item = new JMSHeadlineBlock();
         $item->setWeight('xs');
         $item->addBlock((new JMSTextBlock('c')));
-        $this->assertEquals('{"block":"headline","modifiers":{"weight":"xs"},"content":[{"block":"text","modifiers":[],"content":"c"}]}', $item->asJMSText());
+        $this->assertEquals('{"block":"headline","modifiers":{"weight":"xs"},"content":[{"block":"text","modifiers":[],"content":"c"}]}', $item->getJMSText());
     }
 
     public function testSuccessImageItem()
@@ -52,7 +52,7 @@ class JMSFormatItemsTest extends PHPUnit_Framework_TestCase
         $item->setFloating('left');
         $item->setSize('wide');
         $item->setSrc('https://www.ya.ru/favicon.ico');
-        $this->assertEquals('{"block":"image","modifiers":{"floating":"left","size":"wide","src":"https://www.ya.ru/favicon.ico"}}', $item->asJMSText());
+        $this->assertEquals('{"block":"image","modifiers":{"floating":"left","size":"wide","src":"https://www.ya.ru/favicon.ico"}}', $item->getJMSText());
     }
 
     public function testFiledParagraphItem()
@@ -74,7 +74,7 @@ class JMSFormatItemsTest extends PHPUnit_Framework_TestCase
         $collection->addBlock(new JMSTextBlock('c'));
         $item->addCollection($collection);
 
-        $this->assertEquals('{"block":"paragraph","modifiers":{"alignment":"center"},"content":[{"block":"image","modifiers":[]},{"block":"text","modifiers":[],"content":"c"},{"block":"text","modifiers":[],"content":"c"}]}', $item->asJMSText());
+        $this->assertEquals('{"block":"paragraph","modifiers":{"alignment":"center"},"content":[{"block":"image","modifiers":[]},{"block":"text","modifiers":[],"content":"c"},{"block":"text","modifiers":[],"content":"c"}]}', $item->getJMSText());
     }
 
     public function testSuccessTextItem()
@@ -83,6 +83,6 @@ class JMSFormatItemsTest extends PHPUnit_Framework_TestCase
         $item->setContent('content');
         $item->setColor('info');
         $item->setDecoration('bold');
-        $this->assertEquals('{"block":"text","modifiers":{"color":"info","decoration":["bold"]},"content":"content"}', $item->asJMSText());
+        $this->assertEquals('{"block":"text","modifiers":{"color":"info","decoration":["bold"]},"content":"content"}', $item->getJMSText());
     }
 }

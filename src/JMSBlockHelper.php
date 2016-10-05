@@ -14,7 +14,7 @@ use Mildberry\JMSFormat\Interfaces\ColorModifierInterface;
 use Mildberry\JMSFormat\Interfaces\DecorationModifierInterface;
 use Mildberry\JMSFormat\Interfaces\FloatingModifierInterface;
 use Mildberry\JMSFormat\Interfaces\SizeModifierInterface;
-use Mildberry\JMSFormat\Interfaces\SrcModifierInterface;
+use Mildberry\JMSFormat\Interfaces\SourceAttributeInterface;
 use Mildberry\JMSFormat\Interfaces\WeightModifierInterface;
 
 /**
@@ -46,19 +46,17 @@ class JMSBlockHelper
 
     /**
      * @param string $name
-     * @param string $value
-     * @return JMSAbstractBlock
-     * @throws BadBlockNameException
+     * @return string
      */
-    public static function createBlockByTagName($name, $value)
+    public static function getClassByTagName($name)
     {
         switch ($name) {
             case 'span': case 'u': case 'b': case 'i': case 'del':
-                $className = JMSTextBlock::class;
-                break;
+            $className = JMSTextBlock::class;
+            break;
             case 'h1': case 'h2': case 'h3': case 'h4':
-                $className = JMSHeadlineBlock::class;
-                break;
+            $className = JMSHeadlineBlock::class;
+            break;
             case 'img':
                 $className = JMSImageBlock::class;
                 break;
@@ -73,6 +71,18 @@ class JMSBlockHelper
                 break;
         }
 
+        return $className;
+    }
+
+    /**
+     * @param string $name
+     * @param string $value
+     * @return JMSAbstractBlock
+     * @throws BadBlockNameException
+     */
+    public static function createBlockByTagName($name, $value)
+    {
+        $className = static::getClassByTagName($name);
         $block = new $className($value);
 
         if (!$block instanceof JMSAbstractBlock) {
@@ -84,82 +94,45 @@ class JMSBlockHelper
 
     /**
      * @param JMSAbstractBlock $block
+     * @param string $content
      * @return string
      */
-    public static function getTagSourceByBlock(JMSAbstractBlock $block)
+    public static function getTagSourceByBlock(JMSAbstractBlock $block, $content = '')
     {
         $tagName = '';
         $classes = [];
+        $modifiers = JMSModifierHelper::getAllowedModifiers();
 
-        if ($block instanceof DecorationModifierInterface) {
+        foreach ($modifiers as $modifier) {
+            $method = JMSModifierHelper::getModifierGetterName($modifier);
+            $instance = JMSModifierHelper::getModifierInterfaceClassName($modifier);
+            if ($block instanceof $instance && $value = $block->$method()) {
+                if (!$tagName && $name = JMSModifierHelper::getTagNameByModifierValue($value)) {
+                    $tagName = $name;
+                }
+
+                if (is_array($value)) {
+                    foreach ($value as $item) {
+                        if (get_class($block) <> static::getClassByTagName($tagName)) {
+                            $classes[] = $modifier . '-' . $item;
+                        }
+                    }
+                } else {
+                    if (get_class($block) <> static::getClassByTagName($tagName)) {
+                        $classes[] = $modifier . '-' . $value;
+                    }
+                }
+            }
+        }
+//        die($block->getBlockName());
+//        if (!$tagName && $block->getBlockName() == 'headline') {
+//            $tagName = 'h1';
+//        }
+
+        if (!$tagName && !empty($classes)) {
             $tagName = 'span';
-            if (count($block->getDecoration()) == 1) {
-                switch($block->getDecoration()[0]) {
-                    case 'bold':
-                        $tagName = 'b';
-                        break;
-                    case 'italic':
-                        $tagName = 'i';
-                        break;
-                    case 'del':
-                        $tagName = 'del';
-                        break;
-                    case 'underline':
-                        $tagName = 'u';
-                        break;
-                }
-            }
-            if (count($block->getDecoration()) > 1) {
-                foreach ($block->getDecoration() as $decoration) {
-                    $classes[] = 'decoration-'.$decoration;
-                }
-            }
         }
 
-        if ($block instanceof ColorModifierInterface && $block->getColor()) {
-            $classes[] = 'color-'.$block->getColor();
-        }
-
-        if ($block instanceof AlignmentModifierInterface) {
-            $tagName = 'p';
-            $classes[] = 'alignment-'.$block->getAlignment();
-        }
-
-        if ($block instanceof FloatingModifierInterface) {
-            $tagName = 'img';
-            $classes[] = 'floating-'.$block->getFloating();
-        }
-
-        if ($block instanceof SizeModifierInterface) {
-            $tagName = 'img';
-            $classes[] = 'size-'.$block->getSize();
-        }
-
-        if ($block instanceof SrcModifierInterface) {
-            $tagName = 'img src="'.$block->getSrc().'"';
-        }
-
-        if ($block->getBlockName() == 'headline') {
-            $tagName = 'h1';
-        }
-
-        if ($block instanceof WeightModifierInterface) {
-            switch ($block->getWeight()) {
-                case 'xs':
-                    $tagName = 'h4';
-                    break;
-                case 'sm':
-                    $tagName = 'h3';
-                    break;
-                case 'md':
-                    $tagName = 'h2';
-                    break;
-                case 'lg';
-                    $tagName = 'h1';
-                    break;
-            }
-        }
-
-        return $tagName.((count($classes) > 0) ? ' class="'.implode(' ', $classes).'"' : '');
+        return (($tagName) ? '<'.$tagName.((count($classes) > 0) ? ' class="'.implode(' ', $classes).'"' : '').'>' : '').(($content) ? $content.(($tagName) ? '</'.$tagName.'>' : '') : '');
     }
 }

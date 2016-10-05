@@ -10,16 +10,11 @@ use Mildberry\JMSFormat\Exception\BadModifierValueException;
 trait DecorationModifierTrait
 {
     /**
-     * @var array
-     */
-    protected $decoration = [];
-
-    /**
      * @return array
      */
     public function getDecoration()
     {
-        return $this->decoration;
+        return (!empty($this->modifiers['$decoration'])) ? $this->modifiers['$decoration'] : null;
     }
 
     /**
@@ -30,15 +25,16 @@ trait DecorationModifierTrait
     public function setDecoration($decoration)
     {
         if (is_array($decoration)) {
-            $this->decoration = $decoration;
+            $this->modifiers['$decoration'] = $decoration;
         } else {
             if (!in_array($decoration, $this->getDecorationAllowedValues())) {
-                throw new BadModifierValueException('Decoration value: "' . $decoration . '" not valid, must be [' . implode(',', $this->getDecorationAllowedValues()) . ']');
+                throw new BadModifierValueException('Decoration value: "' . $decoration . '" not valid, must be [' . implode(', ', $this->getDecorationAllowedValues()) . ']');
             }
-
-            array_push($this->decoration, $decoration);
+            $this->tagName = $this->getDecorationTags()[$decoration];
+            array_push($this->modifiers['$decoration'], $decoration);
         }
-        $this->decoration = array_unique($this->decoration);
+
+        $this->modifiers['$decoration'] = array_unique($this->modifiers['$decoration']);
 
         return $this;
     }
@@ -48,6 +44,19 @@ trait DecorationModifierTrait
      */
     public function getDecorationAllowedValues()
     {
-        return ['bold', 'italic', 'del', 'underline'];
+        return array_keys($this->getDecorationTags());
+    }
+
+    /**
+     * @return array
+     */
+    private function getDecorationTags()
+    {
+        return [
+            'bold' => 'b',
+            'italic' => 'i',
+            'del' => 'del',
+            'underline' => 'u',
+        ];
     }
 }

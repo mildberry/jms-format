@@ -18,6 +18,16 @@ class JMSParagraphBlock extends JMSCollectionBlock implements AlignmentModifierI
     protected $blockName = 'paragraph';
 
     /**
+     * @var string
+     */
+    protected $tagName = 'p';
+
+    /**
+     * @var array
+     */
+    protected $modifiers;
+
+    /**
      * @var array
      */
     protected $allowedBlocks = ['text', 'image'];

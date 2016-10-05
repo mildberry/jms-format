@@ -37,7 +37,7 @@ class JMSFormatModifiersTest extends PHPUnit_Framework_TestCase
         $item->setAlignment('center');
         $item->setAlignment('right');
         $this->assertEquals(3, count($item->getAlignmentAllowedValues()));
-        $this->assertEquals('{"block":"paragraph","modifiers":{"alignment":"right"},"content":[]}', $item->asJMSText());
+        $this->assertEquals('{"block":"paragraph","modifiers":{"alignment":"right"},"content":[]}', $item->getJMSText());
     }
 
     public function testFiledColorModifier()
@@ -56,7 +56,7 @@ class JMSFormatModifiersTest extends PHPUnit_Framework_TestCase
         $item->setColor('warning');
         $item->setColor('danger');
         $this->assertEquals(5, count($item->getColorAllowedValues()));
-        $this->assertEquals('{"block":"text","modifiers":{"color":"danger"},"content":"content"}', $item->asJMSText());
+        $this->assertEquals('{"block":"text","modifiers":{"color":"danger"},"content":"content"}', $item->getJMSText());
     }
 
     public function testFiledDecorationModifier()
@@ -74,7 +74,7 @@ class JMSFormatModifiersTest extends PHPUnit_Framework_TestCase
         $item->setDecoration('del');
         $item->setDecoration('underline');
         $this->assertEquals(4, count($item->getDecorationAllowedValues()));
-        $this->assertEquals('{"block":"text","modifiers":{"decoration":["bold","italic","del","underline"]},"content":"content"}', $item->asJMSText());
+        $this->assertEquals('{"block":"text","modifiers":{"decoration":["bold","italic","del","underline"]},"content":"content"}', $item->getJMSText());
     }
 
     public function testFiledFloatingModifier()
@@ -90,7 +90,7 @@ class JMSFormatModifiersTest extends PHPUnit_Framework_TestCase
         $item->setFloating('left');
         $item->setFloating('right');
         $this->assertEquals(2, count($item->getFloatingAllowedValues()));
-        $this->assertEquals('{"block":"image","modifiers":{"floating":"right"}}', $item->asJMSText());
+        $this->assertEquals('{"block":"image","modifiers":{"floating":"right"}}', $item->getJMSText());
     }
 
     public function testFiledSizeModifier()
@@ -106,7 +106,7 @@ class JMSFormatModifiersTest extends PHPUnit_Framework_TestCase
         $item->setSize('wide');
         $this->assertTrue(true);
         $this->assertEquals(1, count($item->getSizeAllowedValues()));
-        $this->assertEquals('{"block":"image","modifiers":{"size":"wide"}}', $item->asJMSText());
+        $this->assertEquals('{"block":"image","modifiers":{"size":"wide"}}', $item->getJMSText());
     }
 
     public function testFiledWeightModifier()
@@ -124,6 +124,6 @@ class JMSFormatModifiersTest extends PHPUnit_Framework_TestCase
         $item->setWeight('md');
         $item->setWeight('lg');
         $this->assertEquals(4, count($item->getWeightAllowedValues()));
-        $this->assertEquals('{"block":"headline","modifiers":{"weight":"lg"},"content":[]}', $item->asJMSText());
+        $this->assertEquals('{"block":"headline","modifiers":{"weight":"lg"},"content":[]}', $item->getJMSText());
     }
 }

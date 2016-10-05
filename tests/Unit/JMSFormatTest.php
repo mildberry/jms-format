@@ -41,7 +41,7 @@ class JMSFormatTest extends PHPUnit_Framework_TestCase
         $this->assertEquals($this->getJMSText(), $contentFormatter->convert('html', 'JMS', $this->getHtmlText()));
 
         $contentFormatter->setData(new JMSCollectionBlock());
-        $this->assertEquals('{"block":"body","modifiers":[],"content":[]}', $contentFormatter->getData()->asJMSText());
+        $this->assertEquals('{"block":"body","modifiers":[],"content":[]}', $contentFormatter->getData()->getJMSText());
 
         $this->assertEquals($this->getJMSText(), $contentFormatter->loadFormFormat('JMS', $this->getJMSText())->saveToFormat('JMS'));
         $this->assertEquals($this->getHtmlText(), $contentFormatter->loadFormFormat('JMS', $this->getJMSText())->saveToFormat('Html'));
@@ -51,7 +51,7 @@ class JMSFormatTest extends PHPUnit_Framework_TestCase
     {
         $parser = new JmsParser();
         $this->assertTrue($parser instanceof ParserInterface);
-        $this->assertEquals('{"block":"body","modifiers":[],"content":[]}', $parser->toCollection('')->asJMSText());
+        $this->assertEquals('{"block":"body","modifiers":[],"content":[]}', $parser->toCollection('')->getJMSText());
     }
 
     public function testSuccessHTMLParser()

@@ -13,6 +13,16 @@ class JMSBlockquoteBlock extends JMSCollectionBlock
     protected $blockName = 'blockquote';
 
     /**
+     * @var string
+     */
+    protected $tagName = 'blockquote';
+
+    /**
+     * @var array
+     */
+    protected $modifiers;
+
+    /**
      * @var array
      */
     protected $allowedBlocks = ['text', 'image'];

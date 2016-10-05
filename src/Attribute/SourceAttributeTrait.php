@@ -1,23 +1,18 @@
 <?php
 
-namespace Mildberry\JMSFormat\Modifier;
+namespace Mildberry\JMSFormat\Attribute;
 
 /**
  * @author Egor Zyuskin <e.zyuskin@mildberry.com>
  */
-trait SrcModifierTrait
+trait SourceAttributeTrait
 {
-    /**
-     * @var string
-     */
-    protected $src;
-
     /**
      * @return string
      */
     public function getSrc()
     {
-        return $this->src;
+        return (!empty($this->attributes['src'])) ? $this->attributes['src'] : null;
     }
 
     /**
@@ -27,7 +22,7 @@ trait SrcModifierTrait
      */
     public function setSrc($src)
     {
-        $this->src = $src;
+        $this->attributes['src'] = $src;
 
         return $this;
     }

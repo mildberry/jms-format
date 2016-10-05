@@ -10,16 +10,11 @@ use Mildberry\JMSFormat\Exception\BadModifierValueException;
 trait AlignmentModifierTrait
 {
     /**
-     * @var string
-     */
-    protected $alignment;
-
-    /**
      * @return string
      */
     public function getAlignment()
     {
-        return $this->alignment;
+        return (!empty($this->modifiers['alignment'])) ? $this->modifiers['alignment'] : null;
     }
 
     /**
@@ -30,10 +25,10 @@ trait AlignmentModifierTrait
     public function setAlignment($alignment)
     {
         if (!in_array($alignment, $this->getAlignmentAllowedValues())) {
-            throw new BadModifierValueException('Alignment value: "'.$alignment.'" not valid, must be ['.implode(',', $this->getAlignmentAllowedValues()).']');
+            throw new BadModifierValueException('Alignment value: "'.$alignment.'" not valid, must be ['.implode(', ', $this->getAlignmentAllowedValues()).']');
         }
 
-        $this->alignment = $alignment;
+        $this->modifiers['alignment'] = $alignment;
 
         return $this;
     }

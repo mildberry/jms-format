@@ -5,10 +5,10 @@ namespace Mildberry\JMSFormat\Interfaces;
 /**
  * @author Egor Zyuskin <e.zyuskin@mildberry.com>
  */
-interface SrcModifierInterface
+interface SourceAttributeInterface
 {
     /**
      * @return string
      */
-    public function getSrc();
+    public function getSource();
 }

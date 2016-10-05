@@ -10,16 +10,11 @@ use Mildberry\JMSFormat\Exception\BadModifierValueException;
 trait WeightModifierTrait
 {
     /**
-     * @var string
-     */
-    protected $weight;
-
-    /**
      * @return string
      */
     public function getWeight()
     {
-        return $this->weight;
+        return (!empty($this->modifiers['weight'])) ? $this->modifiers['weight'] : null;
     }
 
     /**
@@ -30,10 +25,11 @@ trait WeightModifierTrait
     public function setWeight($weight)
     {
         if (!in_array($weight, $this->getWeightAllowedValues())) {
-            throw new BadModifierValueException('Weight value: "'.$weight.'" not valid, must be ['.implode(',', $this->getWeightAllowedValues()).']');
+            throw new BadModifierValueException('Weight value: "'.$weight.'" not valid, must be ['.implode(', ', $this->getWeightAllowedValues()).']');
         }
 
-        $this->weight = $weight;
+        $this->tagName = $this->getWeightTags()[$weight];
+        $this->modifiers['weight'] = $weight;
 
         return $this;
     }
@@ -43,6 +39,19 @@ trait WeightModifierTrait
      */
     public function getWeightAllowedValues()
     {
-        return ['xs', 'sm', 'md', 'lg'];
+        return array_keys($this->getWeightTags());
+    }
+
+    /**
+     * @return array
+     */
+    private function getWeightTags()
+    {
+        return [
+            'xs' => 'h4',
+            'sm' => 'h3',
+            'md' => 'h2',
+            'lg' => 'h1',
+        ];
     }
 }

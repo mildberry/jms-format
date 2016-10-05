@@ -20,6 +20,11 @@ class JMSCollectionBlock extends JMSAbstractBlock implements IteratorAggregate ,
     protected $blockName = 'body';
 
     /**
+     * @var string
+     */
+    protected $tagName = 'body';
+
+    /**
      * @var JMSAbstractBlock[]
      */
     protected $blocks = [];
@@ -51,10 +56,10 @@ class JMSCollectionBlock extends JMSAbstractBlock implements IteratorAggregate ,
     /**
      * @return array
      */
-    public function asJMSArray()
+    public function getJMSArray()
     {
         return array_merge(
-            parent::asJMSArray(),
+            parent::getJMSArray(),
             [
                 'content' => $this->getContentAsJMSArray(),
             ]
@@ -69,10 +74,32 @@ class JMSCollectionBlock extends JMSAbstractBlock implements IteratorAggregate ,
         $items = [];
 
         foreach ($this->blocks as $item) {
-            $items[] = $item->asJMSArray();
+            $items[] = $item->getJMSArray();
         }
 
         return $items;
+    }
+
+    /**
+     * @return string
+     */
+    public function getHTMLText()
+    {
+        return '<'.$this->getTagName().$this->getModifiersClassesString().'>'.$this->getContentAsHTMLText().'</'.$this->getTagName().'>';
+    }
+
+    /**
+     * @return string
+     */
+    public function getContentAsHTMLText()
+    {
+        $html = '';
+
+        foreach ($this->blocks as $item) {
+            $html .= $item->getHTMLText();
+        }
+
+        return $html;
     }
 
     /**
@@ -123,7 +150,7 @@ class JMSCollectionBlock extends JMSAbstractBlock implements IteratorAggregate ,
      */
     public function toJson($options = 0)
     {
-        return json_encode($this->asJMSArray(), $options);
+        return json_encode($this->getJMSArray(), $options);
     }
 
     /**

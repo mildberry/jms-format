@@ -15,11 +15,34 @@ abstract class JMSAbstractBlock
     protected $blockName;
 
     /**
+     * @var string
+     */
+    protected $tagName;
+
+    /**
+     * @var array
+     */
+    protected $modifiers;
+
+    /**
+     * @var array
+     */
+    protected $attributes;
+
+    /**
      * @return string
      */
     public function getBlockName()
     {
         return $this->blockName;
+    }
+
+    /**
+     * @return string
+     */
+    public function getTagName()
+    {
+        return $this->tagName;
     }
 
     /**
@@ -78,7 +101,7 @@ abstract class JMSAbstractBlock
     /**
      * @return array
      */
-    public function asJMSArray()
+    public function getJMSArray()
     {
         return [
             'block' => $this->getBlockName(),
@@ -89,8 +112,45 @@ abstract class JMSAbstractBlock
     /**
      * @return string
      */
-    public function asJMSText()
+    public function getJMSText()
     {
-        return json_encode($this->asJMSArray(), JSON_UNESCAPED_SLASHES | JSON_UNESCAPED_UNICODE);
+        return json_encode($this->getJMSArray(), JSON_UNESCAPED_SLASHES | JSON_UNESCAPED_UNICODE);
+    }
+
+    /**
+     * @return string
+     */
+    public function getHTMLText()
+    {
+        return '<'.$this->getTagName().$this->getModifiersClassesString().'>';
+    }
+
+    /**
+     * @return string
+     */
+    protected function getModifiersClassesString()
+    {
+        $classes = $this->getModifiersClasses();
+
+        return (!empty($classes)) ? ' classes="'.implode(' ', $classes).'"' : '';
+    }
+
+    /**
+     * @return array
+     */
+    protected function getModifiersClasses()
+    {
+        $classes = [];
+
+        foreach ($this->getModifiers() as $name => $modifiers) {
+            if (is_string($modifiers)) {
+                $modifiers = [$modifiers];
+            }
+            foreach ($modifiers as $modifier) {
+                $classes[] = $name.'-'.$modifier;
+            }
+        }
+
+        return $classes;
     }
 }
