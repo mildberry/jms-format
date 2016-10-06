@@ -50,44 +50,4 @@ class JMSModifierHelper
     {
         return 'set'.ucfirst(strtolower($name));
     }
-
-    /**
-     * @param string|array $values
-     * @return string
-     */
-    public static function getTagNameByModifierValue($values)
-    {
-        if (!is_array($values)) {
-            $values = [$values];
-        }
-
-        foreach ($values as $value) {
-            switch ($value) {
-                case 'bold':
-                    return 'b';
-                    break;
-                case 'italic':
-                    return 'i';
-                    break;
-                case 'del':
-                    return 'del';
-                    break;
-                case 'underline':
-                    return 'u';
-                    break;
-                case 'xs':
-                    return 'h4';
-                    break;
-                case 'sm':
-                    return 'h3';
-                    break;
-                case 'md':
-                    return 'h2';
-                    break;
-                case 'lg':
-                    return 'h1';
-                    break;
-            }
-        }
-    }
 }
