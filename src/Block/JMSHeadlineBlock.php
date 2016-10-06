@@ -26,21 +26,4 @@ class JMSHeadlineBlock extends JMSCollectionBlock implements WeightModifierInter
      * @var string
      */
     protected $tagName = 'h1';
-
-    /**
-     * @var array
-     */
-    protected $modifiers;
-
-    /**
-     * @return string
-     */
-    public function getTagName()
-    {
-        if ($tagName = $this->getTagNameByDecorationValue()) {
-            return $tagName;
-        }
-
-        return $this->tagName;
-    }
 }

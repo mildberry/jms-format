@@ -5,15 +5,10 @@ namespace Mildberry\JMSFormat\Interfaces;
 /**
  * @author Egor Zyuskin <e.zyuskin@mildberry.com>
  */
-interface WeightModifierInterface
+interface SrcAttributeInterface
 {
     /**
      * @return string
      */
-    public function getWeight();
-
-    /**
-     * @return string
-     */
-    public function getWeightHtmlClass();
+    public function getSrc();
 }

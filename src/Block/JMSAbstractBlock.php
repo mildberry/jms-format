@@ -2,6 +2,7 @@
 
 namespace Mildberry\JMSFormat\Block;
 
+use Mildberry\JMSFormat\JMSAttributeHelper;
 use Mildberry\JMSFormat\JMSModifierHelper;
 
 /**
@@ -20,16 +21,6 @@ abstract class JMSAbstractBlock
     protected $tagName;
 
     /**
-     * @var array
-     */
-    protected $modifiers;
-
-    /**
-     * @var array
-     */
-    protected $attributes;
-
-    /**
      * @return string
      */
     public function getBlockName()
@@ -43,6 +34,46 @@ abstract class JMSAbstractBlock
     public function getTagName()
     {
         return $this->tagName;
+    }
+
+    /**
+     * @return array
+     */
+    public function getAttributes()
+    {
+        $attributesName = JMSAttributeHelper::getAllowedAttributes();
+        $attributes = [];
+
+        foreach ($attributesName as $name) {
+            $interfaceName = JMSAttributeHelper::getAttributeInterfaceClassName($name);
+            $methodName = JMSAttributeHelper::getAttributeGetterName($name);
+
+            if ($this instanceof $interfaceName) {
+                if ($attributesValue = $this->$methodName()) {
+                    $attributes[$name] = $attributesValue;
+                }
+            }
+        }
+
+        return $attributes;
+    }
+
+    /**
+     * @param array $attributes
+     * @return $this
+     */
+    public function setAttributes(array $attributes)
+    {
+        foreach ($attributes as $name => $value) {
+            $interfaceName = JMSAttributeHelper::getAttributeInterfaceClassName($name);
+            $attributeName = JMSAttributeHelper::getAttributeSetterName($name);
+
+            if ($this instanceof $interfaceName) {
+                $this->$attributeName($value);
+            }
+        }
+
+        return $this;
     }
 
     /**
@@ -95,6 +126,10 @@ abstract class JMSAbstractBlock
             $this->setModifiers($data['modifiers']);
         }
 
+        if (!empty($data['attributes'])) {
+            $this->setAttributes($data['attributes']);
+        }
+
         return $this;
     }
 
@@ -103,10 +138,16 @@ abstract class JMSAbstractBlock
      */
     public function getJMSArray()
     {
-        return [
+        $return = [
             'block' => $this->getBlockName(),
             'modifiers' => $this->getModifiers(),
         ];
+
+        if ($attributes = $this->getAttributes()) {
+            $return['attributes'] = $attributes;
+        }
+
+        return $return;
     }
 
     /**
@@ -122,7 +163,7 @@ abstract class JMSAbstractBlock
      */
     public function getHTMLText()
     {
-        return '<'.$this->getTagName().$this->getModifiersClassesString().'>';
+        return '<'.$this->getTagName().$this->getModifiersClassesString().$this->getAttributesHtmlString().'>';
     }
 
     /**
@@ -132,7 +173,7 @@ abstract class JMSAbstractBlock
     {
         $classes = $this->getModifiersClasses();
 
-        return (!empty($classes)) ? ' classes="'.implode(' ', $classes).'"' : '';
+        return (!empty($classes)) ? ' class="'.implode(' ', $classes).'"' : '';
     }
 
     /**
@@ -142,15 +183,51 @@ abstract class JMSAbstractBlock
     {
         $classes = [];
 
-        foreach ($this->getModifiers() as $name => $modifiers) {
-            if (is_string($modifiers)) {
-                $modifiers = [$modifiers];
-            }
-            foreach ($modifiers as $modifier) {
-                $classes[] = $name.'-'.$modifier;
+        $modifiersName = JMSModifierHelper::getAllowedModifiers();
+
+        foreach ($modifiersName as $name) {
+            $interfaceName = JMSModifierHelper::getModifierInterfaceClassName($name);
+            $methodName = JMSModifierHelper::getModifierGetterHtmlClass($name);
+
+            if ($this instanceof $interfaceName) {
+                if ($modifiersValue = $this->$methodName()) {
+                    $classes[] = $modifiersValue;
+                }
             }
         }
 
         return $classes;
+    }
+
+    /**
+     * @return string
+     */
+    protected function getAttributesHtmlString()
+    {
+        $attributes = $this->getAttributeHtml();
+
+        return (!empty($attributes)) ? ' '.implode(' ', $attributes) : '';
+    }
+
+    /**
+     * @return array
+     */
+    protected function getAttributeHtml()
+    {
+        $attributes = [];
+
+        $attributesName = JMSModifierHelper::getAllowedModifiers();
+
+        foreach ($attributesName as $name) {
+            $interfaceName = JMSAttributeHelper::getAttributeInterfaceClassName($name);
+            $methodName = JMSAttributeHelper::getAttributeGetterName($name);
+            if ($this instanceof $interfaceName) {
+                if ($modifiersValue = $this->$methodName()) {
+                    $attributes[] = $name.'="'.$modifiersValue.'"';
+                }
+            }
+        }
+
+        return $attributes;
     }
 }

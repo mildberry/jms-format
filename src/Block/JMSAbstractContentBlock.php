@@ -13,11 +13,6 @@ abstract class JMSAbstractContentBlock extends JMSAbstractBlock
     protected $content;
 
     /**
-     * @var array
-     */
-    protected $modifiers;
-
-    /**
      * @param string $content
      */
     public function __construct($content = '')

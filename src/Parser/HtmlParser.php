@@ -8,12 +8,7 @@ use DOMNamedNodeMap;
 use DOMNodeList;
 use DOMText;
 use Mildberry\JMSFormat\Block\JMSAbstractBlock;
-use Mildberry\JMSFormat\Block\JMSAbstractContentBlock;
-use Mildberry\JMSFormat\Block\JMSBlockquoteBlock;
 use Mildberry\JMSFormat\Block\JMSCollectionBlock;
-use Mildberry\JMSFormat\Block\JMSHeadlineBlock;
-use Mildberry\JMSFormat\Block\JMSImageBlock;
-use Mildberry\JMSFormat\Block\JMSParagraphBlock;
 use Mildberry\JMSFormat\Block\JMSTextBlock;
 use Mildberry\JMSFormat\Interfaces\ParserInterface;
 use Mildberry\JMSFormat\JMSBlockHelper;
@@ -43,7 +38,7 @@ class HtmlParser implements ParserInterface
      */
     public function toContent(JMSCollectionBlock $collection)
     {
-        return $this->createHtmlFromCollection($collection);
+        return $collection->getContentAsHTMLText();
     }
 
     /**
@@ -53,34 +48,6 @@ class HtmlParser implements ParserInterface
     private function createCollectionFormHtml($content)
     {
         return $this->createCollectionByDOMElements($this->createDOMElementsByHtml($content));
-    }
-
-    /**
-     * @param JMSCollectionBlock $collection
-     * @return string
-     */
-    private function createHtmlFromCollection(JMSCollectionBlock $collection)
-    {
-        return $collection->getContentAsHTMLText();
-//        $html = '';
-//
-//        /** @var JMSAbstractBlock $block */
-//        foreach ($collection as $block) {
-//            if ($block instanceof JMSCollectionBlock) {
-//                if ($block->count() == 1) {
-//                    $content = ($block[0] instanceof JMSAbstractContentBlock) ? $block[0]->getContent() : null;
-//                    $html .= JMSBlockHelper::getTagSourceByBlock($block[0], $content);
-//                } else {
-//                    $content = $this->createHtmlFromCollection($block);
-//                    $html .= JMSBlockHelper::getTagSourceByBlock($block, $content);
-//                }
-//            } else {
-//                $content = ($block instanceof JMSAbstractContentBlock) ? $block->getContent() : null;
-//                $html .= JMSBlockHelper::getTagSourceByBlock($block, $content);
-//            }
-//        }
-//
-//        return $html;
     }
 
     /**
@@ -130,16 +97,16 @@ class HtmlParser implements ParserInterface
 
     /**
      * @param DOMElement $element
-     * @param array $modifiers
+     * @param array $parentModifiers
      * @return JMSAbstractBlock
      */
-    private function createItemFromDOMElement($element, $modifiers = [])
+    private function createItemFromDOMElement($element, $parentModifiers = [])
     {
         $tagName = mb_strtolower($element->tagName);
-        $item = (JMSBlockHelper::createBlockByTagName($tagName, strip_tags($element->nodeValue)));
-        $item->setModifiers($modifiers);
-
-        return $this->updateBlockModifiersByTagNam($item, $tagName, $element->attributes);
+        return JMSBlockHelper::createBlockByTagName($tagName, strip_tags($element->nodeValue), $element->attributes, $parentModifiers);
+//        $item->setModifiers($parentModifiers);
+//
+//        return $this->updateBlockModifiersByTagNam($item, $tagName, $element->attributes);
     }
 
     /**
@@ -159,7 +126,7 @@ class HtmlParser implements ParserInterface
             case 'h2': $item->setWeight('md'); break;
             case 'h3': $item->setWeight('sm'); break;
             case 'h4': $item->setWeight('xs'); break;
-            case 'img': $item->setSrc($attributes->getNamedItem('src')->nodeValue); break;
+            case 'img': $item->setSource($attributes->getNamedItem('src')->nodeValue); break;
         }
 
         if ($classes = $attributes->getNamedItem('class')) {

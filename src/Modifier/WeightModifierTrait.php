@@ -10,11 +10,16 @@ use Mildberry\JMSFormat\Exception\BadModifierValueException;
 trait WeightModifierTrait
 {
     /**
+     * @var string
+     */
+    protected $weight;
+    
+    /**
      * @return string
      */
     public function getWeight()
     {
-        return (!empty($this->modifiers['weight'])) ? $this->modifiers['weight'] : null;
+        return $this->weight;
     }
 
     /**
@@ -29,9 +34,26 @@ trait WeightModifierTrait
         }
 
         $this->tagName = $this->getWeightTags()[$weight];
-        $this->modifiers['weight'] = $weight;
+        $this->weight = $weight;
 
         return $this;
+    }
+
+    /**
+     * @param string $tagName
+     * @return string
+     */
+    public function getWeightByTag($tagName)
+    {
+        return array_search($tagName, $this->getWeightTags());
+    }
+
+    /**
+     * @return string
+     */
+    public function getWeightHtmlClass()
+    {
+        return ($this->weight && $this->getWeightTags()[$this->weight] != $this->tagName) ? 'weight-'.$this->getWeight() : null;
     }
 
     /**

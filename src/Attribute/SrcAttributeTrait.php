@@ -5,14 +5,17 @@ namespace Mildberry\JMSFormat\Attribute;
 /**
  * @author Egor Zyuskin <e.zyuskin@mildberry.com>
  */
-trait SourceAttributeTrait
+trait SrcAttributeTrait
 {
+
+    private $src;
+
     /**
      * @return string
      */
     public function getSrc()
     {
-        return (!empty($this->attributes['src'])) ? $this->attributes['src'] : null;
+        return $this->src;
     }
 
     /**
@@ -22,7 +25,7 @@ trait SourceAttributeTrait
      */
     public function setSrc($src)
     {
-        $this->attributes['src'] = $src;
+        $this->src = $src;
 
         return $this;
     }

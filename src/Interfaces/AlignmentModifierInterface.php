@@ -11,4 +11,9 @@ interface AlignmentModifierInterface
      * @return string
      */
     public function getAlignment();
+
+    /**
+     * @return string
+     */
+    public function getAlignmentHtmlClass();
 }

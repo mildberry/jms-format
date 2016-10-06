@@ -37,6 +37,15 @@ class JMSModifierHelper
      * @param string $name
      * @return string
      */
+    public static function getModifierGetterHtmlClass($name)
+    {
+        return 'get'.ucfirst(strtolower($name)).'HtmlClass';
+    }
+
+    /**
+     * @param string $name
+     * @return string
+     */
     public static function getModifierSetterName($name)
     {
         return 'set'.ucfirst(strtolower($name));

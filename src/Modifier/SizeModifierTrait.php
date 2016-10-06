@@ -10,11 +10,16 @@ use Mildberry\JMSFormat\Exception\BadModifierValueException;
 trait SizeModifierTrait
 {
     /**
+     * @var string
+     */
+    protected $size;
+    
+    /**
      * @return string
      */
     public function getSize()
     {
-        return (!empty($this->modifiers['size'])) ? $this->modifiers['size'] : null;
+        return $this->size;
     }
 
     /**
@@ -28,9 +33,17 @@ trait SizeModifierTrait
             throw new BadModifierValueException('Size value: "'.$size.'" not valid, must be ['.implode(', ', $this->getSizeAllowedValues()).']');
         }
 
-        $this->modifiers['size'] = $size;
+        $this->size = $size;
 
         return $this;
+    }
+
+    /**
+     * @return string
+     */
+    public function getSizeHtmlClass()
+    {
+        return ($this->size) ? 'size-'.$this->getSize() : null;
     }
 
     /**

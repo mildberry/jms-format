@@ -10,11 +10,16 @@ use Mildberry\JMSFormat\Exception\BadModifierValueException;
 trait ColorModifierTrait
 {
     /**
+     * @var string
+     */
+    protected $color;
+
+    /**
      * @return string
      */
     public function getColor()
     {
-        return (!empty($this->modifiers['color'])) ? $this->modifiers['color'] : null;
+        return $this->color;
     }
 
     /**
@@ -28,9 +33,17 @@ trait ColorModifierTrait
             throw new BadModifierValueException('Color value: "'.$color.'" not valid, must be ['.implode(', ', $this->getColorAllowedValues()).']');
         }
 
-        $this->modifiers['color'] = $color;
+        $this->color = $color;
 
         return $this;
+    }
+
+    /**
+     * @return string
+     */
+    public function getColorHtmlClass()
+    {
+        return ($this->color) ? 'color-'.$this->getColor() : null;
     }
 
     /**

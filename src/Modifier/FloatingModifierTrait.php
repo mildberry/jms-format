@@ -10,11 +10,16 @@ use Mildberry\JMSFormat\Exception\BadModifierValueException;
 trait FloatingModifierTrait
 {
     /**
+     * @var string
+     */
+    protected $floating;
+    
+    /**
      * @return string
      */
     public function getFloating()
     {
-        return (!empty($this->modifiers['floating'])) ? $this->modifiers['floating'] : null;
+        return $this->floating;
     }
 
     /**
@@ -28,9 +33,17 @@ trait FloatingModifierTrait
             throw new BadModifierValueException('Floating value: "'.$floating.'" not valid, must be ['.implode(', ', $this->getFloatingAllowedValues()).']');
         }
 
-        $this->modifiers['floating'] = $floating;
+        $this->floating = $floating;
 
         return $this;
+    }
+
+    /**
+     * @return string
+     */
+    public function getFloatingHtmlClass()
+    {
+        return ($this->floating) ? 'floating-'.$this->getFloating() : null;
     }
 
     /**

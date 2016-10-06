@@ -20,10 +20,5 @@ class JMSBlockquoteBlock extends JMSCollectionBlock
     /**
      * @var array
      */
-    protected $modifiers;
-
-    /**
-     * @var array
-     */
     protected $allowedBlocks = ['text', 'image'];
 }

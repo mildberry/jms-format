@@ -11,4 +11,9 @@ interface FloatingModifierInterface
      * @return string
      */
     public function getFloating();
+
+    /**
+     * @return string
+     */
+    public function getFloatingHtmlClass();
 }

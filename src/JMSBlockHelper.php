@@ -2,6 +2,7 @@
 
 namespace Mildberry\JMSFormat;
 
+use DOMNamedNodeMap;
 use Mildberry\JMSFormat\Block\JMSAbstractBlock;
 use Mildberry\JMSFormat\Block\JMSBlockquoteBlock;
 use Mildberry\JMSFormat\Block\JMSHeadlineBlock;
@@ -9,13 +10,6 @@ use Mildberry\JMSFormat\Block\JMSImageBlock;
 use Mildberry\JMSFormat\Block\JMSParagraphBlock;
 use Mildberry\JMSFormat\Block\JMSTextBlock;
 use Mildberry\JMSFormat\Exception\BadBlockNameException;
-use Mildberry\JMSFormat\Interfaces\AlignmentModifierInterface;
-use Mildberry\JMSFormat\Interfaces\ColorModifierInterface;
-use Mildberry\JMSFormat\Interfaces\DecorationModifierInterface;
-use Mildberry\JMSFormat\Interfaces\FloatingModifierInterface;
-use Mildberry\JMSFormat\Interfaces\SizeModifierInterface;
-use Mildberry\JMSFormat\Interfaces\SourceAttributeInterface;
-use Mildberry\JMSFormat\Interfaces\WeightModifierInterface;
 
 /**
  * @author Egor Zyuskin <e.zyuskin@mildberry.com>
@@ -29,16 +23,16 @@ class JMSBlockHelper
      */
     public static function createBlockByName($name)
     {
-        $className = __NAMESPACE__.'\\Block\\JMS'.ucfirst(strtolower($name)).'Block';
+        $className = __NAMESPACE__ . '\\Block\\JMS' . ucfirst(strtolower($name)) . 'Block';
 
         if (!class_exists($className)) {
-            throw new BadBlockNameException('Class from block "'.$name.'" not exists');
+            throw new BadBlockNameException('Class from block "' . $name . '" not exists');
         }
 
         $block = new $className;
 
         if (!$block instanceof JMSAbstractBlock) {
-            throw new BadBlockNameException('Class "'.$className.'" not block');
+            throw new BadBlockNameException('Class "' . $className . '" not block');
         }
 
         return $block;
@@ -46,93 +40,83 @@ class JMSBlockHelper
 
     /**
      * @param string $name
-     * @return string
+     * @param $value
+     * @return JMSAbstractBlock
+     * @throws BadBlockNameException
      */
-    public static function getClassByTagName($name)
+    public static function createBlockClass($name, $value)
     {
         switch ($name) {
-            case 'span': case 'u': case 'b': case 'i': case 'del':
-            $className = JMSTextBlock::class;
-            break;
-            case 'h1': case 'h2': case 'h3': case 'h4':
-            $className = JMSHeadlineBlock::class;
-            break;
+            case 'span':
+            case 'u':
+            case 'b':
+            case 'i':
+            case 'del':
+                $block = (new JMSTextBlock($value));
+                $block->setDecoration($block->getDecorationByTag($name));
+                break;
+            case 'h1':
+            case 'h2':
+            case 'h3':
+            case 'h4':
+                $block = (new JMSHeadlineBlock($value));
+                $block->setWeight($block->getWeightByTag($name));
+                break;
             case 'img':
-                $className = JMSImageBlock::class;
+                $block = new JMSImageBlock($value);
                 break;
             case 'p':
-                $className = JMSParagraphBlock::class;
+                $block = new JMSParagraphBlock($value);
                 break;
             case 'blockquote':
-                $className = JMSBlockquoteBlock::class;
+                $block = new JMSBlockquoteBlock($value);
                 break;
             default:
-                $className = '';
+                throw new BadBlockNameException('Class for tag "' . $name . '" not found');
                 break;
         }
 
-        return $className;
+        return $block;
     }
 
     /**
      * @param string $name
      * @param string $value
+     * @param DOMNamedNodeMap $nodeAttributes
+     * @param array $parentModifiers
      * @return JMSAbstractBlock
      * @throws BadBlockNameException
      */
-    public static function createBlockByTagName($name, $value)
+    public static function createBlockByTagName($name, $value, DOMNamedNodeMap $nodeAttributes, array $parentModifiers)
     {
-        $className = static::getClassByTagName($name);
-        $block = new $className($value);
+        $block = static::createBlockClass($name, $value);
 
-        if (!$block instanceof JMSAbstractBlock) {
-            throw new BadBlockNameException('Class "'.$className.'" not block');
-        }
+        $allowedModifiers = JMSModifierHelper::getAllowedModifiers();
+        $allowedAttributes = JMSAttributeHelper::getAllowedAttributes();
 
-        return $block;
-    }
+        foreach ($nodeAttributes as $nodeAttribute) {
+            if ($nodeAttribute->nodeName == 'class') {
 
-    /**
-     * @param JMSAbstractBlock $block
-     * @param string $content
-     * @return string
-     */
-    public static function getTagSourceByBlock(JMSAbstractBlock $block, $content = '')
-    {
-        $tagName = '';
-        $classes = [];
-        $modifiers = JMSModifierHelper::getAllowedModifiers();
+                foreach (explode(' ', $nodeAttribute->nodeValue) as $class) {
+                    list($modifier, $value) = array_pad(explode('-', $class), 2, '');
 
-        foreach ($modifiers as $modifier) {
-            $method = JMSModifierHelper::getModifierGetterName($modifier);
-            $instance = JMSModifierHelper::getModifierInterfaceClassName($modifier);
-            if ($block instanceof $instance && $value = $block->$method()) {
-                if (!$tagName && $name = JMSModifierHelper::getTagNameByModifierValue($value)) {
-                    $tagName = $name;
-                }
-
-                if (is_array($value)) {
-                    foreach ($value as $item) {
-                        if (get_class($block) <> static::getClassByTagName($tagName)) {
-                            $classes[] = $modifier . '-' . $item;
+                    if (in_array($modifier, $allowedModifiers) && $modifier && $value) {
+                        $modifierClassName = JMSModifierHelper::getModifierInterfaceClassName($modifier);
+                        if ($block instanceof $modifierClassName) {
+                            $methodName = JMSModifierHelper::getModifierSetterName($modifier);
+                            $block->$methodName($value);
                         }
                     }
-                } else {
-                    if (get_class($block) <> static::getClassByTagName($tagName)) {
-                        $classes[] = $modifier . '-' . $value;
-                    }
+                }
+            } elseif (in_array($nodeAttribute->name, $allowedAttributes)) {
+                $attributeClassName = JMSAttributeHelper::getAttributeInterfaceClassName($nodeAttribute->name);
+                if ($block instanceof $attributeClassName) {
+                    $methodName = JMSAttributeHelper::getAttributeSetterName($nodeAttribute->name);
+                    $block->$methodName($nodeAttribute->value);
                 }
             }
         }
-//        die($block->getBlockName());
-//        if (!$tagName && $block->getBlockName() == 'headline') {
-//            $tagName = 'h1';
-//        }
 
-        if (!$tagName && !empty($classes)) {
-            $tagName = 'span';
-        }
-
-        return (($tagName) ? '<'.$tagName.((count($classes) > 0) ? ' class="'.implode(' ', $classes).'"' : '').'>' : '').(($content) ? $content.(($tagName) ? '</'.$tagName.'>' : '') : '');
+        return $block->setModifiers($parentModifiers);
     }
 }
