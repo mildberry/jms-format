@@ -43,10 +43,14 @@ class JMSCollectionBlock extends JMSAbstractBlock implements IteratorAggregate ,
         parent::loadFromJMSArray($data);
 
         if (!empty($data['content'])) {
-            foreach ($data['content'] as $blockData) {
-                $block = JMSBlockHelper::createBlockByName($blockData['block']);
-                $block->loadFromJMSArray($blockData);
-                $this->addBlock($block);
+            if (is_array($data['content'])) {
+                foreach ($data['content'] as $blockData) {
+                    $block = JMSBlockHelper::createBlockByName($blockData['block']);
+                    $block->loadFromJMSArray($blockData);
+                    $this->addBlock($block);
+                }
+            } else {
+                $this->addBlock(new JMSTextBlock($data['content']));
             }
         }
 
