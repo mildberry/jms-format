@@ -2,13 +2,9 @@
 
 namespace Mildberry\JMSFormat\Test\Unit;
 
-use Mildberry\JMSFormat\Exception\BadModifierValueException;
 use Mildberry\JMSFormat\Block\JMSParagraphBlock;
-use Mildberry\JMSFormat\Block\JMSHeadlineBlock;
 use Mildberry\JMSFormat\Block\JMSImageBlock;
-use Mildberry\JMSFormat\Block\JMSTextBlock;
 use Mildberry\JMSFormat\JMSAttributeHelper;
-use Mildberry\JMSFormat\JMSModifierHelper;
 use PHPUnit_Framework_TestCase;
 
 /**
