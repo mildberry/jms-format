@@ -8,7 +8,7 @@ namespace Mildberry\JMSFormat\Attribute;
 trait SrcAttributeTrait
 {
 
-    private $src;
+    protected $src;
 
     /**
      * @return string

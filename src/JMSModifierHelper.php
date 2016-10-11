@@ -12,7 +12,7 @@ class JMSModifierHelper
      */
     public static function getAllowedModifiers()
     {
-        return ['alignment', 'color', 'floating', 'size', 'src', 'weight', 'decoration'];
+        return ['alignment', 'color', 'floating', 'size', 'weight', 'decoration'];
     }
 
     /**

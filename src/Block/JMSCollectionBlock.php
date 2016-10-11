@@ -89,7 +89,7 @@ class JMSCollectionBlock extends JMSAbstractBlock implements IteratorAggregate ,
      */
     public function getHTMLText()
     {
-        return '<'.$this->getTagName().$this->getModifiersClassesString().'>'.$this->getContentAsHTMLText().'</'.$this->getTagName().'>';
+        return parent::getHTMLText().$this->getContentAsHTMLText().'</'.$this->getTagName().'>';
     }
 
     /**

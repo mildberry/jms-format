@@ -8,12 +8,12 @@ namespace Mildberry\JMSFormat\Attribute;
 trait DataParagraphIdAttributeTrait
 {
     /**
-     * @var int
+     * @var string
      */
-    private $dataParagraphId;
+    protected $dataParagraphId;
 
     /**
-     * @return int
+     * @return string
      */
     public function getDataParagraphId()
     {
@@ -21,7 +21,7 @@ trait DataParagraphIdAttributeTrait
     }
 
     /**
-     * @param int $dataParagraphId
+     * @param string $dataParagraphId
      *
      * @return $this
      */

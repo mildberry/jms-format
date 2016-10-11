@@ -12,7 +12,7 @@ class JMSAttributeHelper
      */
     public static function getAllowedAttributes()
     {
-        return ['src', 'dataParagraphId'];
+        return ['src', 'data-paragraph-id'];
     }
 
     /**
@@ -21,7 +21,7 @@ class JMSAttributeHelper
      */
     public static function getAttributeInterfaceClassName($name)
     {
-        return __NAMESPACE__.'\Interfaces\\'.ucfirst(strtolower($name)).'AttributeInterface';
+        return __NAMESPACE__.'\Interfaces\\'.str_replace('-','', ucwords(strtolower($name), '-')).'AttributeInterface';
     }
 
     /**
@@ -30,7 +30,7 @@ class JMSAttributeHelper
      */
     public static function getAttributeGetterName($name)
     {
-        return 'get'.ucfirst(strtolower($name));
+        return 'get'.str_replace('-','', ucwords(strtolower($name), '-'));
     }
 
     /**
@@ -39,6 +39,6 @@ class JMSAttributeHelper
      */
     public static function getAttributeSetterName($name)
     {
-        return 'set'.ucfirst(strtolower($name));
+        return 'set'.str_replace('-','', ucwords(strtolower($name), '-'));
     }
 }

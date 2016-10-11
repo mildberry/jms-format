@@ -216,14 +216,14 @@ abstract class JMSAbstractBlock
     {
         $attributes = [];
 
-        $attributesName = JMSModifierHelper::getAllowedModifiers();
+        $attributesName = JMSAttributeHelper::getAllowedAttributes();
 
         foreach ($attributesName as $name) {
             $interfaceName = JMSAttributeHelper::getAttributeInterfaceClassName($name);
             $methodName = JMSAttributeHelper::getAttributeGetterName($name);
             if ($this instanceof $interfaceName) {
-                if ($modifiersValue = $this->$methodName()) {
-                    $attributes[] = $name.'="'.$modifiersValue.'"';
+                if ($attributeValue = $this->$methodName()) {
+                    $attributes[] = $name.'="'.$attributeValue.'"';
                 }
             }
         }
