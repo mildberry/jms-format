@@ -48,6 +48,8 @@ class JMSBlockHelper
     {
         switch ($name) {
             case 'span':
+                $block = (new JMSTextBlock($value));
+                break;
             case 'u':
             case 'b':
             case 'i':
@@ -89,6 +91,7 @@ class JMSBlockHelper
      */
     public static function createBlockByTagName($name, $value, DOMNamedNodeMap $nodeAttributes, array $parentModifiers)
     {
+        print $name."\n";
         $block = static::createBlockClass($name, $value);
 
         $allowedModifiers = JMSModifierHelper::getAllowedModifiers();
