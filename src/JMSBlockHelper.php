@@ -91,7 +91,6 @@ class JMSBlockHelper
      */
     public static function createBlockByTagName($name, $value, DOMNamedNodeMap $nodeAttributes, array $parentModifiers)
     {
-        print $name."\n";
         $block = static::createBlockClass($name, $value);
 
         $allowedModifiers = JMSModifierHelper::getAllowedModifiers();
