@@ -35,56 +35,6 @@ class JMSCollectionBlock extends JMSAbstractBlock implements IteratorAggregate ,
     protected $allowedBlocks = [];
 
     /**
-     * @param array $data
-     * @return $this
-     */
-    public function loadFromJMSArray(array $data)
-    {
-        parent::loadFromJMSArray($data);
-
-        if (!empty($data['content'])) {
-            if (is_array($data['content'])) {
-                foreach ($data['content'] as $blockData) {
-                    $block = JMSBlockHelper::createBlockByName($blockData['block']);
-                    $block->loadFromJMSArray($blockData);
-                    $this->addBlock($block);
-                }
-            } else {
-                $this->addBlock(new JMSTextBlock($data['content']));
-            }
-        }
-
-        return $this;
-    }
-
-    /**
-     * @return array
-     */
-    public function getJMSArray()
-    {
-        return array_merge(
-            parent::getJMSArray(),
-            [
-                'content' => $this->getContentAsJMSArray(),
-            ]
-        );
-    }
-
-    /**
-     * @return array
-     */
-    public function getContentAsJMSArray()
-    {
-        $items = [];
-
-        foreach ($this->blocks as $item) {
-            $items[] = $item->getJMSArray();
-        }
-
-        return $items;
-    }
-
-    /**
      * @return string
      */
     public function getHTMLText()
@@ -214,16 +164,6 @@ class JMSCollectionBlock extends JMSAbstractBlock implements IteratorAggregate ,
     public function count()
     {
         return count($this->blocks);
-    }
-
-    /**
-     * Convert the collection to its string representation.
-     *
-     * @return string
-     */
-    public function __toString()
-    {
-        return $this->toJson();
     }
 
     /**

@@ -16,27 +16,27 @@ use Mildberry\JMSFormat\Exception\BadBlockNameException;
  */
 class JMSBlockHelper
 {
-    /**
-     * @param string $name
-     * @return JMSAbstractBlock
-     * @throws BadBlockNameException
-     */
-    public static function createBlockByName($name)
-    {
-        $className = __NAMESPACE__ . '\\Block\\JMS' . ucfirst(strtolower($name)) . 'Block';
-
-        if (!class_exists($className)) {
-            throw new BadBlockNameException('Class from block "' . $name . '" not exists');
-        }
-
-        $block = new $className;
-
-        if (!$block instanceof JMSAbstractBlock) {
-            throw new BadBlockNameException('Class "' . $className . '" not block');
-        }
-
-        return $block;
-    }
+//    /**
+//     * @param string $name
+//     * @return JMSAbstractBlock
+//     * @throws BadBlockNameException
+//     */
+//    public static function createBlockByName($name)
+//    {
+//        $className = __NAMESPACE__ . '\\Block\\JMS' . ucfirst(strtolower($name)) . 'Block';
+//
+//        if (!class_exists($className)) {
+//            throw new BadBlockNameException('Class from block "' . $name . '" not exists');
+//        }
+//
+//        $block = new $className;
+//
+//        if (!$block instanceof JMSAbstractBlock) {
+//            throw new BadBlockNameException('Class "' . $className . '" not block');
+//        }
+//
+//        return $block;
+//    }
 
     /**
      * @param string $name
