@@ -1,6 +1,7 @@
 <?php
 
 namespace Mildberry\JMSFormat;
+
 use Mildberry\JMSFormat\Block\JMSAbstractBlock;
 
 /**
@@ -22,7 +23,7 @@ class JMSAttributeHelper
      */
     public static function getAttributeInterfaceClassName($name)
     {
-        return __NAMESPACE__.'\Interfaces\\'.str_replace('-','', ucwords(strtolower($name), '-')).'AttributeInterface';
+        return __NAMESPACE__.'\Interfaces\\'.ucfirst(strtolower($name)).'AttributeInterface';
     }
 
     /**
@@ -31,7 +32,7 @@ class JMSAttributeHelper
      */
     public static function getAttributeGetterName($name)
     {
-        return 'get'.str_replace('-','', ucwords(strtolower($name), '-'));
+        return 'get'.ucfirst(strtolower($name));
     }
 
     /**
@@ -40,7 +41,7 @@ class JMSAttributeHelper
      */
     public static function getAttributeSetterName($name)
     {
-        return 'set'.str_replace('-','', ucwords(strtolower($name), '-'));
+        return 'set'.ucfirst(strtolower($name));
     }
 
     /**
@@ -49,12 +50,12 @@ class JMSAttributeHelper
      */
     public static function getBlockAttributes(JMSAbstractBlock $block)
     {
-        $attributesName = JMSAttributeHelper::getAllowedAttributes();
+        $attributesName = static::getAllowedAttributes();
         $attributes = [];
 
         foreach ($attributesName as $name) {
-            $interfaceName = JMSAttributeHelper::getAttributeInterfaceClassName($name);
-            $methodName = JMSAttributeHelper::getAttributeGetterName($name);
+            $interfaceName = static::getAttributeInterfaceClassName($name);
+            $methodName = static::getAttributeGetterName($name);
 
             if ($block instanceof $interfaceName) {
                 if ($attributesValue = $block->$methodName()) {

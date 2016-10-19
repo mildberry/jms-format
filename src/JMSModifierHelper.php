@@ -59,12 +59,12 @@ class JMSModifierHelper
      */
     public static function getBlockModifiers(JMSAbstractBlock $block)
     {
-        $modifiersName = JMSModifierHelper::getAllowedModifiers();
+        $modifiersName = static::getAllowedModifiers();
         $modifiers = [];
 
         foreach ($modifiersName as $name) {
-            $interfaceName = JMSModifierHelper::getModifierInterfaceClassName($name);
-            $methodName = JMSModifierHelper::getModifierGetterName($name);
+            $interfaceName = static::getModifierInterfaceClassName($name);
+            $methodName = static::getModifierGetterName($name);
 
             if ($block instanceof $interfaceName) {
                 if ($modifiersValue = $block->$methodName()) {
@@ -83,8 +83,8 @@ class JMSModifierHelper
     public static function setBlockModifiers(JMSAbstractBlock &$block, array $modifiers)
     {
         foreach ($modifiers as $name => $value) {
-            $interfaceName = JMSModifierHelper::getModifierInterfaceClassName($name);
-            $methodName = JMSModifierHelper::getModifierSetterName($name);
+            $interfaceName = static::getModifierInterfaceClassName($name);
+            $methodName = static::getModifierSetterName($name);
 
             if ($block instanceof $interfaceName) {
                 $block->$methodName($value);

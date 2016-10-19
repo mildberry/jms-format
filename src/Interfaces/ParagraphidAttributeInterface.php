@@ -5,10 +5,10 @@ namespace Mildberry\JMSFormat\Interfaces;
 /**
  * @author Egor Zyuskin <e.zyuskin@mildberry.com>
  */
-interface DataParagraphIdAttributeInterface
+interface ParagraphidAttributeInterface
 {
     /**
      * @return string
      */
-    public function getDataParagraphId();
+    public function getParagraphid();
 }

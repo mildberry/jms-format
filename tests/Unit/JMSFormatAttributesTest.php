@@ -28,8 +28,8 @@ class JMSFormatAttributesTest extends PHPUnit_Framework_TestCase
     }
     public function testSuccessAttributeHelper()
     {
-        $this->assertEquals(['src', 'data-paragraph-id'], JMSAttributeHelper::getAllowedAttributes());
-        $this->assertEquals('Mildberry\JMSFormat\Interfaces\DataParagraphIdAttributeInterface', JMSAttributeHelper::getAttributeInterfaceClassName('data-paragraph-id'));
+        $this->assertEquals(['src', 'paragraphId'], JMSAttributeHelper::getAllowedAttributes());
+        $this->assertEquals('Mildberry\JMSFormat\Interfaces\ParagraphidAttributeInterface', JMSAttributeHelper::getAttributeInterfaceClassName('paragraphId'));
     }
 
     public function testSuccessSrcAttribute()
@@ -43,8 +43,8 @@ class JMSFormatAttributesTest extends PHPUnit_Framework_TestCase
     public function testSuccessDataParagraphIdAttribute()
     {
         $item = new JMSParagraphBlock();
-        $item->setDataParagraphId("1");
-        $this->assertEquals('{"version":"v1","content":[{"block":"paragraph","modifiers":[],"attributes":{"data-paragraph-id":"1"}}]}', $this->asText($item));
+        $item->setParagraphId("1");
+        $this->assertEquals('{"version":"v1","content":[{"block":"paragraph","modifiers":[],"attributes":{"paragraphId":"1"}}]}', $this->asText($item));
         $this->assertEquals('<p data-paragraph-id="1"></p>', $item->getHTMLText());
     }
 
