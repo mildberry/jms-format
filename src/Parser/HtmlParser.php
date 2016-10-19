@@ -11,6 +11,7 @@ use Mildberry\JMSFormat\Block\JMSCollectionBlock;
 use Mildberry\JMSFormat\Block\JMSTextBlock;
 use Mildberry\JMSFormat\Interfaces\ParserInterface;
 use Mildberry\JMSFormat\JMSBlockHelper;
+use Mildberry\JMSFormat\JMSModifierHelper;
 
 /**
  * @author Egor Zyuskin <e.zyuskin@mildberry.com>
@@ -73,7 +74,9 @@ class HtmlParser implements ParserInterface
             // as text has no tags
             if ($element instanceof DOMText) {
                 if ($text = strip_tags($element->nodeValue)) {
-                    $collection->addBlock((new JMSTextBlock($text))->setModifiers($modifiers));
+                    $block = (new JMSTextBlock($text));
+                    JMSModifierHelper::setBlockModifiers($block, $modifiers);
+                    $collection->addBlock($block);
                 }
             } elseif ($element instanceof DOMElement) {
                 $item = $this->createItemFromDOMElement($element, $modifiers);
@@ -82,7 +85,7 @@ class HtmlParser implements ParserInterface
                         $item->addCollection($this->createCollectionByDOMElements($element->childNodes));
                         $collection->addBlock($item);
                     } else {
-                        $collection->addCollection($this->createCollectionByDOMElements($element->childNodes, $item->getModifiers()));
+                        $collection->addCollection($this->createCollectionByDOMElements($element->childNodes, JMSModifierHelper::getBlockModifiers($item)));
                     }
                 } else {
                     $collection->addBlock($item);

@@ -2,6 +2,8 @@
 
 namespace Mildberry\JMSFormat;
 
+use Mildberry\JMSFormat\Block\JMSAbstractBlock;
+
 /**
  * @author Egor Zyuskin <e.zyuskin@mildberry.com>
  */
@@ -49,5 +51,44 @@ class JMSModifierHelper
     public static function getModifierSetterName($name)
     {
         return 'set'.ucfirst(strtolower($name));
+    }
+
+    /**
+     * @param JMSAbstractBlock $block
+     * @return array
+     */
+    public static function getBlockModifiers(JMSAbstractBlock $block)
+    {
+        $modifiersName = JMSModifierHelper::getAllowedModifiers();
+        $modifiers = [];
+
+        foreach ($modifiersName as $name) {
+            $interfaceName = JMSModifierHelper::getModifierInterfaceClassName($name);
+            $methodName = JMSModifierHelper::getModifierGetterName($name);
+
+            if ($block instanceof $interfaceName) {
+                if ($modifiersValue = $block->$methodName()) {
+                    $modifiers[$name] = $modifiersValue;
+                }
+            }
+        }
+
+        return $modifiers;
+    }
+
+    /**
+     * @param JMSAbstractBlock $block
+     * @param array $modifiers
+     */
+    public static function setBlockModifiers(JMSAbstractBlock &$block, array $modifiers)
+    {
+        foreach ($modifiers as $name => $value) {
+            $interfaceName = JMSModifierHelper::getModifierInterfaceClassName($name);
+            $methodName = JMSModifierHelper::getModifierSetterName($name);
+
+            if ($block instanceof $interfaceName) {
+                $block->$methodName($value);
+            }
+        }
     }
 }

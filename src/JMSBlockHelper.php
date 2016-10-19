@@ -119,6 +119,8 @@ class JMSBlockHelper
             }
         }
 
-        return $block->setModifiers($parentModifiers);
+        JMSModifierHelper::setBlockModifiers($block, $parentModifiers);
+
+        return $block;
     }
 }

@@ -59,25 +59,11 @@ class JmsParser implements ParserInterface
         $block = $this->createBlockByName($name);
 
         if (!empty($data['modifiers'])) {
-            foreach ($data['modifiers'] as $name => $value) {
-                $interfaceName = JMSModifierHelper::getModifierInterfaceClassName($name);
-                $methodName = JMSModifierHelper::getModifierSetterName($name);
-
-                if ($block instanceof $interfaceName) {
-                    $block->$methodName($value);
-                }
-            }
+            JMSModifierHelper::setBlockModifiers($block, $data['modifiers']);
         }
 
         if (!empty($data['attributes'])) {
-            foreach ($data['attributes'] as $name => $value) {
-                $interfaceName = JMSAttributeHelper::getAttributeInterfaceClassName($name);
-                $attributeName = JMSAttributeHelper::getAttributeSetterName($name);
-
-                if ($block instanceof $interfaceName) {
-                    $block->$attributeName($value);
-                }
-            }
+            JMSAttributeHelper::setBlockAttributes($block, $data['attributes']);
         }
 
         if (!empty($data['content'])) {
@@ -105,15 +91,15 @@ class JmsParser implements ParserInterface
     {
         $return = [
             'block' => $block->getBlockName(),
-            'modifiers' => $this->getBlockModifiers($block),
+            'modifiers' => JMSModifierHelper::getBlockModifiers($block),
         ];
 
-        if ($attributes = $this->getBlockAttributes($block)) {
+        if ($attributes = JMSAttributeHelper::getBlockAttributes($block)) {
             $return['attributes'] = $attributes;
         }
 
-        if ($block instanceof JMSAbstractContentBlock) {
-            $return['content'] = $block->getContent();
+        if ($block instanceof JMSAbstractContentBlock && $content = $block->getContent()) {
+            $return['content'] = $content;
         }
 
         if ($block instanceof JMSCollectionBlock && $content = $this->getArrayFromCollection($block)) {
@@ -136,52 +122,6 @@ class JmsParser implements ParserInterface
         }
 
         return $return;
-    }
-
-    /**
-     * @param JMSAbstractBlock $block
-     * @return array
-     */
-    private function getBlockModifiers($block)
-    {
-        $modifiersName = JMSModifierHelper::getAllowedModifiers();
-        $modifiers = [];
-
-        foreach ($modifiersName as $name) {
-            $interfaceName = JMSModifierHelper::getModifierInterfaceClassName($name);
-            $methodName = JMSModifierHelper::getModifierGetterName($name);
-
-            if ($block instanceof $interfaceName) {
-                if ($modifiersValue = $block->$methodName()) {
-                    $modifiers[$name] = $modifiersValue;
-                }
-            }
-        }
-
-        return $modifiers;
-    }
-
-    /**
-     * @param JMSAbstractBlock $block
-     * @return array
-     */
-    public function getBlockAttributes($block)
-    {
-        $attributesName = JMSAttributeHelper::getAllowedAttributes();
-        $attributes = [];
-
-        foreach ($attributesName as $name) {
-            $interfaceName = JMSAttributeHelper::getAttributeInterfaceClassName($name);
-            $methodName = JMSAttributeHelper::getAttributeGetterName($name);
-
-            if ($block instanceof $interfaceName) {
-                if ($attributesValue = $block->$methodName()) {
-                    $attributes[$name] = $attributesValue;
-                }
-            }
-        }
-
-        return $attributes;
     }
 
     /**
