@@ -43,7 +43,7 @@ class JmsParser implements ParserInterface
     {
         $content = [
             'version' => self::VERSION,
-            'content' => $this->getArrayFromBlock($collection),
+            'content' => $this->getArrayFromCollection($collection),
         ];
 
         return json_encode($content, JSON_UNESCAPED_SLASHES | JSON_UNESCAPED_UNICODE);
@@ -116,10 +116,23 @@ class JmsParser implements ParserInterface
             $return['content'] = $block->getContent();
         }
 
-        if ($block instanceof JMSCollectionBlock) {
-            foreach ($block as $item) {
-                $return['content'][] = $this->getArrayFromBlock($item);
-            }
+        if ($block instanceof JMSCollectionBlock && $content = $this->getArrayFromCollection($block)) {
+            $return['content'] = $content;
+        }
+
+        return $return;
+    }
+
+    /**
+     * @param JMSCollectionBlock $collectionBlock
+     * @return array
+     */
+    private function getArrayFromCollection(JMSCollectionBlock $collectionBlock)
+    {
+        $return = [];
+
+        foreach ($collectionBlock as $item) {
+            $return[] = $this->getArrayFromBlock($item);
         }
 
         return $return;
@@ -139,7 +152,7 @@ class JmsParser implements ParserInterface
             $methodName = JMSModifierHelper::getModifierGetterName($name);
 
             if ($block instanceof $interfaceName) {
-                if ($modifiersValue = $this->$methodName()) {
+                if ($modifiersValue = $block->$methodName()) {
                     $modifiers[$name] = $modifiersValue;
                 }
             }
@@ -162,7 +175,7 @@ class JmsParser implements ParserInterface
             $methodName = JMSAttributeHelper::getAttributeGetterName($name);
 
             if ($block instanceof $interfaceName) {
-                if ($attributesValue = $this->$methodName()) {
+                if ($attributesValue = $block->$methodName()) {
                     $attributes[$name] = $attributesValue;
                 }
             }
