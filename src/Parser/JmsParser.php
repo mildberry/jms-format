@@ -54,7 +54,7 @@ class JmsParser implements ParserInterface
      * @param string|array $data
      * @return JMSAbstractBlock
      */
-    public function createBlockFromArray($name, $data)
+    private function createBlockFromArray($name, $data)
     {
         $block = $this->createBlockByName($name);
 
@@ -101,7 +101,7 @@ class JmsParser implements ParserInterface
      * @param JMSAbstractBlock $block
      * @return array
      */
-    public function getArrayFromBlock($block)
+    private function getArrayFromBlock($block)
     {
         $return = [
             'block' => $block->getBlockName(),
@@ -189,7 +189,7 @@ class JmsParser implements ParserInterface
      * @return JMSAbstractBlock
      * @throws BadBlockNameException
      */
-    protected function createBlockByName($name)
+    private function createBlockByName($name)
     {
         $className = __NAMESPACE__ . '\\Block\\JMS' . ucfirst(strtolower($name)) . 'Block';
 
