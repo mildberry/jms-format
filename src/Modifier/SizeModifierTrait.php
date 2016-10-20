@@ -39,14 +39,6 @@ trait SizeModifierTrait
     }
 
     /**
-     * @return string
-     */
-    public function getSizeHtmlClass()
-    {
-        return ($this->size) ? 'size-'.$this->getSize() : null;
-    }
-
-    /**
      * @return array
      */
     public function getSizeAllowedValues()

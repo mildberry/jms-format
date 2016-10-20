@@ -19,17 +19,4 @@ class JMSTextBlock extends JMSAbstractContentBlock implements ColorModifierInter
      * @var string
      */
     protected $blockName = 'text';
-
-    /**
-     * @var string
-     */
-    protected $tagName = 'span';
-
-    /**
-     * @return string
-     */
-    public function getHTMLText()
-    {
-        return ($this->tagName == 'span' && empty($this->getModifiersClasses())) ? $this->getContent() : parent::getHTMLText();
-    }
 }

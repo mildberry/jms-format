@@ -11,9 +11,4 @@ interface DecorationModifierInterface
      * @return array
      */
     public function getDecoration();
-
-    /**
-     * @return array
-     */
-    public function getDecorationHtmlClass();
 }

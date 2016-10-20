@@ -39,14 +39,6 @@ trait FloatingModifierTrait
     }
 
     /**
-     * @return string
-     */
-    public function getFloatingHtmlClass()
-    {
-        return ($this->floating) ? 'floating-'.$this->getFloating() : null;
-    }
-
-    /**
      * @return array
      */
     public function getFloatingAllowedValues()

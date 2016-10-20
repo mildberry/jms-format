@@ -53,7 +53,7 @@ class JMSFormatTest extends PHPUnit_Framework_TestCase
         $this->assertEquals($this->getJMSText(), $contentFormatter->convert('html', 'JMS', $this->getHtmlText()));
 
         $contentFormatter->setData(new JMSCollectionBlock());
-        $this->assertEquals('{"block":"body","modifiers":[],"content":[]}', $this->asText($contentFormatter->getData()));
+        $this->assertEquals('{"version":"v1","content":[]}', $this->asText($contentFormatter->getData()));
 
         $this->assertEquals($this->getJMSText(), $contentFormatter->loadFormFormat('JMS', $this->getJMSText())->saveToFormat('JMS'));
         $this->assertEquals($this->getHtmlText(), $contentFormatter->loadFormFormat('JMS', $this->getJMSText())->saveToFormat('Html'));
@@ -91,7 +91,7 @@ class JMSFormatTest extends PHPUnit_Framework_TestCase
 
     private function getJMSText()
     {
-        return '{"version":"v1","content":[{"block":"headline","modifiers":{"weight":"lg"},"content":[{"block":"text","modifiers":[],"content":"Header "},{"block":"text","modifiers":{"decoration":["italic","bold"]},"content":"1"}]},{"block":"paragraph","modifiers":{"alignment":"left"},"attributes":{"data-paragraph-id":"1"},"content":[{"block":"text","modifiers":[],"content":"Paragraph "},{"block":"text","modifiers":{"color":"danger","decoration":["bold"]},"content":"BOLD"},{"block":"text","modifiers":[],"content":" text inside tag "},{"block":"text","modifiers":{"decoration":["bold","italic"]},"content":"BOLD AND ITALIC"},{"block":"text","modifiers":{"decoration":["italic","bold"]},"content":" ITALIC AND BOLD "},{"block":"image","modifiers":{"size":"wide"},"attributes":{"src":"https://www.ya.ru/favicon.ico"}}]},{"block":"headline","modifiers":{"weight":"md"},"content":[{"block":"text","modifiers":[],"content":"Next header"}]},{"block":"blockquote","modifiers":[],"content":[{"block":"text","modifiers":[],"content":"Block "},{"block":"text","modifiers":{"decoration":["underline"]},"content":"quote"},{"block":"text","modifiers":[],"content":" "},{"block":"text","modifiers":{"decoration":["del"]},"content":"text"}]}]}';
+        return '{"version":"v1","content":[{"block":"headline","modifiers":{"weight":"lg"},"content":[{"block":"text","modifiers":[],"content":"Header "},{"block":"text","modifiers":{"decoration":["italic","bold"]},"content":"1"}]},{"block":"paragraph","modifiers":{"alignment":"left"},"attributes":{"paragraphId":"1"},"content":[{"block":"text","modifiers":[],"content":"Paragraph "},{"block":"text","modifiers":{"color":"danger","decoration":["bold"]},"content":"BOLD"},{"block":"text","modifiers":[],"content":" text inside tag "},{"block":"text","modifiers":{"decoration":["bold","italic"]},"content":"BOLD AND ITALIC"},{"block":"text","modifiers":{"decoration":["italic","bold"]},"content":" ITALIC AND BOLD "},{"block":"image","modifiers":{"size":"wide"},"attributes":{"src":"https://www.ya.ru/favicon.ico"}}]},{"block":"headline","modifiers":{"weight":"md"},"content":[{"block":"text","modifiers":[],"content":"Next header"}]},{"block":"blockquote","modifiers":[],"content":[{"block":"text","modifiers":[],"content":"Block "},{"block":"text","modifiers":{"decoration":["underline"]},"content":"quote"},{"block":"text","modifiers":[],"content":" "},{"block":"text","modifiers":{"decoration":["del"]},"content":"text"}]}]}';
     }
 
     /**

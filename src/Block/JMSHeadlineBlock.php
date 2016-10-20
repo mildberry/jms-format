@@ -21,9 +21,4 @@ class JMSHeadlineBlock extends JMSCollectionBlock implements WeightModifierInter
      * @var array
      */
     protected $allowedBlocks = ['text'];
-
-    /**
-     * @var string
-     */
-    protected $tagName = 'h1';
 }

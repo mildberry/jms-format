@@ -20,11 +20,6 @@ class JMSCollectionBlock extends JMSAbstractBlock implements IteratorAggregate ,
     protected $blockName = 'body';
 
     /**
-     * @var string
-     */
-    protected $tagName = 'body';
-
-    /**
      * @var JMSAbstractBlock[]
      */
     protected $blocks = [];
@@ -35,25 +30,11 @@ class JMSCollectionBlock extends JMSAbstractBlock implements IteratorAggregate ,
     protected $allowedBlocks = [];
 
     /**
-     * @return string
+     * @return JMSAbstractBlock[]
      */
-    public function getHTMLText()
+    public function getBlocks()
     {
-        return parent::getHTMLText().$this->getContentAsHTMLText().'</'.$this->getTagName().'>';
-    }
-
-    /**
-     * @return string
-     */
-    public function getContentAsHTMLText()
-    {
-        $html = '';
-
-        foreach ($this->blocks as $item) {
-            $html .= $item->getHTMLText();
-        }
-
-        return $html;
+        return $this->blocks;
     }
 
     /**
@@ -94,17 +75,6 @@ class JMSCollectionBlock extends JMSAbstractBlock implements IteratorAggregate ,
         array_unshift($this->blocks, $item);
 
         return $this;
-    }
-
-    /**
-     * Get the collection of items as JSON.
-     *
-     * @param  int  $options
-     * @return string
-     */
-    public function toJson($options = 0)
-    {
-        return json_encode($this->getJMSArray(), $options);
     }
 
     /**
@@ -174,13 +144,5 @@ class JMSCollectionBlock extends JMSAbstractBlock implements IteratorAggregate ,
     public function getIterator()
     {
         return new ArrayIterator($this->blocks);
-    }
-
-    /**
-     * @return JMSAbstractBlock[]
-     */
-    public function getBlocks()
-    {
-        return $this->blocks;
     }
 }

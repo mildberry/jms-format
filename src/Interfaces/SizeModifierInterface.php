@@ -11,9 +11,4 @@ interface SizeModifierInterface
      * @return string
      */
     public function getSize();
-
-    /**
-     * @return string
-     */
-    public function getSizeHtmlClass();
 }

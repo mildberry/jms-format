@@ -39,14 +39,6 @@ trait AlignmentModifierTrait
     }
 
     /**
-     * @return string
-     */
-    public function getAlignmentHtmlClass()
-    {
-        return ($this->alignment) ? 'alignment-'.$this->getAlignment() : null;
-    }
-
-    /**
      * @return array
      */
     public function getAlignmentAllowedValues()

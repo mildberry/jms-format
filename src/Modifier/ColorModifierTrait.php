@@ -39,14 +39,6 @@ trait ColorModifierTrait
     }
 
     /**
-     * @return string
-     */
-    public function getColorHtmlClass()
-    {
-        return ($this->color) ? 'color-'.$this->getColor() : null;
-    }
-
-    /**
      * @return array
      */
     public function getColorAllowedValues()

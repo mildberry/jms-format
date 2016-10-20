@@ -11,9 +11,4 @@ interface ColorModifierInterface
      * @return string
      */
     public function getColor();
-
-    /**
-     * @return string
-     */
-    public function getColorHtmlClass();
 }

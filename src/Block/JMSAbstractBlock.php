@@ -16,32 +16,11 @@ abstract class JMSAbstractBlock
     protected $blockName;
 
     /**
-     * @var string
-     */
-    protected $tagName;
-
-    /**
      * @return string
      */
     public function getBlockName()
     {
         return $this->blockName;
-    }
-
-    /**
-     * @return string
-     */
-    public function getTagName()
-    {
-        return $this->tagName;
-    }
-
-    /**
-     * @return string
-     */
-    public function getHTMLText()
-    {
-        return '<'.$this->getTagName().$this->getModifiersClassesString().$this->getAttributesHtmlString().'>';
     }
 
     /**

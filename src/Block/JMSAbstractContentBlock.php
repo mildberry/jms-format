@@ -38,12 +38,4 @@ abstract class JMSAbstractContentBlock extends JMSAbstractBlock
 
         return $this;
     }
-
-    /**
-     * @return string
-     */
-    public function getHTMLText()
-    {
-        return parent::getHTMLText().$this->getContent().'</'.$this->getTagName().'>';
-    }
 }

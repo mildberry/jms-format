@@ -11,9 +11,4 @@ interface WeightModifierInterface
      * @return string
      */
     public function getWeight();
-
-    /**
-     * @return string
-     */
-    public function getWeightHtmlClass();
 }

@@ -131,16 +131,16 @@ class JmsParser implements ParserInterface
      */
     private function createBlockByName($name)
     {
-        $className = __NAMESPACE__ . '\\Block\\JMS' . ucfirst(strtolower($name)) . 'Block';
+        $className = 'Mildberry\\JMSFormat\\Block\\JMS'.ucfirst(strtolower($name)).'Block';
 
         if (!class_exists($className)) {
-            throw new BadBlockNameException('Class from block "' . $name . '" not exists');
+            throw new BadBlockNameException('Class from block "'.$className.'" not exists');
         }
 
         $block = new $className;
 
         if (!$block instanceof JMSAbstractBlock) {
-            throw new BadBlockNameException('Class "' . $className . '" not block');
+            throw new BadBlockNameException('Class "'.$className.'" not block');
         }
 
         return $block;

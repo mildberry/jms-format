@@ -22,9 +22,4 @@ class JMSImageBlock extends JMSAbstractBlock implements SrcAttributeInterface, F
      * @var string
      */
     protected $blockName = 'image';
-
-    /**
-     * @var string
-     */
-    protected $tagName = 'img';
 }
