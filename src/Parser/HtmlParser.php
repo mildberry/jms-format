@@ -15,6 +15,7 @@ use Mildberry\JMSFormat\Block\JMSImageBlock;
 use Mildberry\JMSFormat\Block\JMSParagraphBlock;
 use Mildberry\JMSFormat\Block\JMSTextBlock;
 use Mildberry\JMSFormat\Exception\BadBlockNameException;
+use Mildberry\JMSFormat\Interfaces\DecorationModifierInterface;
 use Mildberry\JMSFormat\Interfaces\ParserInterface;
 use Mildberry\JMSFormat\JMSAttributeHelper;
 use Mildberry\JMSFormat\JMSModifierHelper;
@@ -152,7 +153,7 @@ class HtmlParser implements ParserInterface
     private function getContentFromBlock(JMSAbstractBlock $block)
     {
         $tagName = $this->getTagNameByBlock($block);
-        $modifiers = $this->clearBlockModifiers($block, JMSModifierHelper::getBlockModifiers($block));
+        $modifiers = $this->clearBlockModifiers($tagName, JMSModifierHelper::getBlockModifiers($block));
         $attributes = JMSAttributeHelper::getBlockAttributes($block);
 
         if ($tagName == 'span' && empty($modifiers) && empty($attributes)) {
@@ -248,12 +249,21 @@ class HtmlParser implements ParserInterface
     }
 
     /**
-     * @param JMSAbstractBlock $block
+     * @param string $tagName
      * @param array $modifiers
      * @return array
      */
-    private function clearBlockModifiers(JMSAbstractBlock $block, array $modifiers)
+    private function clearBlockModifiers($tagName, array $modifiers)
     {
+        switch ($tagName) {
+            case 'h1':
+            case 'h2':
+            case 'h3':
+            case 'h4':
+                unset($modifiers['weight']);
+                break;
+        }
+
         return $modifiers;
     }
 
@@ -270,7 +280,7 @@ class HtmlParser implements ParserInterface
         $classes = [];
 
         foreach ($modifiers as $name => $value) {
-            $classes[] = (is_array($value)) ? implode(' ', $value) : $name . '-' . $value;
+            $classes[] = (is_array($value)) ? trim(' '.$name.'-'.implode(' '.$name.'-', $value)) : $name . '-' . $value;
         }
 
         return ' class="'.implode(' ', $classes).'"';
