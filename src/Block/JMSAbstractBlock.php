@@ -2,9 +2,6 @@
 
 namespace Mildberry\JMSFormat\Block;
 
-use Mildberry\JMSFormat\JMSAttributeHelper;
-use Mildberry\JMSFormat\JMSModifierHelper;
-
 /**
  * @author Egor Zyuskin <e.zyuskin@mildberry.com>
  */
