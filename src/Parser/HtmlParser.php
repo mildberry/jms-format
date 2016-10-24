@@ -15,7 +15,6 @@ use Mildberry\JMSFormat\Block\JMSImageBlock;
 use Mildberry\JMSFormat\Block\JMSParagraphBlock;
 use Mildberry\JMSFormat\Block\JMSTextBlock;
 use Mildberry\JMSFormat\Exception\BadBlockNameException;
-use Mildberry\JMSFormat\Interfaces\DecorationModifierInterface;
 use Mildberry\JMSFormat\Interfaces\ParserInterface;
 use Mildberry\JMSFormat\JMSAttributeHelper;
 use Mildberry\JMSFormat\JMSModifierHelper;
@@ -255,13 +254,10 @@ class HtmlParser implements ParserInterface
      */
     private function clearBlockModifiers($tagName, array $modifiers)
     {
-        switch ($tagName) {
-            case 'h1':
-            case 'h2':
-            case 'h3':
-            case 'h4':
-                unset($modifiers['weight']);
-                break;
+        if (in_array($tagName, array_values($this->getWeights()))) {
+            unset($modifiers['weight']);
+        } elseif (in_array($tagName, array_values($this->getDecorations()))) {
+            unset($modifiers['decoration'][0]);
         }
 
         return $modifiers;
@@ -280,10 +276,20 @@ class HtmlParser implements ParserInterface
         $classes = [];
 
         foreach ($modifiers as $name => $value) {
-            $classes[] = (is_array($value)) ? trim(' '.$name.'-'.implode(' '.$name.'-', $value)) : $name . '-' . $value;
+            if (is_array($value)) {
+                if ((count($value) > 0)) {
+                    $classes[] = trim(' '.$name.'-'.implode(' '.$name.'-', $value));
+                }
+            } elseif (is_string($value)) {
+                $classes[] = $name . '-' . $value;
+            }
         }
 
-        return ' class="'.implode(' ', $classes).'"';
+        if (!empty($classes)) {
+            return ' class="'.trim(implode(' ', $classes)).'"';
+        }
+
+        return '';
     }
 
     /**
