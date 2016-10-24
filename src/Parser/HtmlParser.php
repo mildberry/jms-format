@@ -14,6 +14,7 @@ use Mildberry\JMSFormat\Block\JMSHeadlineBlock;
 use Mildberry\JMSFormat\Block\JMSImageBlock;
 use Mildberry\JMSFormat\Block\JMSParagraphBlock;
 use Mildberry\JMSFormat\Block\JMSTextBlock;
+use Mildberry\JMSFormat\Block\JMSVideoBlock;
 use Mildberry\JMSFormat\Exception\BadBlockNameException;
 use Mildberry\JMSFormat\Interfaces\ParserInterface;
 use Mildberry\JMSFormat\JMSAttributeHelper;
@@ -26,7 +27,7 @@ class HtmlParser implements ParserInterface
 {
     const ROOT_NODE_ID = 'DOMRootBodyElement';
 
-    const ALLOWED_TAGS = '<p><span><b><i><del><u><blockquote><h1><h2><h3><h4><img>';
+    const ALLOWED_TAGS = '<p><span><b><i><del><u><blockquote><h1><h2><h3><h4><img><object>';
 
     /**
      * @param string $content
@@ -162,7 +163,13 @@ class HtmlParser implements ParserInterface
         $return = '<'.$tagName.$this->getBlockClasses($modifiers).$this->getBlockAttributes($attributes).'>';
 
         if ($block instanceof JMSAbstractContentBlock || $block instanceof JMSCollectionBlock) {
-            $content = ($block instanceof JMSAbstractContentBlock) ? $block->getContent() : $this->getContentFromCollection($block);
+            if ($block instanceof JMSAbstractContentBlock) {
+                $content = $block->getContent();
+            } elseif ($block instanceof JMSVideoBlock) {
+                $content = '<embed />';
+            } else {
+                $content = $this->getContentFromCollection($block);
+            }
 
             $return .= $content.'</'.$tagName.'>';
         }
@@ -219,6 +226,9 @@ class HtmlParser implements ParserInterface
                 break;
             case 'blockquote':
                 $block = new JMSBlockquoteBlock($value);
+                break;
+            case 'object':
+                $block = new JMSVideoBlock();
                 break;
             default:
                 throw new BadBlockNameException('Class for tag "'.$name.'" not found');
@@ -309,6 +319,8 @@ class HtmlParser implements ParserInterface
                 return 'blockquote';
             case 'headline':
                 return $this->getWeightTagName($block->getWeight());
+            case 'video':
+                return 'object';
             default:
                 return null;
         }
@@ -384,6 +396,9 @@ class HtmlParser implements ParserInterface
     {
         return [
             'data-paragraph-id' => 'paragraphId',
+            'data-video-src' => 'videoSrc',
+            'data-video-id' => 'videoId',
+            'data-video-provider' => 'videoProvider',
         ];
     }
 }

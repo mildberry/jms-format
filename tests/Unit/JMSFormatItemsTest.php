@@ -9,6 +9,7 @@ use Mildberry\JMSFormat\Block\JMSHeadlineBlock;
 use Mildberry\JMSFormat\Block\JMSImageBlock;
 use Mildberry\JMSFormat\Block\JMSParagraphBlock;
 use Mildberry\JMSFormat\Block\JMSTextBlock;
+use Mildberry\JMSFormat\Block\JMSVideoBlock;
 use Mildberry\JMSFormat\Exception\BadBlockTypeForAddToCollection;
 use Mildberry\JMSFormat\Parser\JmsParser;
 use PHPUnit_Framework_TestCase;
@@ -98,6 +99,19 @@ class JMSFormatItemsTest extends PHPUnit_Framework_TestCase
         $item->setColor('info');
         $item->setDecoration('bold');
         $this->assertEquals('{"version":"v1","content":[{"block":"text","modifiers":{"color":"info","decoration":["bold"]},"content":"content"}]}', $this->asText($item));
+    }
+
+    public function testSuccessVideoBlock()
+    {
+        $item = (new JMSVideoBlock())
+            ->setVideoSrc('https://www.youtube.com/video/1')
+            ->setVideoProvider('youtube')
+            ->setVideoId('1')
+            ->setFloating('left')
+            ->setSize('wide')
+        ;
+
+        $this->assertEquals('{"version":"v1","content":[{"block":"video","modifiers":{"floating":"left","size":"wide"},"attributes":{"videoSrc":"https://www.youtube.com/video/1","videoId":"1","videoProvider":"youtube"}}]}', $this->asText($item));
     }
 
     /**

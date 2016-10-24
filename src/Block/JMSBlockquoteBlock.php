@@ -15,5 +15,5 @@ class JMSBlockquoteBlock extends JMSCollectionBlock
     /**
      * @var array
      */
-    protected $allowedBlocks = ['text', 'image'];
+    protected $allowedBlocks = ['text', 'image', 'video'];
 }
