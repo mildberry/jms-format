@@ -16,10 +16,9 @@ use Mildberry\JMSFormat\Modifier\SizeModifierTrait;
 /**
  * @author Egor Zyuskin <e.zyuskin@mildberry.com>
  */
-class JMSVideoBlock extends JMSCollectionBlock implements FloatingModifierInterface, SizeModifierInterface, VideosrcAttributeInterface , VideoidAttributeInterface, VideoproviderAttributeInterface
+class JMSVideoBlock extends JMSCollectionBlock implements SizeModifierInterface, VideosrcAttributeInterface , VideoidAttributeInterface, VideoproviderAttributeInterface
 {
     use SizeModifierTrait;
-    use FloatingModifierTrait;
     use VideoSrcAttributeTrait;
     use VideoIdAttributeTrait;
     use VideoProviderAttributeTrait;

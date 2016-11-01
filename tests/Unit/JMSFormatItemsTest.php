@@ -107,11 +107,10 @@ class JMSFormatItemsTest extends PHPUnit_Framework_TestCase
             ->setVideoSrc('https://www.youtube.com/video/1')
             ->setVideoProvider('youtube')
             ->setVideoId('1')
-            ->setFloating('left')
             ->setSize('wide')
         ;
 
-        $this->assertEquals('{"version":"v1","content":[{"block":"video","modifiers":{"floating":"left","size":"wide"},"attributes":{"videoSrc":"https://www.youtube.com/video/1","videoId":"1","videoProvider":"youtube"}}]}', $this->asText($item));
+        $this->assertEquals('{"version":"v1","content":[{"block":"video","modifiers":{"size":"wide"},"attributes":{"videoSrc":"https://www.youtube.com/video/1","videoId":"1","videoProvider":"youtube"}}]}', $this->asText($item));
     }
 
     /**
