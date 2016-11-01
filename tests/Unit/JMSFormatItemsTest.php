@@ -104,13 +104,13 @@ class JMSFormatItemsTest extends PHPUnit_Framework_TestCase
     public function testSuccessVideoBlock()
     {
         $item = (new JMSVideoBlock())
-            ->setVideoSrc('https://www.youtube.com/video/1')
-            ->setVideoProvider('youtube')
-            ->setVideoId('1')
+            ->setVideoSrc('http://player.youku.com/player.php/sid/XMzIzNDI5Mzg4/v.swf')
+            ->setVideoProvider('youku')
+            ->setVideoId('XMzIzNDI5Mzg4')
             ->setSize('wide')
         ;
 
-        $this->assertEquals('{"version":"v1","content":[{"block":"video","modifiers":{"size":"wide"},"attributes":{"videoSrc":"https://www.youtube.com/video/1","videoId":"1","videoProvider":"youtube"}}]}', $this->asText($item));
+        $this->assertEquals('{"version":"v1","content":[{"block":"video","modifiers":{"size":"wide"},"attributes":{"videoSrc":"http://player.youku.com/player.php/sid/XMzIzNDI5Mzg4/v.swf","videoId":"XMzIzNDI5Mzg4","videoProvider":"youku"}}]}', $this->asText($item));
     }
 
     /**
