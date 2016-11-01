@@ -118,6 +118,9 @@ class JMSFormatModifiersTest extends PHPUnit_Framework_TestCase
     public function testSuccessSizeModifier()
     {
         $item = new JMSImageBlock();
+        $item->setSize('xs');
+        $item->setSize('lg');
+        $item->setSize('md');
         $item->setSize('wide');
         $this->assertTrue(true);
         $this->assertEquals(4, count($item->getSizeAllowedValues()));
