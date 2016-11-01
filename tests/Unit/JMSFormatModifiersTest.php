@@ -120,7 +120,7 @@ class JMSFormatModifiersTest extends PHPUnit_Framework_TestCase
         $item = new JMSImageBlock();
         $item->setSize('wide');
         $this->assertTrue(true);
-        $this->assertEquals(1, count($item->getSizeAllowedValues()));
+        $this->assertEquals(4, count($item->getSizeAllowedValues()));
         $this->assertEquals('{"version":"v1","content":[{"block":"image","modifiers":{"size":"wide"}}]}', $this->asText($item));
     }
 

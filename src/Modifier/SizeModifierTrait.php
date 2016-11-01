@@ -43,6 +43,6 @@ trait SizeModifierTrait
      */
     public function getSizeAllowedValues()
     {
-        return ['wide'];
+        return ['wide', 'xs', 'lg', 'md'];
     }
 }
