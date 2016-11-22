@@ -8,25 +8,13 @@ use Mildberry\JMSFormat\JMSFormat;
 use Mildberry\JMSFormat\Exception\BadParserNameException;
 use Mildberry\JMSFormat\Parser\HtmlParser;
 use Mildberry\JMSFormat\Parser\JmsParser;
-use PHPUnit_Framework_TestCase;
+use Mildberry\JMSFormat\Tests\TestCase;
 
 /**
  * @author Egor Zyuskin <e.zyuskin@mildberry.com>
  */
-class JMSFormatTest extends PHPUnit_Framework_TestCase
+class JMSFormatTest extends TestCase
 {
-    /**
-     * @var JmsParser
-     */
-    protected $jms;
-
-    public function __construct()
-    {
-        parent::__construct();
-
-        $this->jms = new JmsParser();
-    }
-
     public function testSuccessConstruct()
     {
         $contentFormatter = $this->createFormatter();
@@ -53,7 +41,7 @@ class JMSFormatTest extends PHPUnit_Framework_TestCase
         $this->assertEquals($this->getJMSText(), $contentFormatter->convert('html', 'JMS', $this->getHtmlText()));
 
         $contentFormatter->setData(new JMSCollectionBlock());
-        $this->assertEquals('{"version":"v1","content":[]}', $this->asText($contentFormatter->getData()));
+        $this->assertEquals('{"version":"v1","content":[{"block":"body","modifiers":[]}]}', $this->asJmsText($contentFormatter->getData()));
 
         $this->assertEquals($this->getJMSText(), $contentFormatter->loadFormFormat('JMS', $this->getJMSText())->saveToFormat('JMS'));
         $this->assertEquals($this->getHtmlText(), $contentFormatter->loadFormFormat('JMS', $this->getJMSText())->saveToFormat('Html'));
@@ -63,7 +51,7 @@ class JMSFormatTest extends PHPUnit_Framework_TestCase
     {
         $parser = new JmsParser();
         $this->assertTrue($parser instanceof ParserInterface);
-        $this->assertEquals('{"version":"v1","content":[]}', $this->asText($parser->toCollection('')));
+        $this->assertEquals('{"version":"v1","content":[{"block":"body","modifiers":[]}]}', $this->asJmsText($parser->toCollection('')));
     }
 
     public function testSuccessHTMLParser()
@@ -92,14 +80,5 @@ class JMSFormatTest extends PHPUnit_Framework_TestCase
     private function getJMSText()
     {
         return '{"version":"v1","content":[{"block":"headline","modifiers":{"weight":"lg"},"content":[{"block":"text","modifiers":[],"content":"Header "},{"block":"text","modifiers":{"decoration":["italic","bold"]},"content":"1"}]},{"block":"paragraph","modifiers":{"alignment":"left"},"attributes":{"paragraphId":"1"},"content":[{"block":"text","modifiers":[],"content":"Paragraph "},{"block":"link","modifiers":[],"attributes":{"href":"http://www.mildberry.com"},"content":[{"block":"text","modifiers":[],"content":"http://www.mildberry.com"}]},{"block":"text","modifiers":{"color":"danger","decoration":["bold"]},"content":"BOLD"},{"block":"text","modifiers":[],"content":" text inside tag "},{"block":"text","modifiers":{"decoration":["bold","italic"]},"content":"BOLD AND ITALIC"},{"block":"text","modifiers":{"decoration":["italic","bold"]},"content":" ITALIC AND BOLD "},{"block":"image","modifiers":{"size":"wide"},"attributes":{"src":"https://www.ya.ru/favicon.ico"}}]},{"block":"headline","modifiers":{"weight":"md"},"content":[{"block":"text","modifiers":[],"content":"Next header"}]},{"block":"blockquote","modifiers":[],"content":[{"block":"text","modifiers":[],"content":"Block "},{"block":"text","modifiers":{"decoration":["underline"]},"content":"quote"},{"block":"text","modifiers":[],"content":" "},{"block":"text","modifiers":{"decoration":["del"]},"content":"text"},{"block":"video","modifiers":{"size":"wide"},"attributes":{"videoSrc":"http://player.youku.com/player.php/sid/XMzIzNDI5Mzg4/v.swf","videoId":"XMzIzNDI5Mzg4","videoProvider":"youku"}}]}]}';
-    }
-
-    /**
-     * @param JMSCollectionBlock $item
-     * @return string
-     */
-    private function asText($item)
-    {
-        return $this->jms->toContent($item);
     }
 }
