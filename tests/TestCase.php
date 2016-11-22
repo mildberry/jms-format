@@ -37,12 +37,16 @@ abstract class TestCase extends \PHPUnit_Framework_TestCase
      * @param JMSAbstractBlock $item
      * @return string
      */
-    protected function asJmsText($item)
+    protected function asJmsText(JMSAbstractBlock $item)
     {
         return $this->jmsParser->toContent((new JMSCollectionBlock())->addBlock($item));
     }
 
-    protected function asHtmlText($item)
+    /**
+     * @param JMSAbstractBlock $item
+     * @return string
+     */
+    protected function asHtmlText(JMSAbstractBlock $item)
     {
         return $this->htmlParser->toContent((new JMSCollectionBlock())->addBlock($item));
     }

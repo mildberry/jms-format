@@ -74,11 +74,14 @@ class JMSFormatTest extends TestCase
      */
     private function getHtmlText()
     {
-        return '<h1>Header <i class="decoration-bold">1</i></h1><p class="alignment-left" data-paragraph-id="1">Paragraph <a href="http://www.mildberry.com">http://www.mildberry.com</a><b class="color-danger">BOLD</b> text inside tag <b class="decoration-italic">BOLD AND ITALIC</b><i class="decoration-bold"> ITALIC AND BOLD </i><img class="size-wide" src="https://www.ya.ru/favicon.ico"></p><h2>Next header</h2><blockquote>Block <u>quote</u> <del>text</del><object class="size-wide" data-video-src="http://player.youku.com/player.php/sid/XMzIzNDI5Mzg4/v.swf" data-video-id="XMzIzNDI5Mzg4" data-video-provider="youku"><embed /></object></blockquote>';
+        return file_get_contents(__DIR__.'/../Data/data.html');
     }
 
+    /**
+     * @return string
+     */
     private function getJMSText()
     {
-        return '{"version":"v1","content":[{"block":"headline","modifiers":{"weight":"lg"},"content":[{"block":"text","modifiers":[],"content":"Header "},{"block":"text","modifiers":{"decoration":["italic","bold"]},"content":"1"}]},{"block":"paragraph","modifiers":{"alignment":"left"},"attributes":{"paragraphId":"1"},"content":[{"block":"text","modifiers":[],"content":"Paragraph "},{"block":"link","modifiers":[],"attributes":{"href":"http://www.mildberry.com"},"content":[{"block":"text","modifiers":[],"content":"http://www.mildberry.com"}]},{"block":"text","modifiers":{"color":"danger","decoration":["bold"]},"content":"BOLD"},{"block":"text","modifiers":[],"content":" text inside tag "},{"block":"text","modifiers":{"decoration":["bold","italic"]},"content":"BOLD AND ITALIC"},{"block":"text","modifiers":{"decoration":["italic","bold"]},"content":" ITALIC AND BOLD "},{"block":"image","modifiers":{"size":"wide"},"attributes":{"src":"https://www.ya.ru/favicon.ico"}}]},{"block":"headline","modifiers":{"weight":"md"},"content":[{"block":"text","modifiers":[],"content":"Next header"}]},{"block":"blockquote","modifiers":[],"content":[{"block":"text","modifiers":[],"content":"Block "},{"block":"text","modifiers":{"decoration":["underline"]},"content":"quote"},{"block":"text","modifiers":[],"content":" "},{"block":"text","modifiers":{"decoration":["del"]},"content":"text"},{"block":"video","modifiers":{"size":"wide"},"attributes":{"videoSrc":"http://player.youku.com/player.php/sid/XMzIzNDI5Mzg4/v.swf","videoId":"XMzIzNDI5Mzg4","videoProvider":"youku"}}]}]}';
+        return file_get_contents(__DIR__.'/../Data/data.json');
     }
 }
