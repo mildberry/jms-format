@@ -1,43 +1,23 @@
 <?php
 
-namespace Mildberry\JMSFormat\Test\Unit;
+namespace Mildberry\JMSFormat\Tests\Unit;
 
-use Mildberry\JMSFormat\Block\JMSAbstractBlock;
-use Mildberry\JMSFormat\Block\JMSCollectionBlock;
+use Mildberry\JMSFormat\Block\JMSLinkBlock;
 use Mildberry\JMSFormat\Block\JMSParagraphBlock;
 use Mildberry\JMSFormat\Block\JMSImageBlock;
+use Mildberry\JMSFormat\Block\JMSTextBlock;
 use Mildberry\JMSFormat\Block\JMSVideoBlock;
 use Mildberry\JMSFormat\JMSAttributeHelper;
-use Mildberry\JMSFormat\Parser\HtmlParser;
-use Mildberry\JMSFormat\Parser\JmsParser;
-use PHPUnit_Framework_TestCase;
+use Mildberry\JMSFormat\Tests\TestCase;
 
 /**
  * @author Egor Zyuskin <e.zyuskin@mildberry.com>
  */
-class JMSFormatAttributesTest extends PHPUnit_Framework_TestCase
+class JMSFormatAttributesTest extends TestCase
 {
-    /**
-     * @var JmsParser
-     */
-    protected $jmsParser;
-
-    /**
-     * @var HtmlParser
-     */
-    protected $htmlParser;
-
-    public function __construct()
-    {
-        parent::__construct();
-
-        $this->jmsParser = new JmsParser();
-        $this->htmlParser = new HtmlParser();
-    }
-
     public function testSuccessAttributeHelper()
     {
-        $this->assertEquals(['src', 'paragraphId', 'videoSrc', 'videoId', 'videoProvider'], JMSAttributeHelper::getAllowedAttributes());
+        $this->assertEquals(['src', 'paragraphId', 'videoSrc', 'videoId', 'videoProvider', 'href'], JMSAttributeHelper::getAllowedAttributes());
         $this->assertEquals('Mildberry\JMSFormat\Interfaces\ParagraphidAttributeInterface', JMSAttributeHelper::getAttributeInterfaceClassName('paragraphId'));
     }
 
@@ -47,6 +27,16 @@ class JMSFormatAttributesTest extends PHPUnit_Framework_TestCase
         $item->setSrc('http://www.ya.ru');
         $this->assertEquals('{"version":"v1","content":[{"block":"image","modifiers":[],"attributes":{"src":"http://www.ya.ru"}}]}', $this->asJmsText($item));
         $this->assertEquals('<img src="http://www.ya.ru">', $this->asHtmlText($item));
+    }
+
+    public function testSuccessHrefAttribute()
+    {
+        $item = (new JMSLinkBlock())
+            ->setHref('http://www.mildberry.com')
+            ->addBlock((new JMSTextBlock('Mildberry')))
+        ;
+        $this->assertEquals('{"version":"v1","content":[{"block":"link","modifiers":[],"attributes":{"href":"http://www.mildberry.com"},"content":[{"block":"text","modifiers":[],"content":"Mildberry"}]}]}', $this->asJmsText($item));
+        $this->assertEquals('<a href="http://www.mildberry.com">Mildberry</a>', $this->asHtmlText($item));
     }
 
     public function testSuccessDataParagraphIdAttribute()
@@ -79,19 +69,5 @@ class JMSFormatAttributesTest extends PHPUnit_Framework_TestCase
         $item->setVideoSrc('https://www.youtube.com/video/1');
         $this->assertEquals('{"version":"v1","content":[{"block":"video","modifiers":[],"attributes":{"videoSrc":"https://www.youtube.com/video/1"}}]}', $this->asJmsText($item));
         $this->assertEquals('<object data-video-src="https://www.youtube.com/video/1"><embed /></object>', $this->asHtmlText($item));
-    }
-
-    /**
-     * @param JMSAbstractBlock $item
-     * @return string
-     */
-    private function asJmsText($item)
-    {
-        return $this->jmsParser->toContent((new JMSCollectionBlock())->addBlock($item));
-    }
-
-    private function asHtmlText($item)
-    {
-        return $this->htmlParser->toContent((new JMSCollectionBlock())->addBlock($item));
     }
 }

@@ -7,6 +7,7 @@ use Mildberry\JMSFormat\Block\JMSBlockquoteBlock;
 use Mildberry\JMSFormat\Block\JMSCollectionBlock;
 use Mildberry\JMSFormat\Block\JMSHeadlineBlock;
 use Mildberry\JMSFormat\Block\JMSImageBlock;
+use Mildberry\JMSFormat\Block\JMSLinkBlock;
 use Mildberry\JMSFormat\Block\JMSParagraphBlock;
 use Mildberry\JMSFormat\Block\JMSTextBlock;
 use Mildberry\JMSFormat\Block\JMSVideoBlock;
@@ -40,10 +41,12 @@ class JMSFormatItemsTest extends PHPUnit_Framework_TestCase
 
     public function testSuccessBlockQuoteItem()
     {
-        $item = new JMSBlockquoteBlock();
-        $item->addBlock((new JMSImageBlock()));
-        $item->addBlock((new JMSTextBlock('c')));
-        $this->assertEquals('{"version":"v1","content":[{"block":"blockquote","modifiers":[],"content":[{"block":"image","modifiers":[]},{"block":"text","modifiers":[],"content":"c"}]}]}', $this->asText($item));
+        $item = (new JMSBlockquoteBlock())
+            ->addBlock((new JMSLinkBlock())->setHref('http://www.mildberry.com'))
+            ->addBlock((new JMSImageBlock()))
+            ->addBlock((new JMSTextBlock('c')))
+        ;
+        $this->assertEquals('{"version":"v1","content":[{"block":"blockquote","modifiers":[],"content":[{"block":"link","modifiers":[],"attributes":{"href":"http://www.mildberry.com"}},{"block":"image","modifiers":[]},{"block":"text","modifiers":[],"content":"c"}]}]}', $this->asText($item));
     }
 
     public function testFiledHeadLineItem()
@@ -79,17 +82,20 @@ class JMSFormatItemsTest extends PHPUnit_Framework_TestCase
 
     public function testSuccessParagraphItem()
     {
-        $item = new JMSParagraphBlock();
-        $item->setAlignment('center');
-        $item->addBlock((new JMSImageBlock()));
-        $item->addBlock((new JMSTextBlock('c')));
+        $item = (new JMSParagraphBlock())
+            ->setAlignment('center')
+            ->addBlock((new JMSImageBlock()))
+            ->addBlock((new JMSTextBlock('c')))
+        ;
         $this->assertTrue(true);
 
-        $collection = new JMSCollectionBlock();
-        $collection->addBlock(new JMSTextBlock('c'));
+        $collection = (new JMSCollectionBlock())
+            ->addBlock(new JMSTextBlock('c'))
+            ->addBlock((new JMSLinkBlock())->setHref('http://www.mildberry.com'))
+        ;
         $item->addCollection($collection);
 
-        $this->assertEquals('{"version":"v1","content":[{"block":"paragraph","modifiers":{"alignment":"center"},"content":[{"block":"image","modifiers":[]},{"block":"text","modifiers":[],"content":"c"},{"block":"text","modifiers":[],"content":"c"}]}]}', $this->asText($item));
+        $this->assertEquals('{"version":"v1","content":[{"block":"paragraph","modifiers":{"alignment":"center"},"content":[{"block":"image","modifiers":[]},{"block":"text","modifiers":[],"content":"c"},{"block":"text","modifiers":[],"content":"c"},{"block":"link","modifiers":[],"attributes":{"href":"http://www.mildberry.com"}}]}]}', $this->asText($item));
     }
 
     public function testSuccessTextItem()
@@ -111,6 +117,16 @@ class JMSFormatItemsTest extends PHPUnit_Framework_TestCase
         ;
 
         $this->assertEquals('{"version":"v1","content":[{"block":"video","modifiers":{"size":"wide"},"attributes":{"videoSrc":"http://player.youku.com/player.php/sid/XMzIzNDI5Mzg4/v.swf","videoId":"XMzIzNDI5Mzg4","videoProvider":"youku"}}]}', $this->asText($item));
+    }
+
+    public function testSuccessLinkBlock()
+    {
+        $item = (new JMSLinkBlock())
+            ->setHref('http://www.mildberry.com')
+            ->addBlock((new JMSTextBlock('Mildberry')))
+        ;
+
+        $this->assertEquals('{"version":"v1","content":[{"block":"link","modifiers":[],"attributes":{"href":"http://www.mildberry.com"},"content":[{"block":"text","modifiers":[],"content":"Mildberry"}]}]}', $this->asText($item));
     }
 
     /**

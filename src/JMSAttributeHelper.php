@@ -14,7 +14,7 @@ class JMSAttributeHelper
      */
     public static function getAllowedAttributes()
     {
-        return ['src', 'paragraphId', 'videoSrc', 'videoId', 'videoProvider'];
+        return ['src', 'paragraphId', 'videoSrc', 'videoId', 'videoProvider', 'href'];
     }
 
     /**

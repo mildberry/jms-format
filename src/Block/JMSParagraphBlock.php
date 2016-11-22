@@ -23,5 +23,5 @@ class JMSParagraphBlock extends JMSCollectionBlock implements AlignmentModifierI
     /**
      * @var array
      */
-    protected $allowedBlocks = ['text', 'image', 'video'];
+    protected $allowedBlocks = ['text', 'image', 'video', 'link'];
 }

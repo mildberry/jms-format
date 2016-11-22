@@ -12,6 +12,7 @@ use Mildberry\JMSFormat\Block\JMSBlockquoteBlock;
 use Mildberry\JMSFormat\Block\JMSCollectionBlock;
 use Mildberry\JMSFormat\Block\JMSHeadlineBlock;
 use Mildberry\JMSFormat\Block\JMSImageBlock;
+use Mildberry\JMSFormat\Block\JMSLinkBlock;
 use Mildberry\JMSFormat\Block\JMSParagraphBlock;
 use Mildberry\JMSFormat\Block\JMSTextBlock;
 use Mildberry\JMSFormat\Block\JMSVideoBlock;
@@ -27,7 +28,7 @@ class HtmlParser implements ParserInterface
 {
     const ROOT_NODE_ID = 'DOMRootBodyElement';
 
-    const ALLOWED_TAGS = '<p><span><b><i><del><u><blockquote><h1><h2><h3><h4><img><object>';
+    const ALLOWED_TAGS = '<p><span><b><i><del><u><blockquote><h1><h2><h3><h4><img><object><a>';
 
     /**
      * @param string $content
@@ -230,6 +231,9 @@ class HtmlParser implements ParserInterface
             case 'object':
                 $block = new JMSVideoBlock();
                 break;
+            case 'a':
+                $block = new JMSLinkBlock($value);
+                break;
             default:
                 throw new BadBlockNameException('Class for tag "'.$name.'" not found');
                 break;
@@ -321,6 +325,8 @@ class HtmlParser implements ParserInterface
                 return $this->getWeightTagName($block->getWeight());
             case 'video':
                 return 'object';
+            case 'link':
+                return 'a';
             default:
                 return null;
         }
