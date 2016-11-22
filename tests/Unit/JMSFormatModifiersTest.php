@@ -1,6 +1,6 @@
 <?php
 
-namespace Mildberry\JMSFormat\Test\Unit;
+namespace Mildberry\JMSFormat\Tests\Unit;
 
 use Mildberry\JMSFormat\Exception\BadModifierValueException;
 use Mildberry\JMSFormat\Block\JMSParagraphBlock;

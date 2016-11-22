@@ -1,6 +1,6 @@
 <?php
 
-namespace Mildberry\JMSFormat\Test\Unit;
+namespace Mildberry\JMSFormat\Tests\Unit;
 
 use Mildberry\JMSFormat\Block\JMSCollectionBlock;
 use Mildberry\JMSFormat\Block\JMSTextBlock;
