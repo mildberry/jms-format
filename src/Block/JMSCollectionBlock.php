@@ -7,7 +7,6 @@ use ArrayIterator;
 use Countable;
 use IteratorAggregate;
 use Mildberry\JMSFormat\Exception\BadBlockTypeForAddToCollection;
-use Mildberry\JMSFormat\JMSBlockHelper;
 
 /**
  * @author Egor Zyuskin <e.zyuskin@mildberry.com>
