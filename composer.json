@@ -13,11 +13,9 @@
     },
     "autoload": {
         "psr-4": {
-            "Mildberry\\JMSFormat\\": "src/"
+            "Mildberry\\JMSFormat\\": "src/",
+            "Mildberry\\JMSFormat\\Tests\\": "tests/"
         }
-    },
-    "autoload-dev": {
-        "psr-4": { "Mildberry\\JMSFormat\\Tests\\": "tests/" }
     },
     "extra": {
         "branch-alias": {
