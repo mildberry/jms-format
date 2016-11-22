@@ -110,8 +110,9 @@ class JMSFormatItemsTest extends TestCase
         $item = (new JMSLinkBlock())
             ->setHref('http://www.mildberry.com')
             ->addBlock((new JMSTextBlock('Mildberry')))
+            ->setTarget('_blank')
         ;
 
-        $this->assertEquals('{"version":"v1","content":[{"block":"link","modifiers":[],"attributes":{"href":"http://www.mildberry.com"},"content":[{"block":"text","modifiers":[],"content":"Mildberry"}]}]}', $this->asJmsText($item));
+        $this->assertEquals('{"version":"v1","content":[{"block":"link","modifiers":[],"attributes":{"href":"http://www.mildberry.com","target":"_blank"},"content":[{"block":"text","modifiers":[],"content":"Mildberry"}]}]}', $this->asJmsText($item));
     }
 }

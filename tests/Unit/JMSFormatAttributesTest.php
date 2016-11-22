@@ -17,7 +17,7 @@ class JMSFormatAttributesTest extends TestCase
 {
     public function testSuccessAttributeHelper()
     {
-        $this->assertEquals(['src', 'paragraphId', 'videoSrc', 'videoId', 'videoProvider', 'href'], JMSAttributeHelper::getAllowedAttributes());
+        $this->assertEquals(['src', 'paragraphId', 'videoSrc', 'videoId', 'videoProvider', 'href', 'target'], JMSAttributeHelper::getAllowedAttributes());
         $this->assertEquals('Mildberry\JMSFormat\Interfaces\ParagraphidAttributeInterface', JMSAttributeHelper::getAttributeInterfaceClassName('paragraphId'));
     }
 
@@ -37,6 +37,15 @@ class JMSFormatAttributesTest extends TestCase
         ;
         $this->assertEquals('{"version":"v1","content":[{"block":"link","modifiers":[],"attributes":{"href":"http://www.mildberry.com"},"content":[{"block":"text","modifiers":[],"content":"Mildberry"}]}]}', $this->asJmsText($item));
         $this->assertEquals('<a href="http://www.mildberry.com">Mildberry</a>', $this->asHtmlText($item));
+    }
+
+    public function testSuccessTargetAttribute()
+    {
+        $item = (new JMSLinkBlock())
+            ->setTarget('_blank')
+        ;
+        $this->assertEquals('{"version":"v1","content":[{"block":"link","modifiers":[],"attributes":{"target":"_blank"}}]}', $this->asJmsText($item));
+        $this->assertEquals('<a target="_blank"></a>', $this->asHtmlText($item));
     }
 
     public function testSuccessDataParagraphIdAttribute()
